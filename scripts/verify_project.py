@@ -97,6 +97,8 @@ def main() -> int:
     for token in ('iOS: "17.0"', 'SWIFT_VERSION: "5.0"', "CODE_SIGNING_ALLOWED: \"NO\""):
         if token not in project:
             fail(f"project.yml missing {token}")
+    if "TEST_HOST" not in project or "Harbor.app/Harbor" not in project:
+        fail("Test host must point at the Harbor.app bundle (PRODUCT_NAME Harbor)")
     if "runs-on: macos-15" not in workflow:
         fail("CI must use macos-15")
     if "xcodebuild" not in workflow or "HarborIOS.ipa" not in workflow:

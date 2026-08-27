@@ -49,6 +49,10 @@ targets:
       - HarborIOSTests
     dependencies:
       - target: HarborIOS
+    settings:
+      base:
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Harbor.app/Harbor"
+        BUNDLE_LOADER: "$(TEST_HOST)"
 schemes:
   HarborIOS:
     build:
