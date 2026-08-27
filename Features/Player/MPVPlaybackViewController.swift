@@ -125,7 +125,7 @@ final class MPVPlaybackViewController: UIViewController {
                 let endFile = event.pointee.data
                     .assumingMemoryBound(to: mpv_event_end_file.self)
                     .pointee
-                if endFile.reason == MPV_END_FILE_REASON_ERROR.rawValue {
+                if endFile.reason == MPV_END_FILE_REASON_ERROR {
                     DispatchQueue.main.async {
                         self.onFailed?("Playback ended with an error.")
                     }
