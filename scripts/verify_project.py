@@ -105,6 +105,8 @@ def main() -> int:
         fail("CI must test/build/package the IPA")
     if "permissions:\n  contents: read" not in workflow:
         fail("CI permissions must be read-only")
+    if "codesign --force --sign -" not in workflow or "application-identifier" not in workflow:
+        fail("CI must fake-sign the bundle with the application-identifier entitlement")
     if "kSecAttrAccessibleWhenUnlockedThisDeviceOnly" not in keychain:
         fail("Keychain items must require an unlocked device")
     if "AVURLAssetHTTPHeaderFieldsKey" in player:

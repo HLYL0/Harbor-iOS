@@ -87,6 +87,34 @@ jobs:
           ditto "$APP_PATH" "Payload/Harbor.app"
           rm -rf "Payload/Harbor.app/_CodeSignature" 2>/dev/null || true
           rm -f "Payload/Harbor.app/embedded.mobileprovision" 2>/dev/null || true
+
+      - name: Fake-sign with application-identifier entitlement
+        run: |
+          set -e
+          cat > entitlements.plist <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>application-identifier</key>
+              <string>HARBORIOS1.com.hlyl.harborios</string>
+              <key>com.apple.developer.team-identifier</key>
+              <string>HARBORIOS1</string>
+              <key>get-task-allow</key>
+              <true/>
+              <key>platform-application</key>
+              <true/>
+          </dict>
+          </plist>
+          EOF
+          codesign --force --sign - --entitlements entitlements.plist --generate-entitlement-der "Payload/Harbor.app"
+          codesign -d --entitlements - "Payload/Harbor.app" 2>/dev/null | grep -q "application-identifier"
+          test -d "Payload/Harbor.app/_CodeSignature"
+          echo "Fake-sign complete"
+
+      - name: Package IPA
+        run: |
+          set -e
           python3 - <<'PY'
           import os, zipfile
           with zipfile.ZipFile('HarborIOS.ipa', 'w', zipfile.ZIP_STORED) as archive:
@@ -109,6 +137,7 @@ jobs:
               ats = info.get('NSAppTransportSecurity', {})
               assert not ats.get('NSAllowsArbitraryLoads', False)
               assert not ats.get('NSAllowsArbitraryLoadsForMedia', False)
+              assert any('/_CodeSignature/CodeResources' in name for name in names), 'fake-signature missing'
               executable_mode = archive.getinfo('Payload/Harbor.app/Harbor').external_attr >> 16
               assert executable_mode & 0o111, oct(executable_mode)
               print(f'IPA verified: {len(names)} entries, bundle={info.get("CFBundleIdentifier")}')
