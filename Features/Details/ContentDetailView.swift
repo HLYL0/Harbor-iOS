@@ -9,6 +9,7 @@ final class ContentDetailViewModel: ObservableObject {
     @Published private(set) var isLoadingStreams = false
     @Published var selectedVideo: StremioVideo?
     @Published var playbackSelection: PlaybackSelection?
+    @Published var resolvingStreamID: String?
     @Published var errorMessage: String?
 
     private var streamRequestGeneration = 0
@@ -69,12 +70,27 @@ final class ContentDetailViewModel: ObservableObject {
         }
     }
 
-    func play(_ candidate: AttributedStream) {
+    func play(_ candidate: AttributedStream, using environment: AppEnvironment) async {
         do {
+            let source: PlaybackSource
+            if candidate.stream.isDirectlyPlayable {
+                source = try candidate.stream.playbackSource()
+            } else if candidate.stream.infoHash != nil {
+                guard environment.hasDebridKey else {
+                    errorMessage = "Add your Real-Debrid API key in Settings to play torrent sources."
+                    return
+                }
+                resolvingStreamID = candidate.id
+                defer { resolvingStreamID = nil }
+                let url = try await environment.debridResolve(stream: candidate.stream)
+                source = PlaybackSource(url: url)
+            } else {
+                source = try candidate.stream.playbackSource()
+            }
             playbackSelection = PlaybackSelection(
                 title: metadata.name,
                 subtitle: candidate.addonName,
-                source: try candidate.stream.playbackSource()
+                source: source
             )
         } catch {
             errorMessage = error.localizedDescription
@@ -219,8 +235,14 @@ struct ContentDetailView: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Sources").font(.title2.bold())
                 ForEach(model.streams) { candidate in
-                    Button { model.play(candidate) } label: {
-                        StreamRow(candidate: candidate)
+                    Button {
+                        Task { await model.play(candidate, using: environment) }
+                    } label: {
+                        StreamRow(
+                            candidate: candidate,
+                            isResolving: model.resolvingStreamID == candidate.id,
+                            debridReady: environment.hasDebridKey
+                        )
                     }
                     .buttonStyle(.plain)
                 }
@@ -246,13 +268,34 @@ struct ContentDetailView: View {
 
 private struct StreamRow: View {
     let candidate: AttributedStream
+    let isResolving: Bool
+    let debridReady: Bool
+
+    private var badge: String {
+        if candidate.stream.isDirectlyPlayable { return "DIRECT" }
+        if candidate.stream.infoHash != nil && debridReady { return "DEBRID" }
+        return "RESOLVER"
+    }
+
+    private var badgeColor: Color {
+        if candidate.stream.isDirectlyPlayable { return HarborTheme.accent }
+        if candidate.stream.infoHash != nil && debridReady { return .green }
+        return .orange
+    }
+
+    private var leadingIcon: String {
+        if isResolving { return "arrow.triangle.2.circlepath" }
+        if candidate.stream.isDirectlyPlayable { return "play.circle.fill" }
+        if candidate.stream.infoHash != nil && debridReady { return "bolt.circle.fill" }
+        return "link.badge.plus"
+    }
 
     var body: some View {
         HarborCard {
             HStack(spacing: 14) {
-                Image(systemName: candidate.stream.isDirectlyPlayable ? "play.circle.fill" : "link.badge.plus")
+                Image(systemName: leadingIcon)
                     .font(.title2)
-                    .foregroundStyle(candidate.stream.isDirectlyPlayable ? HarborTheme.accent : .orange)
+                    .foregroundStyle(isResolving ? HarborTheme.accent : badgeColor)
                 VStack(alignment: .leading, spacing: 5) {
                     Text(candidate.stream.displayName)
                         .font(.subheadline.weight(.semibold))
@@ -263,9 +306,12 @@ private struct StreamRow: View {
                         .foregroundStyle(HarborTheme.secondaryText)
                 }
                 Spacer()
-                Text(candidate.stream.isDirectlyPlayable ? "DIRECT" : "RESOLVER")
+                if isResolving {
+                    ProgressView().tint(HarborTheme.accent)
+                }
+                Text(badge)
                     .font(.caption2.bold())
-                    .foregroundStyle(candidate.stream.isDirectlyPlayable ? HarborTheme.accent : .orange)
+                    .foregroundStyle(badgeColor)
             }
         }
     }

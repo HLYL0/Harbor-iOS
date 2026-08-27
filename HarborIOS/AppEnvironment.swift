@@ -7,32 +7,40 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var user: StremioUser?
     @Published private(set) var isAuthenticated = false
     @Published private(set) var isWorking = false
+    @Published private(set) var hasDebridKey = false
     @Published var notice: String?
     @Published var actionError: String?
 
     private static let guestProfileID = "guest"
 
     private let service: any StremioServicing
+    private let debrid: any DebridServicing
     private let persistence: AddonPersistence
     private let keychain: KeychainStore
     private let authAccount = "stremio-auth-key"
+    private let debridAccount = "debrid-api-key"
 
     private var authKey: String?
+    private var debridAPIKey: String?
     private var activeProfileID = AppEnvironment.guestProfileID
     private var persistenceState = AddonPersistenceState()
     private var cloudAddons: [StremioAddon] = []
 
     init(
         service: any StremioServicing = StremioAPIClient(),
+        debrid: any DebridServicing = RealDebridClient(),
         persistence: AddonPersistence = AddonPersistence(),
         keychain: KeychainStore = KeychainStore()
     ) {
         self.service = service
+        self.debrid = debrid
         self.persistence = persistence
         self.keychain = keychain
     }
 
     func start() async {
+        debridAPIKey = keychain.readString(account: debridAccount)
+        hasDebridKey = !(debridAPIKey ?? "").isEmpty
         guard let savedAuthKey = keychain.readString(account: authAccount) else {
             await activateProfile(Self.guestProfileID)
             return
@@ -72,6 +80,49 @@ final class AppEnvironment: ObservableObject {
 
     func streamCandidates(type: String, id: String) async -> [AttributedStream] {
         await service.streams(addons: addons, type: type, id: id)
+    }
+
+    func debridResolve(stream: StremioStream) async throws -> URL {
+        guard let key = debridAPIKey, !key.isEmpty else {
+            throw DebridResolveError.missingAPIKey
+        }
+        guard let infoHash = stream.infoHash, !infoHash.isEmpty else {
+            throw PlaybackSourceError.torrentSourceUnsupported
+        }
+        return try await debrid.resolve(
+            infoHash: infoHash,
+            fileIdx: stream.fileIdx,
+            streamName: stream.behaviorHints?.fileName ?? stream.behaviorHints?.filename,
+            apiKey: key
+        )
+    }
+
+    func saveDebridAPIKey(_ rawKey: String) async {
+        let key = rawKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !key.isEmpty else {
+            actionError = "Paste your Real-Debrid API key first."
+            return
+        }
+        do {
+            try keychain.writeString(key, account: debridAccount)
+            debridAPIKey = key
+            hasDebridKey = true
+            notice = "Real-Debrid key saved. Torrent sources can now be resolved."
+        } catch {
+            actionError = "Could not save the key to Keychain."
+        }
+    }
+
+    func clearDebridAPIKey() async {
+        do {
+            try keychain.delete(account: debridAccount)
+        } catch {
+            actionError = "Could not remove the key from Keychain."
+            return
+        }
+        debridAPIKey = nil
+        hasDebridKey = false
+        notice = "Real-Debrid key removed."
     }
 
     func login(email: String, password: String) async {

@@ -24,8 +24,11 @@ REQUIRED_FILES = [
     "HarborIOS/Assets.xcassets/AppIcon.appiconset/Contents.json",
     "HarborIOS/Assets.xcassets/AppIcon.appiconset/HarborIcon.png",
     "Domain/Models/StremioModels.swift",
+    "Domain/Models/DebridModels.swift",
     "Domain/Networking/StremioEndpoint.swift",
+    "Domain/Services/DebridServicing.swift",
     "Domain/Services/StremioServicing.swift",
+    "Data/Debrid/RealDebridClient.swift",
     "Data/Stremio/StremioAPIClient.swift",
     "Features/Home/HomeView.swift",
     "Features/Details/ContentDetailView.swift",
@@ -35,6 +38,7 @@ REQUIRED_FILES = [
     "HarborIOSTests/StremioManifestTests.swift",
     "HarborIOSTests/AddonPersistenceStateTests.swift",
     "HarborIOSTests/ContentDetailViewModelTests.swift",
+    "HarborIOSTests/DebridResolverTests.swift",
     "HarborIOSTests/HomeViewModelTests.swift",
 ]
 
@@ -94,6 +98,7 @@ def main() -> int:
     workflow = (ROOT / ".github/workflows/build.yml").read_text(encoding="utf-8")
     keychain = (ROOT / "Data/Persistence/KeychainStore.swift").read_text(encoding="utf-8")
     player = (ROOT / "Features/Player/HarborPlayerView.swift").read_text(encoding="utf-8")
+    debrid_client = (ROOT / "Data/Debrid/RealDebridClient.swift").read_text(encoding="utf-8")
     for token in ('iOS: "17.0"', 'SWIFT_VERSION: "5.0"', "CODE_SIGNING_ALLOWED: \"NO\""):
         if token not in project:
             fail(f"project.yml missing {token}")
@@ -111,11 +116,13 @@ def main() -> int:
         fail("Keychain items must require an unlocked device")
     if "AVURLAssetHTTPHeaderFieldsKey" in player:
         fail("Unsupported AVURLAsset header injection must not be used")
+    if "api.real-debrid.com/rest/1.0" not in debrid_client or "addMagnet" not in debrid_client:
+        fail("Real-Debrid client must target the /rest/1.0 API with the addMagnet flow")
 
     swift_files = list(ROOT.rglob("*.swift"))
     test_files = list((ROOT / "HarborIOSTests").glob("*.swift"))
-    if len(swift_files) < 19 or len(test_files) < 5:
-        fail("Expected at least 19 Swift files and 5 test files")
+    if len(swift_files) < 22 or len(test_files) < 6:
+        fail("Expected at least 22 Swift files and 6 test files")
 
     print(f"PASS required_files={len(REQUIRED_FILES)} swift_files={len(swift_files)} tests={len(test_files)}")
     print("PASS plists json storyboard app-icon project workflow")

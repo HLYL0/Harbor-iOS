@@ -9,6 +9,7 @@ A native SwiftUI iPhone/iPad client for the Stremio addon protocol, modeled afte
 - Cloud addon collection sync plus account-scoped manual `manifest.json` installation
 - Concurrent stream requests across compatible addons
 - Direct HTTPS/HLS/MP4 source ranking and native AVPlayer playback
+- Real-Debrid resolution for torrent (`infoHash`) sources: `addMagnet → selectFiles → unrestrict` in the client, key stored in Keychain
 - Torrent-only, cleartext HTTP, header-dependent, and external sources remain visible and are marked as needing a resolver
 - Native dark Harbor visual system and original Harbor icon
 

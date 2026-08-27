@@ -5,11 +5,13 @@ struct SettingsView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var manifestURL = ""
+    @State private var debridKey = ""
 
     var body: some View {
         NavigationStack {
             List {
                 accountSection
+                debridSection
                 addonInstallSection
                 installedAddonsSection
                 compatibilitySection
@@ -52,6 +54,33 @@ struct SettingsView: View {
                 }
                 .disabled(environment.isWorking)
             }
+        }
+        .listRowBackground(HarborTheme.card)
+    }
+
+    private var debridSection: some View {
+        Section("Debrid · Real-Debrid") {
+            if environment.hasDebridKey {
+                Label("API key saved in Keychain", systemImage: "checkmark.shield.fill")
+                    .foregroundStyle(.green)
+                Button("Remove Key", role: .destructive) {
+                    Task { await environment.clearDebridAPIKey() }
+                }
+            } else {
+                SecureField("Real-Debrid API Key", text: $debridKey)
+                    .textContentType(.password)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                Button("Save Key") {
+                    let submitted = debridKey
+                    debridKey = ""
+                    Task { await environment.saveDebridAPIKey(submitted) }
+                }
+                .disabled(debridKey.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            Text("Torrent sources resolve through Real-Debrid so they can play on iOS. The key never leaves your device.")
+                .font(.caption)
+                .foregroundStyle(HarborTheme.secondaryText)
         }
         .listRowBackground(HarborTheme.card)
     }
