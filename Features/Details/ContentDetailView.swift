@@ -116,6 +116,7 @@ struct PlaybackSelection: Identifiable {
 
 struct ContentDetailView: View {
     @EnvironmentObject private var environment: AppEnvironment
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var model: ContentDetailViewModel
 
     init(item: StremioMeta) {
@@ -126,66 +127,103 @@ struct ContentDetailView: View {
         ZStack {
             HarborTheme.background.ignoresSafeArea()
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 22) {
-                    header
-                    if model.metadata.type == "series", !model.episodes.isEmpty {
-                        episodePicker
+                VStack(alignment: .leading, spacing: 0) {
+                    backdrop
+                    VStack(alignment: .leading, spacing: 0) {
+                        titleBlock
+                        if !model.episodes.isEmpty {
+                            episodePicker
+                                .padding(.top, 16)
+                        }
+                        if let description = model.metadata.description {
+                            Text(description)
+                                .font(.subheadline)
+                                .foregroundStyle(HarborTheme.secondaryText)
+                                .lineSpacing(5)
+                                .padding(.top, 16)
+                        }
+                        findStreamsButton
+                            .padding(.top, 18)
+                        streamList
+                            .padding(.top, 24)
+                        if let error = model.errorMessage {
+                            errorCard(error)
+                                .padding(.top, 12)
+                        }
                     }
-                    controls
-                    if let message = model.errorMessage { errorCard(message) }
-                    streamList
+                    .padding(.horizontal, 20)
+                    .padding(.top, -54)
+                    .padding(.bottom, 40)
                 }
-                .padding(.bottom, 30)
             }
             .scrollIndicators(.hidden)
         }
-        .navigationTitle(model.metadata.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
+        .overlay(alignment: .topLeading) {
+            Button { dismiss() } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 36, height: 36)
+                    .background(.black.opacity(0.45), in: Circle())
+            }
+            .padding(.leading, 16)
+            .padding(.top, 6)
+        }
         .task { await model.loadMetadata(using: environment) }
         .fullScreenCover(item: $model.playbackSelection) { selection in
             HarborPlayerView(selection: selection)
         }
     }
 
-    private var header: some View {
-        ZStack(alignment: .bottomLeading) {
+    private var backdrop: some View {
+        ZStack(alignment: .bottom) {
             HarborAsyncImage(model.metadata.background ?? model.metadata.poster)
-                .frame(height: 310)
+                .frame(height: 272)
                 .clipped()
             LinearGradient(
                 colors: [.clear, HarborTheme.background],
                 startPoint: .top,
                 endPoint: .bottom
             )
-            HStack(alignment: .bottom, spacing: 16) {
-                HarborAsyncImage(model.metadata.poster)
-                    .frame(width: 112, height: 166)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .overlay { RoundedRectangle(cornerRadius: 12).stroke(HarborTheme.border) }
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(model.metadata.name).font(.title.bold())
-                    HStack(spacing: 10) {
-                        if let release = model.metadata.releaseInfo { Text(release) }
-                        if let rating = model.metadata.imdbRating {
-                            Label(rating, systemImage: "star.fill").foregroundStyle(.yellow)
-                        }
-                    }
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(HarborTheme.secondaryText)
-                    if let genres = model.metadata.genres, !genres.isEmpty {
-                        Text(genres.prefix(3).joined(separator: " • "))
-                            .font(.caption)
-                            .foregroundStyle(HarborTheme.secondaryText)
-                    }
+            .frame(height: 272)
+        }
+    }
+
+    private var titleBlock: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(model.metadata.name)
+                .font(.system(size: 28, weight: .heavy))
+                .foregroundStyle(HarborTheme.ink)
+            HStack(spacing: 8) {
+                if let rating = model.metadata.imdbRating {
+                    chip(Label(rating, systemImage: "star.fill"), tint: HarborTheme.accent, bg: HarborTheme.accentSoft)
+                }
+                if let release = model.metadata.releaseInfo {
+                    chip(Text(release))
+                }
+                if let genres = model.metadata.genres {
+                    chip(Text(genres.prefix(2).joined(separator: " · ")))
                 }
             }
-            .padding(.horizontal, 20)
         }
+    }
+
+    private func chip(_ label: some View, tint: Color = HarborTheme.secondaryText, bg: Color = HarborTheme.card) -> some View {
+        label
+            .font(.caption.weight(.bold))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(bg, in: RoundedRectangle(cornerRadius: 8))
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(HarborTheme.border, lineWidth: 1))
     }
 
     private var episodePicker: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Episode").font(.headline)
+            Text("Episode")
+                .font(.headline.weight(.heavy))
+                .foregroundStyle(HarborTheme.ink)
             Menu {
                 ForEach(model.episodes, id: \.stableID) { episode in
                     Button(episodeLabel(episode)) { model.selectVideo(episode) }
@@ -193,47 +231,50 @@ struct ContentDetailView: View {
             } label: {
                 HStack {
                     Text(model.selectedVideo.map(episodeLabel) ?? "Choose episode")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(HarborTheme.ink)
+                        .lineLimit(1)
                     Spacer()
                     Image(systemName: "chevron.up.chevron.down")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(HarborTheme.accent)
                 }
-                .foregroundStyle(.white)
                 .padding(14)
-                .background(HarborTheme.card, in: RoundedRectangle(cornerRadius: 12))
+                .background(HarborTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(HarborTheme.border, lineWidth: 1))
             }
         }
-        .padding(.horizontal, 20)
     }
 
-    private var controls: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            if let description = model.metadata.description {
-                Text(description)
-                    .foregroundStyle(HarborTheme.secondaryText)
-                    .lineSpacing(4)
-            }
-            Button {
-                Task { await model.findStreams(using: environment) }
-            } label: {
-                HStack {
-                    if model.isLoadingStreams { ProgressView().tint(.black) }
-                    Label("Find Streams", systemImage: "play.fill")
+    private var findStreamsButton: some View {
+        Button {
+            Task { await model.findStreams(using: environment) }
+        } label: {
+            HStack(spacing: 10) {
+                if model.isLoadingStreams {
+                    ProgressView().tint(HarborTheme.onAccent)
+                } else {
+                    Image(systemName: "play.fill")
                 }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .foregroundStyle(.black)
-                .background(HarborTheme.accent, in: RoundedRectangle(cornerRadius: 14))
+                Text("Find Streams")
+                    .font(.headline.weight(.heavy))
             }
-            .disabled(model.isLoadingStreams)
+            .foregroundStyle(HarborTheme.onAccent)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .background(HarborTheme.accent, in: RoundedRectangle(cornerRadius: 15))
+            .shadow(color: HarborTheme.accent.opacity(0.28), radius: 12, y: 6)
         }
-        .padding(.horizontal, 20)
+        .disabled(model.isLoadingStreams)
     }
 
     @ViewBuilder
     private var streamList: some View {
         if !model.streams.isEmpty {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Sources").font(.title2.bold())
+                Text("Sources")
+                    .font(.title2.weight(.heavy))
+                    .foregroundStyle(HarborTheme.ink)
                 ForEach(model.streams) { candidate in
                     Button {
                         Task { await model.play(candidate, using: environment) }
@@ -247,17 +288,15 @@ struct ContentDetailView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal, 20)
         }
     }
 
     private func errorCard(_ message: String) -> some View {
         HarborCard {
             Label(message, systemImage: "exclamationmark.triangle.fill")
-                .foregroundStyle(.orange)
+                .foregroundStyle(HarborTheme.danger)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.horizontal, 20)
     }
 
     private func episodeLabel(_ episode: StremioVideo) -> String {
@@ -279,39 +318,49 @@ private struct StreamRow: View {
 
     private var badgeColor: Color {
         if candidate.stream.isDirectlyPlayable { return HarborTheme.accent }
-        if candidate.stream.infoHash != nil && debridReady { return .green }
+        if candidate.stream.infoHash != nil && debridReady { return HarborTheme.success }
         return .orange
+    }
+
+    private var badgeBackground: Color {
+        if candidate.stream.isDirectlyPlayable { return HarborTheme.accentSoft }
+        if candidate.stream.infoHash != nil && debridReady { return HarborTheme.success.opacity(0.16) }
+        return .orange.opacity(0.14)
     }
 
     private var leadingIcon: String {
         if isResolving { return "arrow.triangle.2.circlepath" }
-        if candidate.stream.isDirectlyPlayable { return "play.circle.fill" }
-        if candidate.stream.infoHash != nil && debridReady { return "bolt.circle.fill" }
-        return "link.badge.plus"
+        if candidate.stream.isDirectlyPlayable { return "play.fill" }
+        if candidate.stream.infoHash != nil && debridReady { return "bolt.fill" }
+        return "link"
     }
 
     var body: some View {
         HarborCard {
-            HStack(spacing: 14) {
+            HStack(spacing: 13) {
                 Image(systemName: leadingIcon)
-                    .font(.title2)
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(isResolving ? HarborTheme.accent : badgeColor)
-                VStack(alignment: .leading, spacing: 5) {
+                    .frame(width: 24)
+                VStack(alignment: .leading, spacing: 3) {
                     Text(candidate.stream.displayName)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.white)
+                        .font(.subheadline.weight(.bold))
+                        .foregroundStyle(HarborTheme.ink)
                         .lineLimit(2)
                     Text(candidate.addonName)
                         .font(.caption)
-                        .foregroundStyle(HarborTheme.secondaryText)
+                        .foregroundStyle(HarborTheme.subtleText)
                 }
                 Spacer()
                 if isResolving {
                     ProgressView().tint(HarborTheme.accent)
                 }
                 Text(badge)
-                    .font(.caption2.bold())
+                    .font(.system(size: 9.5, weight: .heavy))
                     .foregroundStyle(badgeColor)
+                    .padding(.horizontal, 9)
+                    .padding(.vertical, 4)
+                    .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7))
             }
         }
     }

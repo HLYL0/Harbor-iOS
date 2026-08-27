@@ -121,6 +121,8 @@ def main() -> int:
         fail("Unsupported AVURLAsset header injection must not be used")
     if "mpv_create" not in mpv_player or "moltenvk" not in mpv_player:
         fail("Player must initialize libmpv with the MoltenVK video path")
+    if "MPVPlaybackSnapshot" not in mpv_player:
+        fail("Player must poll mpv state into MPVPlaybackSnapshot")
     if "NuvioMedia/MPVKit" not in project:
         fail("project.yml must depend on the NuvioMedia MPVKit package")
     if "api.real-debrid.com/rest/1.0" not in debrid_client or "addMagnet" not in debrid_client:

@@ -26,7 +26,7 @@ final class HomeViewModel: ObservableObject {
             async let seriesTask = environment.topCatalog(type: "series")
             let (movies, series) = try await (moviesTask, seriesTask)
             sections = [
-                CatalogSection(id: "movies", title: "Top Movies", items: movies),
+                CatalogSection(id: "movie", title: "Top Movies", items: movies),
                 CatalogSection(id: "series", title: "Top Series", items: series),
             ]
         } catch {
@@ -89,14 +89,15 @@ struct HomeView: View {
     @EnvironmentObject private var environment: AppEnvironment
     @StateObject private var model = HomeViewModel()
     @State private var query = ""
+    @State private var chip = "all"
 
     var body: some View {
         NavigationStack {
             ZStack {
-                HarborTheme.background.ignoresSafeArea()
+                harborBackground
                 content
             }
-            .navigationTitle("Harbor")
+            .navigationBarHidden(true)
             .searchable(text: $query, prompt: "Movies and series")
             .onSubmit(of: .search) {
                 Task { await model.search(query, using: environment) }
@@ -111,47 +112,114 @@ struct HomeView: View {
         }
     }
 
+    private var harborBackground: some View {
+        ZStack {
+            HarborTheme.background
+            RadialGradient(
+                colors: [HarborTheme.accent.opacity(0.09), .clear],
+                center: UnitPoint(x: 0.25, y: -0.08),
+                startRadius: 0,
+                endRadius: 430
+            )
+        }
+        .ignoresSafeArea()
+    }
+
     @ViewBuilder
     private var content: some View {
         if model.isLoading && model.sections.isEmpty {
-            ProgressView("Loading Harbor…")
+            ProgressView()
                 .tint(HarborTheme.accent)
-                .foregroundStyle(.white)
+                .scaleEffect(1.3)
         } else {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 28) {
+                LazyVStack(alignment: .leading, spacing: 24) {
                     if let error = model.errorMessage {
                         errorCard(error)
                     }
 
                     if !cleanQuery.isEmpty {
-                        if model.isSearching {
-                            ProgressView("Searching…")
-                                .tint(HarborTheme.accent)
-                        } else if !model.hasCompletedSearch {
-                            searchStatusCard("Press Search to find \(cleanQuery).", systemImage: "magnifyingglass")
-                        } else if model.searchResults.isEmpty && model.errorMessage == nil {
-                            searchStatusCard("No movies or series matched \(cleanQuery).", systemImage: "film.stack")
-                        } else if !model.searchResults.isEmpty {
-                            posterGrid(title: "Search Results", items: model.searchResults)
-                        }
+                        searchContent
                     } else {
-                        if let hero = model.sections.first?.items.first {
-                            HeroCard(item: hero)
-                        }
-                        ForEach(model.sections) { section in
-                            PosterRail(title: section.title, items: section.items)
-                        }
+                        homeContent
                     }
                 }
-                .padding(.vertical, 12)
+                .padding(.bottom, 28)
             }
             .scrollIndicators(.hidden)
         }
     }
 
-    private var cleanQuery: String {
-        query.trimmingCharacters(in: .whitespacesAndNewlines)
+    @ViewBuilder
+    private var homeContent: some View {
+        titleBlock
+        chipRow
+        if let hero = model.sections.first?.items.first {
+            HeroCard(item: hero)
+                .padding(.horizontal, 20)
+        }
+        ForEach(model.sections.filter { chip == "all" || $0.id == chip }) { section in
+            PosterRail(title: section.title, items: section.items)
+        }
+    }
+
+    @ViewBuilder
+    private var searchContent: some View {
+        if model.isSearching {
+            VStack(spacing: 12) {
+                ProgressView().tint(HarborTheme.accent)
+                Text("Searching…").font(.footnote).foregroundStyle(HarborTheme.subtleText)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 40)
+        } else if !model.hasCompletedSearch {
+            searchStatusCard("Press Search to find \(cleanQuery).", systemImage: "magnifyingglass")
+        } else if model.searchResults.isEmpty && model.errorMessage == nil {
+            searchStatusCard("No movies or series matched \(cleanQuery).", systemImage: "film.stack")
+        } else if !model.searchResults.isEmpty {
+            posterGrid(title: "Search Results", items: model.searchResults)
+        }
+    }
+
+    private var titleBlock: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("Harbor")
+                .font(.system(size: 31, weight: .heavy))
+                .foregroundStyle(HarborTheme.ink)
+            Spacer()
+            if environment.isAuthenticated {
+                Label("synced", systemImage: "checkmark.seal.fill")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(HarborTheme.accent)
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 8)
+    }
+
+    private var chipRow: some View {
+        HStack(spacing: 8) {
+            ForEach(["all", "movie", "series"], id: \.self) { option in
+                Button {
+                    withAnimation(.easeInOut(duration: 0.18)) { chip = option }
+                } label: {
+                    Text(option.capitalized)
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(chip == option ? HarborTheme.accent : HarborTheme.secondaryText)
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 8)
+                        .background(
+                            chip == option ? HarborTheme.accentSoft : HarborTheme.card,
+                            in: Capsule()
+                        )
+                        .overlay(Capsule().stroke(
+                            chip == option ? HarborTheme.accent : HarborTheme.border,
+                            lineWidth: 1
+                        ))
+                }
+            }
+        }
+        .padding(.horizontal, 20)
     }
 
     private func searchStatusCard(_ message: String, systemImage: String) -> some View {
@@ -161,12 +229,13 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 20)
+        .padding(.top, 12)
     }
 
     private func errorCard(_ message: String) -> some View {
         HarborCard {
             Label(message, systemImage: "exclamationmark.triangle.fill")
-                .foregroundStyle(.orange)
+                .foregroundStyle(HarborTheme.danger)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 20)
@@ -174,8 +243,11 @@ struct HomeView: View {
 
     private func posterGrid(title: String, items: [StremioMeta]) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text(title).font(.title2.bold()).padding(.horizontal, 20)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 14)], spacing: 18) {
+            Text(title)
+                .font(.title2.weight(.heavy))
+                .foregroundStyle(HarborTheme.ink)
+                .padding(.horizontal, 20)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 108), spacing: 14)], spacing: 20) {
                 ForEach(items) { item in
                     NavigationLink(value: item) { PosterCard(item: item) }
                         .buttonStyle(.plain)
@@ -183,6 +255,10 @@ struct HomeView: View {
             }
             .padding(.horizontal, 20)
         }
+    }
+
+    private var cleanQuery: String {
+        query.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
@@ -193,32 +269,52 @@ private struct HeroCard: View {
         NavigationLink(value: item) {
             ZStack(alignment: .bottomLeading) {
                 HarborAsyncImage(item.background ?? item.poster)
-                    .frame(height: 330)
+                    .frame(height: 352)
                     .clipped()
                 LinearGradient(
-                    colors: [.clear, HarborTheme.background.opacity(0.96)],
+                    colors: [.clear, HarborTheme.background.opacity(0.55), HarborTheme.background],
                     startPoint: .top,
                     endPoint: .bottom
                 )
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(item.name)
-                        .font(.system(size: 34, weight: .bold, design: .rounded))
-                    HStack(spacing: 10) {
-                        if let release = item.releaseInfo { Text(release) }
+                VStack(alignment: .leading, spacing: 9) {
+                    HStack(spacing: 8) {
+                        Text("TOP MOVIE")
+                            .font(.system(size: 10, weight: .heavy))
+                            .foregroundStyle(HarborTheme.onAccent)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(HarborTheme.accent, in: RoundedRectangle(cornerRadius: 8))
                         if let rating = item.imdbRating {
-                            Label(rating, systemImage: "star.fill").foregroundStyle(.yellow)
+                            Label(rating, systemImage: "star.fill")
+                                .font(.caption2.weight(.heavy))
+                                .foregroundStyle(HarborTheme.accent)
+                                .padding(.horizontal, 9)
+                                .padding(.vertical, 5)
+                                .background(HarborTheme.accentSoft, in: RoundedRectangle(cornerRadius: 8))
                         }
                     }
-                    .font(.subheadline.weight(.semibold))
+                    Text(item.name)
+                        .font(.system(size: 25, weight: .heavy))
+                        .foregroundStyle(.white)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    HStack(spacing: 10) {
+                        if let release = item.releaseInfo {
+                            Text(release.prefix(4))
+                        }
+                        if let genres = item.genres {
+                            Text(genres.prefix(2).joined(separator: " · "))
+                        }
+                    }
+                    .font(.caption.weight(.bold))
                     .foregroundStyle(HarborTheme.secondaryText)
                 }
-                .padding(22)
+                .padding(16)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .overlay {
-                RoundedRectangle(cornerRadius: 24).stroke(HarborTheme.border)
-            }
-            .padding(.horizontal, 20)
+            .frame(height: 352)
+            .clipShape(RoundedRectangle(cornerRadius: 22))
+            .overlay(RoundedRectangle(cornerRadius: 22).stroke(HarborTheme.border, lineWidth: 1))
+            .shadow(color: .black.opacity(0.45), radius: 18, y: 10)
         }
         .buttonStyle(.plain)
     }
@@ -229,12 +325,18 @@ private struct PosterRail: View {
     let items: [StremioMeta]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text(title)
-                .font(.title2.bold())
-                .padding(.horizontal, 20)
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: 14) {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(title)
+                    .font(.system(size: 19, weight: .heavy))
+                    .foregroundStyle(HarborTheme.ink)
+                Text("\(items.count)")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(HarborTheme.subtleText)
+            }
+            .padding(.horizontal, 20)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 13) {
                     ForEach(items) { item in
                         NavigationLink(value: item) { PosterCard(item: item) }
                             .buttonStyle(.plain)
@@ -242,7 +344,6 @@ private struct PosterRail: View {
                 }
                 .padding(.horizontal, 20)
             }
-            .scrollIndicators(.hidden)
         }
     }
 }
@@ -251,19 +352,28 @@ private struct PosterCard: View {
     let item: StremioMeta
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HarborAsyncImage(item.poster)
-                .frame(width: 142, height: 210)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
-                .overlay { RoundedRectangle(cornerRadius: 14).stroke(HarborTheme.border) }
+        VStack(alignment: .leading, spacing: 7) {
+            ZStack(alignment: .bottomLeading) {
+                HarborAsyncImage(item.poster)
+                    .frame(width: 108, height: 160)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                if let rating = item.imdbRating {
+                    Text("★ \(rating)")
+                        .font(.system(size: 9.5, weight: .heavy))
+                        .foregroundStyle(HarborTheme.accent)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 3)
+                        .background(.black.opacity(0.66), in: RoundedRectangle(cornerRadius: 7))
+                        .padding(6)
+                }
+            }
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(HarborTheme.border, lineWidth: 1))
             Text(item.name)
-                .font(.subheadline.weight(.semibold))
-                .lineLimit(1)
-                .foregroundStyle(.white)
-            Text(item.releaseInfo ?? item.type.capitalized)
                 .font(.caption)
                 .foregroundStyle(HarborTheme.secondaryText)
+                .lineLimit(1)
+                .frame(width: 108, alignment: .leading)
         }
-        .frame(width: 142, alignment: .leading)
+        .frame(width: 108)
     }
 }

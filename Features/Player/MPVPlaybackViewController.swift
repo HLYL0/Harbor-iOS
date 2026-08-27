@@ -2,16 +2,23 @@ import AVFoundation
 import Libmpv
 import UIKit
 
+struct MPVPlaybackSnapshot: Equatable, Sendable {
+    var position: Double?
+    var duration: Double = 0
+    var paused: Bool = true
+    var speed: Double = 1
+}
+
 final class MPVPlaybackViewController: UIViewController {
     var onFinished: (() -> Void)?
     var onFailed: ((String) -> Void)?
+    var onState: ((MPVPlaybackSnapshot) -> Void)?
 
     private var mpv: OpaquePointer?
     private let metalLayer = MetalLayer()
     private let eventQueue = DispatchQueue(label: "harbor-mpv-events", qos: .userInitiated)
+    private var pollTimer: DispatchSourceTimer?
     private var loadedURL: URL?
-    private var isPaused = false
-    private var pauseButton: UIButton?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +32,6 @@ final class MPVPlaybackViewController: UIViewController {
         view.layer.addSublayer(metalLayer)
 
         setupMpv()
-        installControls()
     }
 
     override func viewDidLayoutSubviews() {
@@ -41,6 +47,7 @@ final class MPVPlaybackViewController: UIViewController {
     }
 
     deinit {
+        pollTimer?.cancel()
         if let mpv {
             mpv_terminate_destroy(mpv)
         }
@@ -91,6 +98,7 @@ final class MPVPlaybackViewController: UIViewController {
         }
 
         startEventLoop()
+        startPolling()
     }
 
     private func setOption(_ name: String, value: String) {
@@ -138,55 +146,74 @@ final class MPVPlaybackViewController: UIViewController {
         }
     }
 
+    // MARK: - State polling
+
+    private func startPolling() {
+        let timer = DispatchSource.makeTimerSource(queue: eventQueue)
+        timer.schedule(deadline: .now(), repeating: 0.5)
+        timer.setEventHandler { [weak self] in
+            guard let self, let mpv = self.mpv else { return }
+            var snapshot = MPVPlaybackSnapshot()
+            snapshot.duration = self.doubleProperty("duration")
+            snapshot.position = self.optionalDoubleProperty("time-pos")
+            snapshot.paused = self.flagProperty("pause")
+            snapshot.speed = self.doubleProperty("speed")
+            let callback = self.onState
+            DispatchQueue.main.async {
+                callback?(snapshot)
+            }
+            _ = mpv
+        }
+        timer.resume()
+        pollTimer = timer
+    }
+
+    private func doubleProperty(_ name: String) -> Double {
+        guard let mpv else { return 0 }
+        var value = 0.0
+        let result = name.withCString { pointer in
+            mpv_get_property(mpv, pointer, MPV_FORMAT_DOUBLE, &value)
+        }
+        return result >= 0 ? value : 0
+    }
+
+    private func optionalDoubleProperty(_ name: String) -> Double? {
+        guard let mpv else { return nil }
+        var value = 0.0
+        let result = name.withCString { pointer in
+            mpv_get_property(mpv, pointer, MPV_FORMAT_DOUBLE, &value)
+        }
+        return result >= 0 ? value : nil
+    }
+
+    private func flagProperty(_ name: String) -> Bool {
+        guard let mpv else { return false }
+        var value: Int32 = 0
+        let result = name.withCString { pointer in
+            mpv_get_property(mpv, pointer, MPV_FORMAT_FLAG, &value)
+        }
+        return result >= 0 && value != 0
+    }
+
     // MARK: - Playback controls
 
     func togglePlayback() {
         guard let mpv else { return }
-        isPaused.toggle()
-        var flag = isPaused ? 1 : 0
+        var flag: Int32 = flagProperty("pause") ? 0 : 1
         mpv_set_property(mpv, "pause", MPV_FORMAT_FLAG, &flag)
-        pauseButton?.setImage(
-            UIImage(systemName: isPaused ? "play.fill" : "pause.fill"),
-            for: .normal
-        )
     }
 
     func seek(relativeSeconds: Double) {
         command(["seek", "\(relativeSeconds)", "relative"])
     }
 
-    // MARK: - UIKit overlay controls
-
-    private func installControls() {
-        let backButton = controlButton("gobackward.15", action: #selector(seekBack))
-        let pause = controlButton("pause.fill", action: #selector(togglePlaybackTapped))
-        let forwardButton = controlButton("goforward.15", action: #selector(seekForward))
-        let doneButton = controlButton("xmark.circle.fill", action: #selector(doneTapped))
-        pauseButton = pause
-
-        let stack = UIStackView(arrangedSubviews: [backButton, pause, forwardButton, doneButton])
-        stack.axis = .horizontal
-        stack.spacing = 36
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
-        ])
+    func seekAbsolute(seconds: Double) {
+        command(["seek", "\(seconds)", "absolute"])
     }
 
-    private func controlButton(_ symbol: String, action: Selector) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: symbol), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    func setSpeed(_ speed: Double) {
+        guard let mpv else { return }
+        var value = speed
+        mpv_set_property(mpv, "speed", MPV_FORMAT_DOUBLE, &value)
     }
-
-    @objc private func togglePlaybackTapped() { togglePlayback() }
-    @objc private func seekBack() { seek(relativeSeconds: -15) }
-    @objc private func seekForward() { seek(relativeSeconds: 15) }
-    @objc private func doneTapped() { onFinished?() }
 }

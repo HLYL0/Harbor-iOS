@@ -1,12 +1,19 @@
 import SwiftUI
 
 enum HarborTheme {
-    static let background = Color(red: 0.035, green: 0.045, blue: 0.065)
-    static let raised = Color(red: 0.075, green: 0.09, blue: 0.12)
-    static let card = Color(red: 0.105, green: 0.12, blue: 0.15)
-    static let accent = Color(red: 0.24, green: 0.78, blue: 0.82)
-    static let secondaryText = Color.white.opacity(0.68)
-    static let border = Color.white.opacity(0.10)
+    // Harbor desktop palette: layered dark blues + amber accent (oklch 0.78 0.13 60)
+    static let background = Color(red: 21 / 255, green: 22 / 255, blue: 26 / 255)
+    static let raised = Color(red: 29 / 255, green: 30 / 255, blue: 36 / 255)
+    static let card = Color(red: 37 / 255, green: 38 / 255, blue: 46 / 255)
+    static let accent = Color(red: 233 / 255, green: 197 / 255, blue: 94 / 255)
+    static let accentSoft = Color(red: 233 / 255, green: 197 / 255, blue: 94 / 255).opacity(0.18)
+    static let success = Color(red: 76 / 255, green: 195 / 255, blue: 138 / 255)
+    static let danger = Color(red: 229 / 255, green: 72 / 255, blue: 77 / 255)
+    static let ink = Color.white
+    static let secondaryText = Color.white.opacity(0.72)
+    static let subtleText = Color.white.opacity(0.54)
+    static let border = Color.white.opacity(0.12)
+    static let onAccent = Color(red: 26 / 255, green: 21 / 255, blue: 3 / 255)
     static let cornerRadius: CGFloat = 18
 }
 
@@ -56,5 +63,22 @@ struct HarborAsyncImage: View {
                 HarborTheme.raised
             }
         }
+    }
+}
+
+extension View {
+    func harborBackground() -> some View {
+        background(
+            ZStack {
+                HarborTheme.background
+                RadialGradient(
+                    colors: [HarborTheme.accent.opacity(0.08), .clear],
+                    center: .init(x: 0.2, y: -0.1),
+                    startRadius: 0,
+                    endRadius: 420
+                )
+            }
+            .ignoresSafeArea()
+        )
     }
 }
