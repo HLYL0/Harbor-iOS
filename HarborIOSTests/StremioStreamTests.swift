@@ -17,7 +17,7 @@ final class StremioStreamTests: XCTestCase {
         )
     }
 
-    func testTorrentOnlyStreamIsUnavailableOnIOS() {
+    func testTorrentOnlyStreamIsUnavailableWithoutResolver() {
         let stream = StremioStream(
             name: "Torrent stream",
             title: "2160p",
@@ -31,7 +31,7 @@ final class StremioStreamTests: XCTestCase {
         }
     }
 
-    func testKnownUnsupportedContainerIsNotAdvertisedAsDirect() {
+    func testMatroskaContainerPlaysThroughMPV() throws {
         let stream = StremioStream(
             name: "Matroska",
             title: "1080p MKV",
@@ -39,10 +39,47 @@ final class StremioStreamTests: XCTestCase {
             subtitles: []
         )
 
-        XCTAssertFalse(stream.isDirectlyPlayable)
-        XCTAssertThrowsError(try stream.playbackSource()) { error in
-            XCTAssertEqual(error as? PlaybackSourceError, .mediaFormatUnsupported)
-        }
+        XCTAssertTrue(stream.isDirectlyPlayable)
+        XCTAssertEqual(
+            try stream.playbackSource(),
+            PlaybackSource(url: URL(string: "https://cdn.example.com/movie.mkv")!)
+        )
+    }
+
+    func testMPEGDashPlaysThroughMPV() throws {
+        let stream = StremioStream(
+            name: "DASH stream",
+            url: "https://cdn.example.com/movie/manifest.mpd",
+            subtitles: []
+        )
+
+        XCTAssertTrue(stream.isDirectlyPlayable)
+        XCTAssertEqual(
+            try stream.playbackSource(),
+            PlaybackSource(url: URL(string: "https://cdn.example.com/movie/manifest.mpd")!)
+        )
+    }
+
+    func testHeaderDependentStreamPassesHeadersToPlayer() throws {
+        let stream = StremioStream(
+            name: "Protected stream",
+            url: "https://cdn.example.com/movie/master.m3u8",
+            subtitles: [],
+            behaviorHints: StreamBehaviorHints(
+                bingeGroup: nil,
+                videoHash: nil,
+                videoSize: nil,
+                filename: nil,
+                fileName: nil,
+                notWebReady: nil,
+                proxyHeaders: nil,
+                headers: ["Referer": "https://addon.example.com/"]
+            )
+        )
+
+        XCTAssertTrue(stream.isDirectlyPlayable)
+        let source = try stream.playbackSource()
+        XCTAssertEqual(source.headers, ["Referer": "https://addon.example.com/"])
     }
 
     func testPlainHTTPStreamIsRejected() {
@@ -68,42 +105,6 @@ final class StremioStreamTests: XCTestCase {
         XCTAssertFalse(stream.isDirectlyPlayable)
         XCTAssertThrowsError(try stream.playbackSource()) { error in
             XCTAssertEqual(error as? PlaybackSourceError, .invalidURL)
-        }
-    }
-
-    func testMPEGDashManifestIsRejected() {
-        let stream = StremioStream(
-            name: "DASH stream",
-            url: "https://cdn.example.com/movie/manifest.mpd",
-            subtitles: []
-        )
-
-        XCTAssertFalse(stream.isDirectlyPlayable)
-        XCTAssertThrowsError(try stream.playbackSource()) { error in
-            XCTAssertEqual(error as? PlaybackSourceError, .mediaFormatUnsupported)
-        }
-    }
-
-    func testHeaderDependentStreamRequiresResolver() {
-        let stream = StremioStream(
-            name: "Protected stream",
-            url: "https://cdn.example.com/movie/master.m3u8",
-            subtitles: [],
-            behaviorHints: StreamBehaviorHints(
-                bingeGroup: nil,
-                videoHash: nil,
-                videoSize: nil,
-                filename: nil,
-                fileName: nil,
-                notWebReady: nil,
-                proxyHeaders: nil,
-                headers: ["Referer": "https://addon.example.com/"]
-            )
-        )
-
-        XCTAssertFalse(stream.isDirectlyPlayable)
-        XCTAssertThrowsError(try stream.playbackSource()) { error in
-            XCTAssertEqual(error as? PlaybackSourceError, .customHeadersUnsupported)
         }
     }
 

@@ -100,10 +100,6 @@ struct StreamBehaviorHints: Codable, Equatable, Sendable {
     let notWebReady: Bool?
     let proxyHeaders: ProxyHeaders?
     let headers: [String: String]?
-
-    var requiresCustomHeaders: Bool {
-        proxyHeaders?.request?.isEmpty == false || headers?.isEmpty == false
-    }
 }
 
 struct StremioStream: Codable, Identifiable, Equatable, Sendable {
@@ -168,9 +164,7 @@ struct StremioStream: Codable, Identifiable, Equatable, Sendable {
               parsed.host?.isEmpty == false else {
             return false
         }
-        return behaviorHints?.notWebReady != true
-            && behaviorHints?.requiresCustomHeaders != true
-            && !isUnsupportedMediaURL(parsed)
+        return true
     }
 
     func playbackSource() throws -> PlaybackSource {
@@ -190,30 +184,22 @@ struct StremioStream: Codable, Identifiable, Equatable, Sendable {
             }
             throw PlaybackSourceError.invalidURL
         }
-        guard behaviorHints?.notWebReady != true, !isUnsupportedMediaURL(parsed) else {
-            throw PlaybackSourceError.mediaFormatUnsupported
-        }
-        guard behaviorHints?.requiresCustomHeaders != true else {
-            throw PlaybackSourceError.customHeadersUnsupported
-        }
         return PlaybackSource(
             url: parsed,
+            headers: behaviorHints?.proxyHeaders?.request ?? behaviorHints?.headers ?? [:],
             subtitles: subtitles ?? []
         )
-    }
-
-    private func isUnsupportedMediaURL(_ url: URL) -> Bool {
-        ["mkv", "avi", "webm", "wmv", "flv", "mpd", "ogg", "ogv"]
-            .contains(url.pathExtension.lowercased())
     }
 }
 
 struct PlaybackSource: Equatable, Sendable {
     let url: URL
+    let headers: [String: String]
     let subtitles: [StreamSubtitle]
 
-    init(url: URL, subtitles: [StreamSubtitle] = []) {
+    init(url: URL, headers: [String: String] = [:], subtitles: [StreamSubtitle] = []) {
         self.url = url
+        self.headers = headers
         self.subtitles = subtitles
     }
 }
@@ -222,24 +208,20 @@ enum PlaybackSourceError: Error, Equatable, LocalizedError {
     case missingDirectURL
     case invalidURL
     case insecureTransport
-    case customHeadersUnsupported
     case torrentSourceUnsupported
     case externalSourceUnsupported
     case youtubeSourceUnsupported
     case addonConfigurationRequired
-    case mediaFormatUnsupported
 
     var errorDescription: String? {
         switch self {
         case .missingDirectURL: "This result has no direct media URL."
         case .invalidURL: "The addon returned an invalid media URL."
         case .insecureTransport: "Harbor blocks media sent over an insecure HTTP connection."
-        case .customHeadersUnsupported: "This source needs a resolver that can attach custom request headers."
         case .torrentSourceUnsupported: "This source still needs a debrid or torrent resolver."
         case .externalSourceUnsupported: "This source opens on an external website."
         case .youtubeSourceUnsupported: "This source is a YouTube link."
         case .addonConfigurationRequired: "This addon needs configuration before it can play."
-        case .mediaFormatUnsupported: "This source needs remuxing or a player with broader codec support."
         }
     }
 }

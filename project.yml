@@ -10,6 +10,10 @@ options:
 configs:
   Debug: debug
   Release: release
+packages:
+  MPVKit:
+    url: https://github.com/NuvioMedia/MPVKit.git
+    branch: Nuvio
 settings:
   base:
     SWIFT_VERSION: "5.0"
@@ -34,6 +38,9 @@ targets:
       - path: Data
       - path: Domain
       - path: Features
+    dependencies:
+      - package: MPVKit
+        product: MPVKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.hlyl.harborios

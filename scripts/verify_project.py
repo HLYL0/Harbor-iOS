@@ -33,6 +33,8 @@ REQUIRED_FILES = [
     "Features/Home/HomeView.swift",
     "Features/Details/ContentDetailView.swift",
     "Features/Player/HarborPlayerView.swift",
+    "Features/Player/MPVPlaybackViewController.swift",
+    "Features/Player/MetalLayer.swift",
     "Features/Settings/SettingsView.swift",
     "HarborIOSTests/StremioStreamTests.swift",
     "HarborIOSTests/StremioManifestTests.swift",
@@ -98,6 +100,7 @@ def main() -> int:
     workflow = (ROOT / ".github/workflows/build.yml").read_text(encoding="utf-8")
     keychain = (ROOT / "Data/Persistence/KeychainStore.swift").read_text(encoding="utf-8")
     player = (ROOT / "Features/Player/HarborPlayerView.swift").read_text(encoding="utf-8")
+    mpv_player = (ROOT / "Features/Player/MPVPlaybackViewController.swift").read_text(encoding="utf-8")
     debrid_client = (ROOT / "Data/Debrid/RealDebridClient.swift").read_text(encoding="utf-8")
     for token in ('iOS: "17.0"', 'SWIFT_VERSION: "5.0"', "CODE_SIGNING_ALLOWED: \"NO\""):
         if token not in project:
@@ -114,15 +117,19 @@ def main() -> int:
         fail("CI must fake-sign the bundle with the application-identifier entitlement")
     if "kSecAttrAccessibleWhenUnlockedThisDeviceOnly" not in keychain:
         fail("Keychain items must require an unlocked device")
-    if "AVURLAssetHTTPHeaderFieldsKey" in player:
+    if "AVURLAssetHTTPHeaderFieldsKey" in player or "AVURLAssetHTTPHeaderFieldsKey" in mpv_player:
         fail("Unsupported AVURLAsset header injection must not be used")
+    if "mpv_create" not in mpv_player or "moltenvk" not in mpv_player:
+        fail("Player must initialize libmpv with the MoltenVK video path")
+    if "NuvioMedia/MPVKit" not in project:
+        fail("project.yml must depend on the NuvioMedia MPVKit package")
     if "api.real-debrid.com/rest/1.0" not in debrid_client or "addMagnet" not in debrid_client:
         fail("Real-Debrid client must target the /rest/1.0 API with the addMagnet flow")
 
     swift_files = list(ROOT.rglob("*.swift"))
     test_files = list((ROOT / "HarborIOSTests").glob("*.swift"))
-    if len(swift_files) < 22 or len(test_files) < 6:
-        fail("Expected at least 22 Swift files and 6 test files")
+    if len(swift_files) < 24 or len(test_files) < 6:
+        fail("Expected at least 24 Swift files and 6 test files")
 
     print(f"PASS required_files={len(REQUIRED_FILES)} swift_files={len(swift_files)} tests={len(test_files)}")
     print("PASS plists json storyboard app-icon project workflow")

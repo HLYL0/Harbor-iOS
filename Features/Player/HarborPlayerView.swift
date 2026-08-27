@@ -1,41 +1,39 @@
-import AVFoundation
-import AVKit
 import SwiftUI
+import UIKit
 
 struct HarborPlayerView: View {
     @Environment(\.dismiss) private var dismiss
     let selection: PlaybackSelection
-    @State private var player: AVPlayer
-
-    init(selection: PlaybackSelection) {
-        self.selection = selection
-        let asset = AVURLAsset(url: selection.source.url)
-        _player = State(initialValue: AVPlayer(playerItem: AVPlayerItem(asset: asset)))
-    }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.black.ignoresSafeArea()
-                VideoPlayer(player: player)
-                    .ignoresSafeArea(edges: .horizontal)
+        MPVPlayerRepresentable(
+            url: selection.source.url,
+            headers: selection.source.headers,
+            onFinished: { dismiss() },
+            onFailed: { message in
+                print("Harbor player: \(message)")
+                dismiss()
             }
-            .navigationTitle(selection.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.black, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Done") { dismiss() }
-                        .foregroundStyle(HarborTheme.accent)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Text(selection.subtitle)
-                        .font(.caption)
-                        .foregroundStyle(HarborTheme.secondaryText)
-                }
-            }
-            .onAppear { player.play() }
-            .onDisappear { player.pause() }
-        }
+        )
+        .ignoresSafeArea()
+        .statusBarHidden()
+    }
+}
+
+private struct MPVPlayerRepresentable: UIViewControllerRepresentable {
+    let url: URL
+    let headers: [String: String]
+    let onFinished: () -> Void
+    let onFailed: (String) -> Void
+
+    func makeUIViewController(context: Context) -> MPVPlaybackViewController {
+        let controller = MPVPlaybackViewController()
+        controller.onFinished = onFinished
+        controller.onFailed = onFailed
+        return controller
+    }
+
+    func updateUIViewController(_ controller: MPVPlaybackViewController, context: Context) {
+        controller.load(url: url, headers: headers)
     }
 }

@@ -8,14 +8,15 @@ A native SwiftUI iPhone/iPad client for the Stremio addon protocol, modeled afte
 - Stremio email sign-in with the returned auth key stored in iOS Keychain
 - Cloud addon collection sync plus account-scoped manual `manifest.json` installation
 - Concurrent stream requests across compatible addons
-- Direct HTTPS/HLS/MP4 source ranking and native AVPlayer playback
+- Direct HTTPS/HLS/MP4 source ranking and native playback
+- Playback via libmpv (NuvioMedia/MPVKit): MKV, AVI, WebM, DASH, soft subtitles, and header-protected sources all play natively
 - Real-Debrid resolution for torrent (`infoHash`) sources: `addMagnet → selectFiles → unrestrict` in the client, key stored in Keychain
-- Torrent-only, cleartext HTTP, header-dependent, and external sources remain visible and are marked as needing a resolver
+- Cleartext HTTP and external sources remain visible and are marked as needing a resolver
 - Native dark Harbor visual system and original Harbor icon
 
 ## Intentional first-build limits
 
-Harbor Desktop ships libmpv, FFmpeg, a local torrent engine, local proxies, transcoding, DLNA, DVR, and multiview. Those executables cannot simply be copied into an iOS app. This first iOS target plays secure direct URLs that AVPlayer can open without custom request headers. `infoHash`-only, header-dependent, and incompatible-container results require a user-authorized debrid resolver or a remote torrent-to-HLS gateway in a later slice.
+Harbor Desktop ships a local torrent engine, local proxies, transcoding, DLNA, DVR, and multiview. Those executables cannot simply be copied into an iOS app. This first iOS target plays direct HTTPS sources through libmpv (any container/codec the bundled build supports) and resolves torrent sources through Real-Debrid. Built-in torrenting, transcoding, and multi-view remain later slices.
 
 ## Build from Windows
 
