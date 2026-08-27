@@ -1,0 +1,41 @@
+import XCTest
+@testable import HarborIOS
+
+@MainActor
+final class ContentDetailViewModelTests: XCTestCase {
+    func testChangingEpisodeClearsPreparedPlayback() {
+        let model = ContentDetailViewModel(
+            item: StremioMeta(id: "tt123", type: "series", name: "Series")
+        )
+        let candidate = AttributedStream(
+            stream: StremioStream(
+                name: "Direct",
+                url: "https://cdn.example.com/episode-one.m3u8"
+            ),
+            addonID: "addon",
+            addonName: "Addon",
+            addonURL: "https://addon.example.com/manifest.json"
+        )
+        let secondEpisode = StremioVideo(
+            id: "tt123:1:2",
+            season: 1,
+            episode: 2,
+            number: 2,
+            released: nil,
+            name: "Episode 2",
+            title: nil,
+            overview: nil,
+            description: nil,
+            thumbnail: nil
+        )
+
+        model.play(candidate)
+        XCTAssertNotNil(model.playbackSelection)
+
+        model.selectVideo(secondEpisode)
+
+        XCTAssertEqual(model.selectedVideo?.id, secondEpisode.id)
+        XCTAssertTrue(model.streams.isEmpty)
+        XCTAssertNil(model.playbackSelection)
+    }
+}

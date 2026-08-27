@@ -1,0 +1,122 @@
+name: Build Harbor iOS IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: macos-15
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Report Xcode
+        run: |
+          xcode-select -p
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: |
+          export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+          export HOMEBREW_NO_AUTO_UPDATE=1
+          brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Validate source configuration
+        run: python3 scripts/verify_project.py
+
+      - name: Run unit tests
+        run: |
+          set -e
+          DEVICE_ID=$(python3 - <<'PY'
+          import json, subprocess
+          payload = json.loads(subprocess.check_output(['xcrun', 'simctl', 'list', 'devices', 'available', '-j']))
+          for runtime, devices in payload.get('devices', {}).items():
+              if 'iOS' not in runtime:
+                  continue
+              for device in devices:
+                  if device.get('isAvailable') and device.get('name', '').startswith('iPhone'):
+                      print(device['udid'])
+                      raise SystemExit
+          raise SystemExit('No available iPhone simulator')
+          PY
+          )
+          xcrun simctl boot "$DEVICE_ID" 2>/dev/null || true
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcodebuild \
+            -project HarborIOS.xcodeproj \
+            -scheme HarborIOS \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$DEVICE_ID" \
+            CODE_SIGNING_ALLOWED=NO \
+            test
+
+      - name: Build unsigned device app
+        run: |
+          set -e
+          xcodebuild \
+            -project HarborIOS.xcodeproj \
+            -scheme HarborIOS \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -sdk iphoneos \
+            -derivedDataPath "$RUNNER_TEMP/HarborDerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            clean build
+
+      - name: Package unsigned IPA
+        run: |
+          set -e
+          APP_PATH="$RUNNER_TEMP/HarborDerivedData/Build/Products/Release-iphoneos/Harbor.app"
+          test -d "$APP_PATH"
+          rm -rf Payload HarborIOS.ipa
+          mkdir -p Payload
+          ditto "$APP_PATH" "Payload/Harbor.app"
+          rm -rf "Payload/Harbor.app/_CodeSignature" 2>/dev/null || true
+          rm -f "Payload/Harbor.app/embedded.mobileprovision" 2>/dev/null || true
+          python3 - <<'PY'
+          import os, zipfile
+          with zipfile.ZipFile('HarborIOS.ipa', 'w', zipfile.ZIP_STORED) as archive:
+              for root, _, files in os.walk('Payload'):
+                  for filename in files:
+                      full = os.path.join(root, filename)
+                      archive.write(full, os.path.relpath(full, '.'))
+          PY
+          python3 - <<'PY'
+          import plistlib, zipfile
+          with zipfile.ZipFile('HarborIOS.ipa') as archive:
+              names = archive.namelist()
+              assert names and all(name.startswith('Payload/') for name in names)
+              info = plistlib.loads(archive.read('Payload/Harbor.app/Info.plist'))
+              assert info.get('UIRequiresFullScreen') is True
+              assert info.get('UILaunchStoryboardName') == 'LaunchScreen'
+              assert {'arm64', 'metal'} <= set(info.get('UIRequiredDeviceCapabilities', []))
+              assert 'UIApplicationSceneManifest' not in info
+              assert 'UILaunchScreen' not in info
+              ats = info.get('NSAppTransportSecurity', {})
+              assert not ats.get('NSAllowsArbitraryLoads', False)
+              assert not ats.get('NSAllowsArbitraryLoadsForMedia', False)
+              executable_mode = archive.getinfo('Payload/Harbor.app/Harbor').external_attr >> 16
+              assert executable_mode & 0o111, oct(executable_mode)
+              print(f'IPA verified: {len(names)} entries, bundle={info.get("CFBundleIdentifier")}')
+          PY
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Harbor-iOS-unsigned-ipa
+          path: HarborIOS.ipa
+          retention-days: 14

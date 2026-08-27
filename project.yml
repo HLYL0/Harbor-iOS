@@ -1,0 +1,59 @@
+name: HarborIOS
+options:
+  bundleIdPrefix: com.hlyl
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  defaultConfig: Release
+  generateEmptyDirectories: true
+  xcodeVersion: "16.0"
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_IDENTITY: ""
+    CODE_SIGNING_REQUIRED: "NO"
+    CODE_SIGNING_ALLOWED: "NO"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.1.0"
+targets:
+  HarborIOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: HarborIOS
+        excludes:
+          - "Info.plist"
+      - path: Core
+      - path: Data
+      - path: Domain
+      - path: Features
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hlyl.harborios
+        PRODUCT_NAME: Harbor
+        PRODUCT_MODULE_NAME: HarborIOS
+        INFOPLIST_FILE: HarborIOS/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+  HarborIOSTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - HarborIOSTests
+    dependencies:
+      - target: HarborIOS
+schemes:
+  HarborIOS:
+    build:
+      targets:
+        HarborIOS: all
+    test:
+      targets:
+        - HarborIOSTests
