@@ -311,7 +311,7 @@ final class ScoringTests: XCTestCase {
             webishFraction: 0.1,
             trustedTrackedCount: 10
         )
-        let movieOpts = opts(mediaKind: "movie", releaseDate: isoDaysAgo(50.0))
+        let movieOpts = opts(releaseDate: isoDaysAgo(50.0), mediaKind: "movie")
 
         let ts = baseParsed(source: .ts)
         let tsResult = Scoring.scoreStream(parsed: ts, opts: movieOpts, corpus: corpus)
@@ -335,7 +335,7 @@ final class ScoringTests: XCTestCase {
             webishFraction: 0.7,
             trustedTrackedCount: 10
         )
-        let movieOpts = opts(mediaKind: "movie", releaseDate: isoDaysAgo(50.0))
+        let movieOpts = opts(releaseDate: isoDaysAgo(50.0), mediaKind: "movie")
         let web = baseParsed(resolution: .uhd, source: .webRip)
 
         let result = Scoring.scoreStream(parsed: web, opts: movieOpts, corpus: corpus)
@@ -541,7 +541,7 @@ final class ScoringTests: XCTestCase {
     func testUndersized4KNewRelease() {
         var parsed = baseParsed(resolution: .uhd)
         parsed.size = 1 * 1024 * 1024 * 1024 // 1 GiB
-        let movieOpts = opts(mediaKind: "movie", releaseDate: isoDaysAgo(45.0))
+        let movieOpts = opts(releaseDate: isoDaysAgo(45.0), mediaKind: "movie")
 
         let result = Scoring.scoreStream(parsed: parsed, opts: movieOpts, corpus: emptyCorpus())
         XCTAssertEqual(result.score, -225.0) // 25 − 250
@@ -553,7 +553,7 @@ final class ScoringTests: XCTestCase {
     func testNewReleaseVirusTinyFile() {
         var parsed = baseParsed(resolution: .p480)
         parsed.size = 100 * 1024 * 1024 // 100 MiB < 250 MiB
-        let movieOpts = opts(mediaKind: "movie", releaseDate: isoDaysAgo(10.0))
+        let movieOpts = opts(releaseDate: isoDaysAgo(10.0), mediaKind: "movie")
 
         let result = Scoring.scoreStream(parsed: parsed, opts: movieOpts, corpus: emptyCorpus())
         XCTAssertEqual(result.score, -258.0) // 2 (480p) − 250 (virus) − 10 (fresh-soft-flag)
