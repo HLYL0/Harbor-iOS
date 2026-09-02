@@ -358,15 +358,13 @@ enum TrustGate {
         return nil
     }
 
-    // MARK: - D-TRUST-01 (see header)
+    // MARK: - D-TRUST-01 (resolved: EngineStream now carries the extra bag)
 
     /// Rust `check_one` counts `stream.extra["nzbUrl"]` as a fifth playable source
-    /// (trust.rs:171). The canonical Swift `EngineStream` contract (EngineModels.swift)
-    /// carries neither `extra` nor `nzbUrl` and must not be modified, so this is
-    /// always false today: NZB-only streams fall through to `no-playable-source`.
-    /// Wire-through point: if `EngineStream` ever gains an extra bag, check it here.
+    /// (trust.rs:171). Wire-through: EngineStream.extra (added with the vector harness).
     static func hasNzbSource(_ s: ParsedStream) -> Bool {
-        false
+        guard let extra = s.stream.extra else { return false }
+        return extra["nzbUrl"]?.isEmpty == false
     }
 
     // MARK: - behaviorHints helpers (trust.rs:401-417)

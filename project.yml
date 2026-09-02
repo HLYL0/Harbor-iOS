@@ -54,6 +54,8 @@ targets:
     platform: iOS
     sources:
       - HarborIOSTests
+    resources:
+      - Tests/Fixtures
     dependencies:
       - target: HarborIOS
     settings:

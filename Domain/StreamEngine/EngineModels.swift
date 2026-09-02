@@ -140,6 +140,8 @@ struct EngineStream: Codable, Equatable, Sendable {
     var addonPriority: Int?
     var addonReturnIdx: Int?
     var contributors: [Contributor]?
+    /// Rust `Stream.extra` flatten bag (trust-critical: `nzbUrl` playable-source check).
+    var extra: [String: String]?
 
     init(
         name: String? = nil, title: String? = nil, description: String? = nil,
@@ -156,6 +158,7 @@ struct EngineStream: Codable, Equatable, Sendable {
         self.availability = availability; self.addonId = addonId; self.addonName = addonName
         self.addonPriority = addonPriority; self.addonReturnIdx = addonReturnIdx
         self.contributors = contributors
+        self.extra = nil
     }
 }
 
