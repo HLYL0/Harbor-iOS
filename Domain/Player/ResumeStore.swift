@@ -9,6 +9,8 @@ public struct PlaybackProgress: Codable, Equatable, Sendable {
     public var streamKey: String
     public var url: String?
     public var title: String?
+    public var poster: String?
+    public var metaType: String
     public var positionSeconds: Double
     public var durationSeconds: Double
     public var watched: Bool
@@ -16,6 +18,7 @@ public struct PlaybackProgress: Codable, Equatable, Sendable {
 
     public init(
         metaId: String, streamKey: String, url: String? = nil, title: String? = nil,
+        poster: String? = nil, metaType: String = "movie",
         positionSeconds: Double = 0, durationSeconds: Double = 0,
         watched: Bool = false, updatedAt: Date = Date()
     ) {
@@ -23,6 +26,8 @@ public struct PlaybackProgress: Codable, Equatable, Sendable {
         self.streamKey = streamKey
         self.url = url
         self.title = title
+        self.poster = poster
+        self.metaType = metaType
         self.positionSeconds = positionSeconds
         self.durationSeconds = durationSeconds
         self.watched = watched
@@ -55,6 +60,20 @@ public actor ResumeStore: ResumeStoring {
 
     private func namespace(metaId: String) -> String { "resume/\(metaId.hashValue)" }
     private func key(metaId: String) -> String { "progress-\(metaId)" }
+    private var indexKey: String { "resume-index" }
+
+    /// Ordered list of unfinished progress entries (most recent first).
+    public func allProgress() async -> [PlaybackProgress] {
+        let index: [String] = cache.get([String].self, key: indexKey, namespace: "resume-index") ?? []
+        var out: [PlaybackProgress] = []
+        for metaId in index {
+            if let progress = cache.get(PlaybackProgress.self, key: key(metaId: metaId), namespace: namespace(metaId: metaId)),
+               progress.resumePosition != nil {
+                out.append(progress)
+            }
+        }
+        return out.sorted { $0.updatedAt > $1.updatedAt }
+    }
 
     public func progress(metaId: String) async -> PlaybackProgress? {
         cache.get(PlaybackProgress.self, key: key(metaId: metaId), namespace: namespace(metaId: metaId))
@@ -83,10 +102,20 @@ public actor ResumeStore: ResumeStoring {
             lastSaved[p.metaId] = (p.positionSeconds, now)
         }
         cache.set(p, key: key(metaId: p.metaId), namespace: namespace(metaId: p.metaId), ttl: nil)
+        // Maintain the resume index (ordered insertion; allProgress sorts by updatedAt).
+        var index: [String] = cache.get([String].self, key: indexKey, namespace: "resume-index") ?? []
+        index.removeAll { $0 == p.metaId }
+        if p.resumePosition != nil {
+            index.insert(p.metaId, at: 0)
+        }
+        cache.set(index, key: indexKey, namespace: "resume-index", ttl: nil)
     }
 
     public func clear(metaId: String) async {
         cache.remove(key: key(metaId: metaId), namespace: namespace(metaId: metaId))
+        var index: [String] = cache.get([String].self, key: indexKey, namespace: "resume-index") ?? []
+        index.removeAll { $0 == metaId }
+        cache.set(index, key: indexKey, namespace: "resume-index", ttl: nil)
         lastSaved.removeValue(forKey: metaId)
     }
 }

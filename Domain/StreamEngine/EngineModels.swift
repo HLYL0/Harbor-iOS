@@ -111,20 +111,6 @@ public struct AudioInfo: Codable, Equatable, Sendable {
     }
 }
 
-public struct StreamSubtitle: Codable, Equatable, Sendable {
-    public var id: String?
-    public var url: String
-    public var lang: String?
-    public var m: String?
-
-    public init(id: String? = nil, url: String, lang: String? = nil, m: String? = nil) {
-        self.id = id
-        self.url = url
-        self.lang = lang
-        self.m = m
-    }
-}
-
 public struct Contributor: Codable, Equatable, Sendable {
     public var id: String
     public var name: String

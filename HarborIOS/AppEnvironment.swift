@@ -17,6 +17,10 @@ final class AppEnvironment: ObservableObject {
     private let debrid: any DebridServicing
     private let persistence: AddonPersistence
     private let keychain: KeychainStore
+    let resumeStore: ResumeStore
+    let catalogService: CatalogService
+    let discoveryClient: any AddonDiscoveryServicing
+    let settingsStore: SettingsStore
     private let authAccount = "stremio-auth-key"
     private let debridAccount = "debrid-api-key"
 
@@ -30,12 +34,20 @@ final class AppEnvironment: ObservableObject {
         service: any StremioServicing = StremioAPIClient(),
         debrid: any DebridServicing = RealDebridClient(),
         persistence: AddonPersistence = AddonPersistence(),
-        keychain: KeychainStore = KeychainStore()
+        keychain: KeychainStore = KeychainStore(),
+        resumeStore: ResumeStore = .shared,
+        catalogService: CatalogService = .shared,
+        discoveryClient: any AddonDiscoveryServicing = AddonDiscoveryClient.shared,
+        settingsStore: SettingsStore = .shared
     ) {
         self.service = service
         self.debrid = debrid
         self.persistence = persistence
         self.keychain = keychain
+        self.resumeStore = resumeStore
+        self.catalogService = catalogService
+        self.discoveryClient = discoveryClient
+        self.settingsStore = settingsStore
     }
 
     func start() async {
@@ -80,6 +92,28 @@ final class AppEnvironment: ObservableObject {
 
     func streamCandidates(type: String, id: String) async -> [AttributedStream] {
         await service.streams(addons: addons, type: type, id: id)
+    }
+
+    /// Continue Watching (Phase 6): unfinished progress from the resume store,
+    /// mapped back to lightweight metas for the Home rail.
+    func continueWatching() async -> [StremioMeta] {
+        let progress = await resumeStore.allProgress()
+        return progress.map { entry in
+            StremioMeta(
+                id: entry.metaId,
+                type: entry.metaType,
+                name: entry.title ?? "Untitled",
+                poster: entry.poster
+            )
+        }
+    }
+
+    func saveProgress(_ progress: PlaybackProgress) async {
+        await resumeStore.save(progress)
+    }
+
+    func progress(metaId: String) async -> PlaybackProgress? {
+        await resumeStore.progress(metaId: metaId)
     }
 
     func debridResolve(stream: StremioStream) async throws -> URL {
