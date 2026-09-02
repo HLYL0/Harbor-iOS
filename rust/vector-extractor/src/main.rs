@@ -1244,7 +1244,10 @@ fn main() {
         None,
     ));
 
+    // tier_assignment_edge_cases — note the Rust test mutates ONE stream in
+    // sequence; the SCR sub-case runs at P480 (left over from the SD case).
     let mut p = base_scoring();
+    p.resolution = Resolution::P480;
     p.source = Source::SCR;
     scoring_fixtures.push(scoring_fixture(
         "scoring/tier_edge:scr_rough",

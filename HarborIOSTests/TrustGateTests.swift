@@ -676,8 +676,10 @@ final class TrustGateTests: XCTestCase {
     // MARK: - Window / date helpers (trust.rs:587-660)
 
     func testCinemaWindowEdges() {
-        XCTAssertTrue(TrustGate.isInCinemaWindow(releaseDate: isoDaysAgo(89)))
-        XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: isoDaysAgo(91)))
+        // Window is -90 < days < 60: up to 59.99 days in the past, up to 89.99 in
+        // the future. 60+ days ago is OUT.
+        XCTAssertTrue(TrustGate.isInCinemaWindow(releaseDate: isoDaysAgo(59)))
+        XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: isoDaysAgo(61)))
         XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: nil))
         XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: "not-a-date"))
 
@@ -700,9 +702,9 @@ final class TrustGateTests: XCTestCase {
         opts.kind = "movie"
         opts.expectedYear = 2025
 
-        opts.releaseDate = isoDaysAgo(89)   // in window: cinema floor + fresh-bluray rule
+        opts.releaseDate = isoDaysAgo(59)   // in window: cinema floor + fresh-bluray rule
         assertRejects([s], opts: opts, reason: "movie-stub-too-small-for-1080p")
-        opts.releaseDate = isoDaysAgo(91)   // out of window: normal floor, no fresh rules
+        opts.releaseDate = isoDaysAgo(61)   // out of window: normal floor, no fresh rules
         assertKeeps([s], opts: opts)
     }
 

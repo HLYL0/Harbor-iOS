@@ -174,6 +174,16 @@ struct EngineBehaviorHints: Codable, Equatable, Sendable {
     var effectiveFilename: String? { filename ?? fileName }
 }
 
+struct YearRange: Codable, Equatable, Sendable {
+    var start: Int
+    var end: Int
+
+    init(start: Int, end: Int) {
+        self.start = start
+        self.end = end
+    }
+}
+
 struct ParsedStream: Codable, Equatable, Sendable {
     var stream: EngineStream
     var parsedTitle: String
@@ -194,7 +204,7 @@ struct ParsedStream: Codable, Equatable, Sendable {
     var remux: Bool
     var edition: String?
     var year: Int?
-    var yearRange: (Int, Int)?
+    var yearRange: YearRange?
     var season: Int?
     var episode: Int?
     var seasonPack: Bool
@@ -215,7 +225,7 @@ struct ParsedStream: Codable, Equatable, Sendable {
         cached: [String: Bool] = [:], inLibrary: [String: Bool] = [:],
         container: Container? = nil, releaseGroup: String? = nil,
         releaseGroupNormalized: String? = nil, remux: Bool = false,
-        edition: String? = nil, year: Int? = nil, yearRange: (Int, Int)? = nil,
+        edition: String? = nil, year: Int? = nil, yearRange: YearRange? = nil,
         season: Int? = nil, episode: Int? = nil, seasonPack: Bool = false,
         discIndex: Int? = nil, repackIteration: Int = 0, proper: Bool = false,
         hardcoded: Bool = false, animeHash: String? = nil, scamScore: Int = 0
@@ -234,7 +244,7 @@ struct ParsedStream: Codable, Equatable, Sendable {
     }
 }
 
-// Codable support for the yearRange tuple (Rust encodes as [start, end] array).
+// Codable support for yearRange (Rust encodes as [start, end] array).
 extension ParsedStream {
     private enum CodingKeys: String, CodingKey {
         case stream, parsedTitle, episodeTitle, resolution, hdrFormat, codec, source
@@ -266,7 +276,7 @@ extension ParsedStream {
         edition = try c.decodeIfPresent(String.self, forKey: .edition)
         year = try c.decodeIfPresent(Int.self, forKey: .year)
         if let arr = try c.decodeIfPresent([Int].self, forKey: .yearRange), arr.count == 2 {
-            yearRange = (arr[0], arr[1])
+            yearRange = YearRange(start: arr[0], end: arr[1])
         } else { yearRange = nil }
         season = try c.decodeIfPresent(Int.self, forKey: .season)
         episode = try c.decodeIfPresent(Int.self, forKey: .episode)
@@ -300,7 +310,7 @@ extension ParsedStream {
         try c.encode(remux, forKey: .remux)
         try c.encodeIfPresent(edition, forKey: .edition)
         try c.encodeIfPresent(year, forKey: .year)
-        if let yearRange { try c.encode([yearRange.0, yearRange.1], forKey: .yearRange) }
+        if let yearRange { try c.encode([yearRange.start, yearRange.end], forKey: .yearRange) }
         try c.encodeIfPresent(season, forKey: .season)
         try c.encodeIfPresent(episode, forKey: .episode)
         try c.encode(seasonPack, forKey: .seasonPack)

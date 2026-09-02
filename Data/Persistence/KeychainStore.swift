@@ -48,6 +48,15 @@ struct KeychainStore: Sendable {
         try writeData(Data(value.utf8), account: account)
     }
 
+    func readCodable<T: Decodable>(_ type: T.Type, account: String) -> T? {
+        readData(account: account).flatMap { try? JSONDecoder().decode(T.self, from: $0) }
+    }
+
+    func writeCodable<T: Encodable>(_ value: T, account: String) {
+        guard let data = try? JSONEncoder().encode(value) else { return }
+        try? writeData(data, account: account)
+    }
+
     func delete(account: String) throws {
         let status = SecItemDelete(baseQuery(account: account) as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {

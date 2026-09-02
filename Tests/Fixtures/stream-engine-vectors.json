@@ -1,0 +1,6063 @@
+{
+  "corpus": [
+    {
+      "expected": {
+        "daysSinceRelease": null,
+        "medianSize": null,
+        "p10Seeders": 5,
+        "p90Seeders": 5,
+        "p90Size": null,
+        "theaterCaptureFraction": 0.3333333333333333,
+        "trustedTrackedCount": 3,
+        "trustedTrackedFraction": 0.75,
+        "webishFraction": 0.6666666666666666
+      },
+      "label": "corpus/corpus_stats_basic_fractions",
+      "options": {
+        "activeDebrids": [
+          "rd"
+        ],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {
+            "rd": true
+          },
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": null,
+          "source": "CAM",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 100,
+          "size": null,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 5,
+          "size": null,
+          "source": "HDTV",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": null,
+          "source": "BluRay",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon",
+            "url": "https://example.com/x"
+          },
+          "year": null,
+          "yearRange": null
+        }
+      ]
+    },
+    {
+      "expected": {
+        "daysSinceRelease": null,
+        "medianSize": null,
+        "p10Seeders": null,
+        "p90Seeders": null,
+        "p90Size": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "label": "corpus/corpus_stats_empty_avoids_divide_by_zero",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": []
+    },
+    {
+      "expected": {
+        "daysSinceRelease": null,
+        "medianSize": 10,
+        "p10Seeders": null,
+        "p90Seeders": null,
+        "p90Size": 50,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "label": "corpus/corpus_stats_size_percentiles",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": 1,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": 5,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": 10,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": 50,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [],
+          "cached": {},
+          "codec": "Other",
+          "container": null,
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "",
+          "proper": false,
+          "releaseGroup": null,
+          "releaseGroupNormalized": null,
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": null,
+          "size": 100,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "test",
+            "addonName": "test-addon"
+          },
+          "year": null,
+          "yearRange": null
+        }
+      ]
+    }
+  ],
+  "generatedAt": "2026-09-02",
+  "generator": "harbor-core@0.1.0",
+  "note": "Golden vectors emitted by rust/vector-extractor replaying the harbor-core #[test] scenarios through the real core functions. Time-relative options carry 'releaseDateDaysAgo' so the Swift harness can re-derive the ISO date at replay time.",
+  "parser": [
+    {
+      "asserts": [
+        "resolution == 1080p",
+        "codec == AVC",
+        "source == WEB-DL",
+        "year == 1999",
+        "audio.codec == DD+ && audio.channels == 6",
+        "releaseGroup == FLUX && releaseGroupNormalized == FLUX",
+        "size > 2_000_000_000",
+        "seeders == 25",
+        "cached[rd] == true"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 6,
+          "codec": "DD+"
+        },
+        "audioLanguages": [
+          "English"
+        ],
+        "cached": {
+          "rd": true
+        },
+        "codec": "AVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "The Matrix",
+        "proper": false,
+        "releaseGroup": "FLUX",
+        "releaseGroupNormalized": "FLUX",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": 25,
+        "size": 2684354560,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "title": "The.Matrix.1999.1080p.WEB-DL.DDP5.1.H.264-FLUX\n👤 25 💾 2.5 GB ⚡ Real-Debrid"
+        },
+        "year": 1999,
+        "yearRange": null
+      },
+      "label": "parser/parses_torrentio_1080p_webdl",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "title": "The.Matrix.1999.1080p.WEB-DL.DDP5.1.H.264-FLUX\n👤 25 💾 2.5 GB ⚡ Real-Debrid"
+      }
+    },
+    {
+      "asserts": [
+        "resolution == 1080p",
+        "codec == HEVC",
+        "source == BluRay",
+        "year == 2008"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "HEVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "The Dark Knight",
+        "proper": false,
+        "releaseGroup": "YTS",
+        "releaseGroupNormalized": "YTS",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "BluRay",
+        "stream": {
+          "addonId": "test",
+          "addonName": "YTS",
+          "title": "The.Dark.Knight.2008.1080p.BluRay.x265-YTS"
+        },
+        "year": 2008,
+        "yearRange": null
+      },
+      "label": "parser/parses_yts_1080p_x265",
+      "stream": {
+        "addonId": "test",
+        "addonName": "YTS",
+        "title": "The.Dark.Knight.2008.1080p.BluRay.x265-YTS"
+      }
+    },
+    {
+      "asserts": [
+        "source == CAM",
+        "year == 2024"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [
+          "English"
+        ],
+        "cached": {},
+        "codec": "AVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "Some Movie",
+        "proper": false,
+        "releaseGroup": "NEW",
+        "releaseGroupNormalized": "NEW",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "SD",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": 1288490189,
+        "source": "CAM",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "title": "Some.Movie.2024.HDCAM.x264-NEW\n💾 1.2 GB"
+        },
+        "year": 2024,
+        "yearRange": null
+      },
+      "label": "parser/parses_cam_release_lowest_quality",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "title": "Some.Movie.2024.HDCAM.x264-NEW\n💾 1.2 GB"
+      }
+    },
+    {
+      "asserts": [
+        "resolution == 4K",
+        "codec == HEVC",
+        "source == REMUX",
+        "hdrFormat == DV+HDR10",
+        "remux == true",
+        "audio.codec == Atmos && audio.channels == 8",
+        "year == 2024",
+        "releaseGroup == FraMeSToR && releaseGroupNormalized == FRAMESTOR (trusted)"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 8,
+          "codec": "Atmos"
+        },
+        "audioLanguages": [
+          "English"
+        ],
+        "cached": {},
+        "codec": "HEVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "DV+HDR10",
+        "inLibrary": {},
+        "parsedTitle": "Dune Part Two",
+        "proper": false,
+        "releaseGroup": "FraMeSToR",
+        "releaseGroupNormalized": "FRAMESTOR",
+        "remux": true,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": 86436216832,
+        "source": "REMUX",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "title": "Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX.DV.HDR10.HEVC.TrueHD.7.1.Atmos-FraMeSToR\n💾 80.5 GB"
+        },
+        "year": 2024,
+        "yearRange": null
+      },
+      "label": "parser/parses_4k_dv_hdr10",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "title": "Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX.DV.HDR10.HEVC.TrueHD.7.1.Atmos-FraMeSToR\n💾 80.5 GB"
+      }
+    },
+    {
+      "asserts": [
+        "season == 1",
+        "episode == nil",
+        "seasonPack == true",
+        "resolution == 1080p"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "AVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "Breaking Bad",
+        "proper": false,
+        "releaseGroup": "DEMAND",
+        "releaseGroupNormalized": "DEMAND",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": 1,
+        "seasonPack": true,
+        "seeders": null,
+        "size": null,
+        "source": "BluRay",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "title": "Breaking.Bad.S01.Complete.1080p.BluRay.x264-DEMAND"
+        },
+        "year": null,
+        "yearRange": null
+      },
+      "label": "parser/detects_season_pack",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "title": "Breaking.Bad.S01.Complete.1080p.BluRay.x264-DEMAND"
+      }
+    },
+    {
+      "asserts": [
+        "season == 3 && episode == 10",
+        "resolution == 720p",
+        "episodeTitle lowercased contains 'benihana'",
+        "container == mkv"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "AVC",
+        "container": "mkv",
+        "discIndex": null,
+        "edition": null,
+        "episode": 10,
+        "episodeTitle": "A Benihana Christmas",
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "The Office",
+        "proper": false,
+        "releaseGroup": "DL.x264",
+        "releaseGroupNormalized": "DLX264",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "720p",
+        "scamScore": 0,
+        "season": 3,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "title": "The.Office.S03E10.A.Benihana.Christmas.720p.WEB-DL.x264.mkv"
+        },
+        "year": null,
+        "yearRange": null
+      },
+      "label": "parser/detects_episode_with_title",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "title": "The.Office.S03E10.A.Benihana.Christmas.720p.WEB-DL.x264.mkv"
+      }
+    },
+    {
+      "asserts": [
+        "resolution == SD",
+        "codec == Other",
+        "source == Other"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "SD",
+        "scamScore": 2,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "Other",
+        "stream": {
+          "addonId": "x",
+          "addonName": "x"
+        },
+        "year": null,
+        "yearRange": null
+      },
+      "label": "parser/empty_stream_falls_back_to_defaults",
+      "stream": {
+        "addonId": "x",
+        "addonName": "x"
+      }
+    },
+    {
+      "asserts": [
+        "size == 5_000_000_000"
+      ],
+      "expected": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "AVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "Movie",
+        "proper": false,
+        "releaseGroup": "DL.x264",
+        "releaseGroupNormalized": "DLX264",
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": 5000000000,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Torrentio",
+          "behaviorHints": {
+            "videoSize": 5000000000
+          },
+          "title": "Movie.2020.1080p.WEB-DL.x264"
+        },
+        "year": 2020,
+        "yearRange": null
+      },
+      "label": "parser/behavior_hints_video_size_used",
+      "stream": {
+        "addonId": "test",
+        "addonName": "Torrentio",
+        "behaviorHints": {
+          "videoSize": 5000000000
+        },
+        "title": "Movie.2020.1080p.WEB-DL.x264"
+      }
+    }
+  ],
+  "ranking": [
+    {
+      "activeDebrids": [
+        "rd"
+      ],
+      "expected": {
+        "byTier": {
+          "1080p": 0,
+          "4K": 1,
+          "720p": 2
+        },
+        "order": [
+          1,
+          2,
+          0
+        ],
+        "primaryIndex": 1
+      },
+      "label": "ranking/rank_and_pick_picks_cached_top_tier",
+      "respectAddonOrder": false,
+      "scored": [
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 30.0,
+          "tier": "1080p"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {
+              "rd": true
+            },
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "4K",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 90.0,
+          "tier": "4K"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {
+              "rd": true
+            },
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "720p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 50.0,
+          "tier": "720p"
+        }
+      ]
+    },
+    {
+      "activeDebrids": [
+        "rd"
+      ],
+      "expected": {
+        "byTier": {
+          "1080p": 0,
+          "4K": 1
+        },
+        "order": [
+          0,
+          1
+        ],
+        "primaryIndex": 0
+      },
+      "label": "ranking/rank_and_pick_preserves_addon_order_when_no_cached",
+      "respectAddonOrder": false,
+      "scored": [
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 30.0,
+          "tier": "1080p"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "4K",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 40.0,
+          "tier": "4K"
+        }
+      ]
+    },
+    {
+      "activeDebrids": [
+        "rd"
+      ],
+      "expected": {
+        "byTier": {
+          "1080p": 1,
+          "4K": 0
+        },
+        "order": [
+          1,
+          0
+        ],
+        "primaryIndex": 1
+      },
+      "label": "ranking/rank_and_pick_addon_order_preserves_return_index_over_score",
+      "respectAddonOrder": true,
+      "scored": [
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "4K",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon",
+              "addonPriority": 0,
+              "addonReturnIdx": 1,
+              "url": "http://a/4k"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 40.0,
+          "tier": "4K"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon",
+              "addonPriority": 0,
+              "addonReturnIdx": 0,
+              "url": "http://a/1080"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 30.0,
+          "tier": "1080p"
+        }
+      ]
+    },
+    {
+      "activeDebrids": [],
+      "expected": {
+        "byTier": {
+          "1080p": 1,
+          "ROUGH": 0
+        },
+        "order": [
+          0,
+          1
+        ],
+        "primaryIndex": 1
+      },
+      "label": "ranking/rank_and_pick_skips_theater_sources_for_primary",
+      "respectAddonOrder": false,
+      "scored": [
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "CAM",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 0.0,
+          "tier": "ROUGH"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {},
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon"
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 0.0,
+          "tier": "1080p"
+        }
+      ]
+    },
+    {
+      "activeDebrids": [
+        "rd"
+      ],
+      "expected": {
+        "byTier": {
+          "1080p": 0
+        },
+        "order": [
+          0,
+          1
+        ],
+        "primaryIndex": 1
+      },
+      "label": "ranking/rank_and_pick_prefers_higher_scored_cached_regardless_of_input_order",
+      "respectAddonOrder": false,
+      "scored": [
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {
+              "rd": true
+            },
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon",
+              "addonPriority": 4
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 80.0,
+          "tier": "1080p"
+        },
+        {
+          "parsed": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [],
+            "cached": {
+              "rd": true
+            },
+            "codec": "Other",
+            "container": null,
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "",
+            "proper": false,
+            "releaseGroup": null,
+            "releaseGroupNormalized": null,
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": null,
+            "size": null,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "test",
+              "addonName": "test-addon",
+              "addonPriority": 0
+            },
+            "year": null,
+            "yearRange": null
+          },
+          "reasons": [],
+          "score": 92.0,
+          "tier": "1080p"
+        }
+      ]
+    }
+  ],
+  "scoring": [
+    {
+      "corpus": {
+        "daysSinceRelease": 50.0,
+        "theaterCaptureFraction": 0.8,
+        "trustedTrackedCount": 10,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.1
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": -60.0,
+            "signal": "Telesync penalty"
+          },
+          {
+            "delta": 75.0,
+            "signal": "fresh-theater-cinema-window"
+          }
+        ],
+        "score": 35.0,
+        "tier": "ROUGH"
+      },
+      "label": "scoring/fresh_theater_window_protects_dominated_pool_past_30_days:ts_boosted",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "mediaKind": "movie",
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "releaseDate": "2026-07-14",
+        "releaseDateDaysAgo": 50.0,
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "TS",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": 50.0,
+        "theaterCaptureFraction": 0.8,
+        "trustedTrackedCount": 10,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.1
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": -45.0,
+            "signal": "fresh-fake-soft"
+          }
+        ],
+        "score": -20.0,
+        "tier": "4K"
+      },
+      "label": "scoring/fresh_theater_window_protects_dominated_pool_past_30_days:webrip_penalized",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "mediaKind": "movie",
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "releaseDate": "2026-07-14",
+        "releaseDateDaysAgo": 50.0,
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEBRip",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": 50.0,
+        "theaterCaptureFraction": 0.1,
+        "trustedTrackedCount": 10,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.7
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          }
+        ],
+        "score": 25.0,
+        "tier": "4K"
+      },
+      "label": "scoring/fresh_non_dominated_still_skips_after_30_days",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "mediaKind": "movie",
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "releaseDate": "2026-07-14",
+        "releaseDateDaysAgo": 50.0,
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEBRip",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": 5.0,
+            "signal": "HDR10"
+          },
+          {
+            "delta": 1.0,
+            "signal": "HEVC"
+          },
+          {
+            "delta": 3.0,
+            "signal": "Atmos"
+          },
+          {
+            "delta": 2.0,
+            "signal": "8.0 channels"
+          }
+        ],
+        "score": 36.0,
+        "tier": "4K_HDR"
+      },
+      "label": "scoring/scoring_4k_hdr_with_atmos_and_hevc",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 8,
+          "codec": "Atmos"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "HEVC",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "HDR10",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": 6.0,
+            "signal": "DV+HDR10"
+          }
+        ],
+        "score": 31.0,
+        "tier": "4K_DV"
+      },
+      "label": "scoring/scoring_4k_dv_uses_dv_tier_and_higher_hdr_delta",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "DV+HDR10",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 60.0,
+            "signal": "cached"
+          },
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 8.0,
+            "signal": "strong-addon"
+          }
+        ],
+        "score": 88.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/scoring_cached_debrid_and_strong_addon",
+      "options": {
+        "activeDebrids": [
+          "rd"
+        ],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {
+          "rd": true
+        },
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "MediaFusion"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 60.0,
+            "signal": "easynews-direct"
+          },
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 4.0,
+            "signal": "trusted-addon"
+          }
+        ],
+        "score": 84.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/scoring_easynews_addon_treated_as_cached_alternative",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "Easynews+"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 8.0,
+            "signal": "720p"
+          },
+          {
+            "delta": -80.0,
+            "signal": "CAM penalty"
+          }
+        ],
+        "score": -72.0,
+        "tier": "ROUGH"
+      },
+      "label": "scoring/scoring_cam_source_penalized_and_marked_rough",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "720p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "CAM",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          }
+        ],
+        "score": 20.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/seeders:5_no_boost",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": 5,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "infoHash": "abc"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": -20.0,
+            "signal": "zero-seeders-stale-meta"
+          },
+          {
+            "delta": -8.0,
+            "signal": "zero-seeders-soft"
+          }
+        ],
+        "score": -8.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/seeders:0_with_hash",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": 0,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "infoHash": "abc"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 9.0,
+            "signal": "seeders=95"
+          }
+        ],
+        "score": 29.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/seeders:95",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": 95,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 10.0,
+            "signal": "seeders=500"
+          }
+        ],
+        "score": 30.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/seeders:500_capped",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": 500,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 12.0,
+            "signal": "preferred-language"
+          }
+        ],
+        "score": 32.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/preferred_language:english_match",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [
+          "en"
+        ],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [
+          "English"
+        ],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": -14.0,
+            "signal": "language-mismatch"
+          }
+        ],
+        "score": 6.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/preferred_language:french_mismatch",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [
+          "en"
+        ],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [
+          "French"
+        ],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": -3.0,
+            "signal": "language-unknown"
+          }
+        ],
+        "score": 17.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/preferred_language:empty_unknown",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [
+          "en"
+        ],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 4.0,
+            "signal": "multi-language"
+          }
+        ],
+        "score": 24.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/preferred_language:multi",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [
+          "en"
+        ],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [
+          "Multi"
+        ],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": 6.0,
+            "signal": "DV"
+          }
+        ],
+        "score": 31.0,
+        "tier": "4K_DV"
+      },
+      "label": "scoring/tier_edge:uhd_dv",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "DV",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": 5.0,
+            "signal": "HDR10"
+          }
+        ],
+        "score": 30.0,
+        "tier": "4K_HDR"
+      },
+      "label": "scoring/tier_edge:uhd_hdr10",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "HDR10",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          }
+        ],
+        "score": 25.0,
+        "tier": "4K"
+      },
+      "label": "scoring/tier_edge:uhd",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          }
+        ],
+        "score": 20.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/tier_edge:1080p",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 5.0,
+            "signal": "HLG"
+          }
+        ],
+        "score": 25.0,
+        "tier": "1080p_HDR"
+      },
+      "label": "scoring/tier_edge:1080p_hlg",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "HLG",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 8.0,
+            "signal": "720p"
+          }
+        ],
+        "score": 8.0,
+        "tier": "720p"
+      },
+      "label": "scoring/tier_edge:720p",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "720p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 2.0,
+            "signal": "480p"
+          }
+        ],
+        "score": 2.0,
+        "tier": "SD"
+      },
+      "label": "scoring/tier_edge:480p_sd",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "480p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 2.0,
+            "signal": "480p"
+          },
+          {
+            "delta": -40.0,
+            "signal": "Screener penalty"
+          }
+        ],
+        "score": -38.0,
+        "tier": "ROUGH"
+      },
+      "label": "scoring/tier_edge:scr_rough",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "480p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "SCR",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 25.0,
+            "signal": "4K"
+          },
+          {
+            "delta": 6.0,
+            "signal": "DV"
+          },
+          {
+            "delta": -80.0,
+            "signal": "CAM penalty"
+          }
+        ],
+        "score": -49.0,
+        "tier": "ROUGH"
+      },
+      "label": "scoring/tier_edge:cam_4k_dv_rough",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": "DV",
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "4K",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "CAM",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 1.0,
+            "signal": "PROPER"
+          }
+        ],
+        "score": 21.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/proper_repack:proper",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": true,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 1.0,
+            "signal": "REPACK1"
+          }
+        ],
+        "score": 21.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/proper_repack:repack1",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 1,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 2.0,
+            "signal": "REPACK5"
+          }
+        ],
+        "score": 22.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/proper_repack:repack5",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 5,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 2.0,
+            "signal": "group:FLUX"
+          },
+          {
+            "delta": 3.0,
+            "signal": "REMUX"
+          }
+        ],
+        "score": 25.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/trusted_release_group_and_remux_bonuses",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": "FLUX",
+        "remux": true,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "BluRay",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": -100.0,
+            "signal": "title-says-hires-filename-says-cam"
+          }
+        ],
+        "score": -80.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/cam_in_filename_penalty_for_1080p_word",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "title": "Some.Movie.1080p.WEB-DL.HDCAM.mkv"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 12.0,
+            "signal": "addon-priority-0"
+          }
+        ],
+        "score": 32.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/addon_priority:p0",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "addonPriority": 0
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          },
+          {
+            "delta": 4.0,
+            "signal": "addon-priority-2"
+          }
+        ],
+        "score": 24.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/addon_priority:p2",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "addonPriority": 2
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          }
+        ],
+        "score": 20.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/addon_priority:p5",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon",
+          "addonPriority": 5
+        },
+        "year": null,
+        "yearRange": null
+      }
+    },
+    {
+      "corpus": {
+        "daysSinceRelease": null,
+        "theaterCaptureFraction": 0.0,
+        "trustedTrackedCount": 0,
+        "trustedTrackedFraction": 0.0,
+        "webishFraction": 0.0
+      },
+      "expected": {
+        "reasons": [
+          {
+            "delta": 20.0,
+            "signal": "1080p"
+          }
+        ],
+        "score": 20.0,
+        "tier": "1080p"
+      },
+      "label": "scoring/addon_priority:none",
+      "options": {
+        "activeDebrids": [],
+        "inTheaters": false,
+        "preferSingleAudioTrack": false,
+        "preferredLanguages": [],
+        "respectAddonOrder": false
+      },
+      "parsed": {
+        "animeHash": null,
+        "audio": {
+          "bitDepth": null,
+          "channels": 2,
+          "codec": "Other"
+        },
+        "audioLanguages": [],
+        "cached": {},
+        "codec": "Other",
+        "container": null,
+        "discIndex": null,
+        "edition": null,
+        "episode": null,
+        "episodeTitle": null,
+        "hardcoded": false,
+        "hdrFormat": null,
+        "inLibrary": {},
+        "parsedTitle": "",
+        "proper": false,
+        "releaseGroup": null,
+        "releaseGroupNormalized": null,
+        "remux": false,
+        "repackIteration": 0,
+        "resolution": "1080p",
+        "scamScore": 0,
+        "season": null,
+        "seasonPack": false,
+        "seeders": null,
+        "size": null,
+        "source": "WEB-DL",
+        "stream": {
+          "addonId": "test",
+          "addonName": "test-addon"
+        },
+        "year": null,
+        "yearRange": null
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "Exercises the private trust::tokenize() helper directly; not reachable through the public apply_trust() API.",
+      "test": "tokenize_decomposes_precomposed_accents"
+    }
+  ],
+  "trust": [
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/keeps_clean_stream",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        []
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_suspicious_extension",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.behaviorHints",
+            "set": {
+              "filename": "Setup.exe"
+            }
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "suspicious-extension:.exe",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "behaviorHints": {
+                "filename": "Setup.exe"
+              },
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": 1,
+          "seasonPack": true,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/allows_season_pack_when_flag_set",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": true,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedEpisode": 3,
+        "expectedSeason": 1,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "season",
+            "set": 1
+          },
+          {
+            "path": "seasonPack",
+            "set": true
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_trailer_below_ceiling",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.behaviorHints",
+            "set": {
+              "filename": "movie.trailer.mkv"
+            }
+          },
+          {
+            "path": "size",
+            "set": 52428800
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "trailer-or-extra",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 52428800,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "behaviorHints": {
+                "filename": "movie.trailer.mkv"
+              },
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_no_playable_source",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.infoHash",
+            "set": null
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "no-playable-source",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "nzbUrl": "https://x/nzb",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/keeps_nzb_only_stream",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.infoHash",
+            "set": null
+          },
+          {
+            "path": "stream.extra.nzbUrl",
+            "set": "https://x/nzb"
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_size_stub",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "size",
+            "set": 1048576
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "size-stub",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 1048576,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_scam_score",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "scamScore",
+            "set": 7
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "scam-score-7",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 7,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        },
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 536870912000,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/disabled_short_circuits",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": true,
+        "expectedYear": 1900,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [],
+        [
+          {
+            "path": "size",
+            "set": 536870912000
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        },
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_series_result_for_movie",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "Obsession"
+          },
+          {
+            "path": "season",
+            "set": 1
+          },
+          {
+            "path": "episode",
+            "set": 1
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "series-result-for-movie",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": 1,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Obsession",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": 1,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_season_pack_for_movie",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "Obsession"
+          },
+          {
+            "path": "seasonPack",
+            "set": true
+          },
+          {
+            "path": "season",
+            "set": 1
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "series-result-for-movie",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Obsession",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": 1,
+            "seasonPack": true,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_cinema_bare_untagged",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedYear": 2025,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "releaseDate": "2026-08-26",
+        "releaseDateDaysAgo": 7.0,
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "Obsession"
+          },
+          {
+            "path": "year",
+            "set": null
+          },
+          {
+            "path": "source",
+            "set": "Other"
+          },
+          {
+            "path": "resolution",
+            "set": "SD"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "cinema-bare-untagged",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Obsession",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "SD",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "Other",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": null,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Obsession",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2025,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/keeps_real_movie_in_cinema_window",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedYear": 2025,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "releaseDate": "2026-08-26",
+        "releaseDateDaysAgo": 7.0,
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "Obsession"
+          },
+          {
+            "path": "year",
+            "set": 2025
+          },
+          {
+            "path": "source",
+            "set": "WEB-DL"
+          },
+          {
+            "path": "resolution",
+            "set": "1080p"
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": 7,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "fileIdx": 2,
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/season_pack_with_file_idx_skips_episode_check",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedEpisode": 3,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.fileIdx",
+            "set": 2
+          },
+          {
+            "path": "episode",
+            "set": 7
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_placeholder_banner",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.description",
+            "set": "🚫 No streams found"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "addon-placeholder-banner",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "description": "🚫 No streams found",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_status_card",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.infoHash",
+            "set": null
+          },
+          {
+            "path": "stream.url",
+            "set": "https://example.com/account"
+          },
+          {
+            "path": "stream.description",
+            "set": "Premium expires in 3 days"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "addon-status-card",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "description": "Premium expires in 3 days",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB",
+              "url": "https://example.com/account"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_uncached_emoji",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.name",
+            "set": "⏳ Cloud only"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "addon-uncached-emoji",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "name": "⏳ Cloud only",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_underscore_delimited_trailer",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.behaviorHints",
+            "set": {
+              "filename": "Movie_2025_trailer_1080p.mkv"
+            }
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "trailer-or-extra",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "behaviorHints": {
+                "filename": "Movie_2025_trailer_1080p.mkv"
+              },
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_cinema_year_mismatch",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedYear": 2025,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "releaseDate": "2026-08-26",
+        "releaseDateDaysAgo": 7.0,
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "The Strangers"
+          },
+          {
+            "path": "year",
+            "set": 2008
+          },
+          {
+            "path": "resolution",
+            "set": "720p"
+          },
+          {
+            "path": "source",
+            "set": "WEB-DL"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "cinema-year-mismatch:2008-vs-2025",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "The Strangers",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "720p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2008,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/rejects_fresh_cinema_fake_hdtv",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedYear": 2025,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "releaseDate": "2026-08-26",
+        "releaseDateDaysAgo": 7.0,
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "New Movie"
+          },
+          {
+            "path": "year",
+            "set": 2025
+          },
+          {
+            "path": "source",
+            "set": "HDTV"
+          },
+          {
+            "path": "resolution",
+            "set": "1080p"
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "fresh-cinema-fake-hdtv",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "New Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "HDTV",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2025,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/anime_keeps_small_episode_non_anime_rejects:non_anime",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "kind": "series",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "size",
+            "set": 188743680
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "episode-stub-too-small-for-1080p",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 188743680,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 188743680,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/anime_keeps_small_episode_non_anime_rejects:anime",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": true,
+        "kind": "series",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "size",
+            "set": 188743680
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Sample Movie",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 83886080,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "behaviorHints": {
+              "filename": "Show.OVA.1080p.mkv"
+            },
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 2020,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/short_format_exempts_small_episode",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "kind": "series",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.behaviorHints",
+            "set": {
+              "filename": "Show.OVA.1080p.mkv"
+            }
+          },
+          {
+            "path": "size",
+            "set": 83886080
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/title_short_guard_rejects_keyword_in_long_title",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedTitle": "Obsession",
+        "expectedYear": 2025,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "DBM Obsession Viva Las Vegas"
+          },
+          {
+            "path": "year",
+            "set": 2025
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "title-mismatch",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "DBM Obsession Viva Las Vegas",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+            },
+            "year": 2025,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [
+        {
+          "animeHash": null,
+          "audio": {
+            "bitDepth": null,
+            "channels": 2,
+            "codec": "Other"
+          },
+          "audioLanguages": [
+            "English"
+          ],
+          "cached": {},
+          "codec": "HEVC",
+          "container": "mkv",
+          "discIndex": null,
+          "edition": null,
+          "episode": null,
+          "episodeTitle": null,
+          "hardcoded": false,
+          "hdrFormat": null,
+          "inLibrary": {},
+          "parsedTitle": "Rocky II",
+          "proper": false,
+          "releaseGroup": "DL.x265",
+          "releaseGroupNormalized": "DLX265",
+          "remux": false,
+          "repackIteration": 0,
+          "resolution": "1080p",
+          "scamScore": 0,
+          "season": null,
+          "seasonPack": false,
+          "seeders": 50,
+          "size": 2147483648,
+          "source": "WEB-DL",
+          "stream": {
+            "addonId": "addon",
+            "addonName": "Addon",
+            "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+          },
+          "year": 1979,
+          "yearRange": null
+        }
+      ],
+      "label": "trust/title_year_tolerance_scales_with_age",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "expectedTitle": "Rocky",
+        "expectedYear": 1976,
+        "isAnime": false,
+        "kind": "movie",
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "parsedTitle",
+            "set": "Rocky II"
+          },
+          {
+            "path": "year",
+            "set": 1979
+          }
+        ]
+      ],
+      "rejected": [],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    },
+    {
+      "kept": [],
+      "label": "trust/status_card_camelcase_filename_not_exempted",
+      "options": {
+        "allowCam": false,
+        "allowSeasonPacks": false,
+        "allowSizeOutliers": false,
+        "disabled": false,
+        "isAnime": false,
+        "preferredAudioLangs": [],
+        "preferredLanguages": [],
+        "requirePreferredLanguage": false,
+        "strict": true
+      },
+      "patches": [
+        [
+          {
+            "path": "stream.infoHash",
+            "set": null
+          },
+          {
+            "path": "stream.url",
+            "set": "https://example.com/acct"
+          },
+          {
+            "path": "stream.description",
+            "set": "Premium expires in 3 days"
+          },
+          {
+            "path": "stream.behaviorHints",
+            "set": {
+              "fileName": "card.mkv"
+            }
+          }
+        ]
+      ],
+      "rejected": [
+        {
+          "reason": "addon-status-card",
+          "stream": {
+            "animeHash": null,
+            "audio": {
+              "bitDepth": null,
+              "channels": 2,
+              "codec": "Other"
+            },
+            "audioLanguages": [
+              "English"
+            ],
+            "cached": {},
+            "codec": "HEVC",
+            "container": "mkv",
+            "discIndex": null,
+            "edition": null,
+            "episode": null,
+            "episodeTitle": null,
+            "hardcoded": false,
+            "hdrFormat": null,
+            "inLibrary": {},
+            "parsedTitle": "Sample Movie",
+            "proper": false,
+            "releaseGroup": "DL.x265",
+            "releaseGroupNormalized": "DLX265",
+            "remux": false,
+            "repackIteration": 0,
+            "resolution": "1080p",
+            "scamScore": 0,
+            "season": null,
+            "seasonPack": false,
+            "seeders": 50,
+            "size": 2147483648,
+            "source": "WEB-DL",
+            "stream": {
+              "addonId": "addon",
+              "addonName": "Addon",
+              "behaviorHints": {
+                "fileName": "card.mkv"
+              },
+              "description": "Premium expires in 3 days",
+              "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB",
+              "url": "https://example.com/acct"
+            },
+            "year": 2020,
+            "yearRange": null
+          }
+        }
+      ],
+      "streams": [
+        {
+          "addonId": "addon",
+          "addonName": "Addon",
+          "infoHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Sample.Movie.2020.1080p.WEB-DL.x265.mkv\n👤 50 💾 2 GB"
+        }
+      ]
+    }
+  ]
+}

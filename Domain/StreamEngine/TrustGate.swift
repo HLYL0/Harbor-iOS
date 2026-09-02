@@ -395,15 +395,16 @@ enum TrustGate {
     ///   SD     200 /  100 /   25 MiB
     /// Selection: older > cinema > normal (trust.rs:25).
     static func movieMinSize(_ r: Resolution, inCinema: Bool, older: Bool) -> UInt64 {
-        let (cinema, normal, olderFloor): (UInt64, UInt64, UInt64)
-        switch r {
-        case .uhd:   (cinema, normal, olderFloor) = (2560 * mib, 1536 * mib, 600 * mib)
-        case .p1080: (cinema, normal, olderFloor) = (movie1080pCinemaFloor, 700 * mib, 250 * mib)
-        case .p720:  (cinema, normal, olderFloor) = (600 * mib, 400 * mib, 120 * mib)
-        case .p480:  (cinema, normal, olderFloor) = (250 * mib, 150 * mib, 50 * mib)
-        case .sd:    (cinema, normal, olderFloor) = (200 * mib, 100 * mib, 25 * mib)
-        }
-        return older ? olderFloor : (inCinema ? cinema : normal)
+        let floors: (cinema: UInt64, normal: UInt64, older: UInt64) = {
+            switch r {
+            case .uhd:   return (2560 * mib, 1536 * mib, 600 * mib)
+            case .p1080: return (movie1080pCinemaFloor, 700 * mib, 250 * mib)
+            case .p720:  return (600 * mib, 400 * mib, 120 * mib)
+            case .p480:  return (250 * mib, 150 * mib, 50 * mib)
+            case .sd:    return (200 * mib, 100 * mib, 25 * mib)
+            }
+        }()
+        return older ? floors.older : (inCinema ? floors.cinema : floors.normal)
     }
 
     /// Episode floors (non-anime) — (cinema, normal, older):
@@ -413,15 +414,16 @@ enum TrustGate {
     ///   480p     80 /  50 /  12 MiB
     ///   SD       50 /  30 /   8 MiB
     static func episodeMinSize(_ r: Resolution, inCinema: Bool, older: Bool) -> UInt64 {
-        let (cinema, normal, olderFloor): (UInt64, UInt64, UInt64)
-        switch r {
-        case .uhd:   (cinema, normal, olderFloor) = (1024 * mib, 600 * mib, 200 * mib)
-        case .p1080: (cinema, normal, olderFloor) = (400 * mib, 250 * mib, 100 * mib)
-        case .p720:  (cinema, normal, olderFloor) = (200 * mib, 120 * mib, 40 * mib)
-        case .p480:  (cinema, normal, olderFloor) = (80 * mib, 50 * mib, 12 * mib)
-        case .sd:    (cinema, normal, olderFloor) = (50 * mib, 30 * mib, 8 * mib)
-        }
-        return older ? olderFloor : (inCinema ? cinema : normal)
+        let floors: (cinema: UInt64, normal: UInt64, older: UInt64) = {
+            switch r {
+            case .uhd:   return (1024 * mib, 600 * mib, 200 * mib)
+            case .p1080: return (400 * mib, 250 * mib, 100 * mib)
+            case .p720:  return (200 * mib, 120 * mib, 40 * mib)
+            case .p480:  return (80 * mib, 50 * mib, 12 * mib)
+            case .sd:    return (50 * mib, 30 * mib, 8 * mib)
+            }
+        }()
+        return older ? floors.older : (inCinema ? floors.cinema : floors.normal)
     }
 
     /// Anime episode floors — (cinema, normal, older):
@@ -431,15 +433,16 @@ enum TrustGate {
     ///   480p     40 /  28 /   8 MiB
     ///   SD       25 /  18 /   5 MiB
     static func animeEpisodeMinSize(_ r: Resolution, inCinema: Bool, older: Bool) -> UInt64 {
-        let (cinema, normal, olderFloor): (UInt64, UInt64, UInt64)
-        switch r {
-        case .uhd:   (cinema, normal, olderFloor) = (600 * mib, 400 * mib, 150 * mib)
-        case .p1080: (cinema, normal, olderFloor) = (220 * mib, 150 * mib, 50 * mib)
-        case .p720:  (cinema, normal, olderFloor) = (100 * mib, 60 * mib, 20 * mib)
-        case .p480:  (cinema, normal, olderFloor) = (40 * mib, 28 * mib, 8 * mib)
-        case .sd:    (cinema, normal, olderFloor) = (25 * mib, 18 * mib, 5 * mib)
-        }
-        return older ? olderFloor : (inCinema ? cinema : normal)
+        let floors: (cinema: UInt64, normal: UInt64, older: UInt64) = {
+            switch r {
+            case .uhd:   return (600 * mib, 400 * mib, 150 * mib)
+            case .p1080: return (220 * mib, 150 * mib, 50 * mib)
+            case .p720:  return (100 * mib, 60 * mib, 20 * mib)
+            case .p480:  return (40 * mib, 28 * mib, 8 * mib)
+            case .sd:    return (25 * mib, 18 * mib, 5 * mib)
+            }
+        }()
+        return older ? floors.older : (inCinema ? floors.cinema : floors.normal)
     }
 
     /// Combined lookup mirroring the Rust dispatch: `kind == "movie"` uses the
