@@ -52,10 +52,11 @@ final class ResumeStoreTests: XCTestCase {
             metaId: "tt5", streamKey: "k5", positionSeconds: 500, durationSeconds: 6000
         )
         await store.save(progress)
-        XCTAssertNotNil(await store.progress(metaId: "tt5"))
+        let loadedAfterSave = await store.progress(metaId: "tt5")
+        XCTAssertNotNil(loadedAfterSave)
         await store.clear(metaId: "tt5")
-        let loaded = await store.progress(metaId: "tt5")
-        XCTAssertNil(loaded)
+        let loadedAfterClear = await store.progress(metaId: "tt5")
+        XCTAssertNil(loadedAfterClear)
     }
 }
 
