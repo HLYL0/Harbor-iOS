@@ -104,10 +104,10 @@ final class PrivacyBlocklistTests: XCTestCase {
 final class NetworkClientTests: XCTestCase {
 
     private actor ScriptedTransport: HTTPTransport {
-        private var script: [Result<Int, Int>]  // status codes per attempt
+        private var script: [Int]  // status codes per attempt
 
         init(script: [Int]) {
-            self.script = script.map { .success($0) }
+            self.script = script
         }
 
         func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
