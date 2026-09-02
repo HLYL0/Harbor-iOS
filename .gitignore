@@ -16,3 +16,7 @@ Payload/
 *.p12
 *.mobileprovision
 AuthKey_*.p8
+
+# Rust (vendored harbor-core reference crate)
+rust/**/target/
+rust/**/Cargo.lock.bak
