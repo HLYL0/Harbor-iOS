@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 // MARK: - Bounded, TTL-aware, memory-pressure-aware cache (Phase 3, spec §78).
 // Disk-backed (Caches/<namespace>/<key>.json) with an in-memory LRU hot layer.

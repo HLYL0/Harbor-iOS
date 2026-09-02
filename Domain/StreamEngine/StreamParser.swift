@@ -382,7 +382,7 @@ enum StreamParser {
         }
 
         // Season (first match wins).
-        if let match = seasonPatterns.firstMatch(working) {
+        if let match = firstMatch(seasonPatterns, working) {
             info.season = match.season
             info.episode = match.episode
             if match.episode == nil { info.seasonPack = true }
@@ -434,6 +434,10 @@ enum StreamParser {
     }
 
     // Season/episode with explicit first-match-wins ordering (audit §2.2).
+    private static let seasonPatterns = try! NSRegularExpression(
+        pattern: "([0-9]{1,2})xall|S([0-9]{1,2}) ?E[0-9]{1,2}|([0-9]{1,2})x[0-9]{1,2}|(?:Saison|Season)[. _-]?([0-9]{1,2})|\\bS([0-9]{1,2})(?![0-9])",
+        options: [.caseInsensitive])
+
     private static let seasonRXs: [NSRegularExpression] = [
         try! NSRegularExpression(pattern: "([0-9]{1,2})xall", options: [.caseInsensitive]),
         try! NSRegularExpression(pattern: "S([0-9]{1,2}) ?E([0-9]{1,5})", options: [.caseInsensitive]),
@@ -890,20 +894,20 @@ enum StreamParser {
     static func parseCacheFlags(text: String, stream: EngineStream) -> CacheFlagResult {
         var result = CacheFlagResult()
         var cleaned = text
-        cleaned = invisiblesRX.replacingMatches(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
-        cleaned = variationSelectorRX.replacingMatches(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
+        cleaned = invisiblesRX.stringByReplacingMatches(in: cleaned, options: [], range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
+        cleaned = variationSelectorRX.stringByReplacingMatches(in: cleaned, options: [], range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
 
         let addonName = stream.addonName.lowercased()
         let addonId = stream.addonId.lowercased()
 
         // Phase 1 — deny.
-        for match in matches(uncachedBracketRX, in: cleaned) {
+        for match in matchObjects(uncachedBracketRX, in: cleaned) {
             if match.numberOfRanges > 1 {
                 let slug = (cleaned as NSString).substring(with: match.range(at: 1)).lowercased()
                 result.uncached[slug] = true
             }
         }
-        for match in matches(jackettioBareRX, in: cleaned) {
+        for match in matchObjects(jackettioBareRX, in: cleaned) {
             if match.numberOfRanges > 1 {
                 let slug = (cleaned as NSString).substring(with: match.range(at: 1)).lowercased()
                 result.uncached[slug] = true
@@ -926,7 +930,7 @@ enum StreamParser {
         }
 
         // Phase 2 — cached (never overrides deny).
-        for match in matches(cachedBracketRX, in: cleaned) {
+        for match in matchObjects(cachedBracketRX, in: cleaned) {
             if match.numberOfRanges > 1 {
                 let slug = (cleaned as NSString).substring(with: match.range(at: 1)).lowercased()
                 if result.uncached[slug] != true { result.cached[slug] = true }
@@ -1012,6 +1016,11 @@ enum StreamParser {
     private static func matches(_ regex: NSRegularExpression, in text: String) -> [String] {
         let range = NSRange(text.startIndex..., in: text)
         return regex.matches(in: text, range: range).map { (text as NSString).substring(with: $0.range) }
+    }
+
+    /// Full match objects (for cache-flag loops that read capture groups).
+    private static func matchObjects(_ regex: NSRegularExpression, in text: String) -> [NSTextCheckingResult] {
+        regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
     }
 }
 
