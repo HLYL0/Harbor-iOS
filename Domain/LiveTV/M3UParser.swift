@@ -183,7 +183,7 @@ enum M3UParser {
             if line.hasPrefix("#") { continue }   // unknown directive ignored (Harbor parity)
 
             // URL line (with pipe options: url|user-agent=...&referer=...).
-            guard var pending else { continue }
+            guard let pendingEntry = pending else { continue }
             var url = line
             var pipeOptions: [String: String] = [:]
             if let pipe = line.firstIndex(of: "|") {
@@ -197,15 +197,15 @@ enum M3UParser {
                 }
             }
 
-            let attrs = pending.attributes
+            let attrs = pendingEntry.attributes
             let group = attrs["group-title"] ?? stickyGroup
             let tvgName = attrs["tvg-name"]
             let tvgId = attrs["tvg-id"] ?? attrs["tvg-chno"]
-            let title = attrs["tvg-name"] ?? pending.title
-            let displayName = tvgName ?? (pending.title.isEmpty ? "Channel \(channels.count + 1)" : pending.title)
+            let title = attrs["tvg-name"] ?? pendingEntry.title
+            let displayName = tvgName ?? (pendingEntry.title.isEmpty ? "Channel \(channels.count + 1)" : pendingEntry.title)
             let logo = attrs["tvg-logo"] ?? attrs["logo"]
 
-            let idPart = tvgId ?? tvgName ?? (pending.title.isEmpty ? "ch-\(channels.count + 1)" : pending.title)
+            let idPart = tvgId ?? tvgName ?? (pendingEntry.title.isEmpty ? "ch-\(channels.count + 1)" : pendingEntry.title)
             let channelID = "\(baseId)::\(idPart)::\(channels.count)"
 
             // Decorative rows dropped at parse time (Harbor parity).
