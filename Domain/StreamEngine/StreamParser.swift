@@ -187,7 +187,7 @@ enum StreamParser {
         let codec = mapCodec(titleInfo.codecRaw ?? detectCodecRaw(fullText))
         let source = detectSource(fullText)
         let audioCodec = detectAudio(fullText)
-        var channels = detectChannels(fullText) ?? titleInfo.channels
+        var channels = detectChannels(fullText) ?? titleInfo.channels ?? 2
         channels = channels ?? 2
         var bitDepth = detectBitDepth(fullText)
         if bitDepth == nil { bitDepth = titleInfo.bitDepth }

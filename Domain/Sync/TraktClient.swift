@@ -76,7 +76,7 @@ enum TraktConfig {
     static let refreshThresholdSeconds: TimeInterval = 14 * 86400
     static let writeMinIntervalMs = 1000
     /// Scrobble ignores media shorter than this (Harbor STUB_MAX_SEC).
-    static let stubMaxSeconds = 150
+    static let stubMaxSeconds = 150.0
     /// Playback crossing this % sends stop at progress 100 (Trakt auto-marks watched).
     static let watchedMarkPercent = 70.0
 }

@@ -67,7 +67,7 @@ enum SubtitleParser {
     }
 
     static func decodeWindows1252(_ data: Data) -> String? {
-        let cfEncoding = CFStringEncoding(CFStringEncodings.windowsLatin1.rawValue)
+        let cfEncoding = CFStringEncoding(0x0500)   // kCFStringEncodingWindowsLatin1
         let nsEncoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding)
         return String(data: data, encoding: String.Encoding(rawValue: nsEncoding))
     }
