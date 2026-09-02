@@ -304,7 +304,7 @@ enum StreamParser {
 
     // MARK: - 2.2 Title / year / season / episode / group
 
-    private struct TitleInfo {
+    struct TitleInfo {
         var cleanTitle: String = ""
         var year: Int?
         var resolutionRaw: String?
@@ -844,7 +844,7 @@ enum StreamParser {
 
     // MARK: - 2.17 cache flags (two-phase: deny first, then cached)
 
-    private struct CacheFlagResult {
+    struct CacheFlagResult {
         var cached: [String: Bool] = [:]
         var uncached: [String: Bool] = [:]
     }

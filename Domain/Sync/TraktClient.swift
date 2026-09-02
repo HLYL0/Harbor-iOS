@@ -94,8 +94,6 @@ actor TraktClient {
     private var lastWriteAt: Date = .distantPast
     private var refreshInFlight = false
 
-    /// Optional user-provided client secret (enables direct token exchange without the proxy).
-    nonisolated var customClientSecret: String?
 
     init(network: NetworkClient = .shared, keychain: KeychainStore = KeychainStore()) {
         self.network = network
@@ -119,7 +117,7 @@ actor TraktClient {
         request.httpBody = try JSONSerialization.data(withJSONObject: ["client_id": TraktConfig.publicClientID])
         let (data, response) = try await network.data(for: request, policy: .none)
         guard response.statusCode == 200 else {
-            throw response.statusCode == 429 ? .rateLimited(retryAfter: 30) : .invalidResponse
+            throw response.statusCode == 429 ? TraktError.rateLimited(retryAfter: 30) : TraktError.invalidResponse
         }
         let code = try JSONDecoder().decode(DeviceCodeResponse.self, from: data)
         return TraktDeviceCode(
