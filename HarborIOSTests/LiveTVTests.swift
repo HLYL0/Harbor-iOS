@@ -116,6 +116,10 @@ final class CatchupBuilderTests: XCTestCase {
     }
 
     func testFlussonicTransform() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let components = DateComponents(year: 2026, month: 9, day: 2, hour: 14, minute: 30)
+
         let ch = channel(url: "http://host/channel.m3u8?token=abc", attrs: ["catchup": "fs"])
         XCTAssertEqual(CatchupBuilder.detectCatchupType(channel: ch), .flussonic)
         let startMs = calendar.date(from: components)!.timeIntervalSince1970 * 1000
@@ -126,12 +130,20 @@ final class CatchupBuilderTests: XCTestCase {
     }
 
     func testFlussonicIndexStem() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let components = DateComponents(year: 2026, month: 9, day: 2, hour: 14, minute: 30)
+
         let ch = channel(url: "http://host/mpegts.m3u8", attrs: ["catchup-type": "flussonic"])
         let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1000000000, endMs: 1003600000, nowMs: 1000000000)
         XCTAssertEqual(url, "http://host/index-1000000-3600.m3u8")
     }
 
     func testUtcLutcFallback() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let components = DateComponents(year: 2026, month: 9, day: 2, hour: 14, minute: 30)
+
         let ch = channel(url: "http://host/stream.ts", attrs: ["catchup": "default"])
         let startMs = calendar.date(from: components)!.timeIntervalSince1970 * 1000
         let startSec = Int(startMs / 1000)
@@ -140,6 +152,10 @@ final class CatchupBuilderTests: XCTestCase {
     }
 
     func testTemplateSourceFilled() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let components = DateComponents(year: 2026, month: 9, day: 2, hour: 14, minute: 30)
+
         let ch = channel(
             url: "http://host/live/stream.ts",
             attrs: ["catchup": "append", "catchup-source": "http://archive.host/{utc}/{duration}.ts"]
@@ -151,6 +167,10 @@ final class CatchupBuilderTests: XCTestCase {
     }
 
     func testStrftimeTokens() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let components = DateComponents(year: 2026, month: 9, day: 2, hour: 14, minute: 30)
+
         let start = calendar.date(from: components)!.timeIntervalSince1970
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
