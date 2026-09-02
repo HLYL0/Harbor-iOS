@@ -100,6 +100,9 @@ enum CatchupBuilder {
         guard let url = URL(string: channel.url),
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
         let query = components.query.map { "?\($0)" } ?? ""
+        let host = components.host ?? ""
+        let portPart = components.port.map { ":\($0)" } ?? ""
+        let origin = "\(components.scheme ?? "http")://\(host)\(portPart)"
         let path = url.path
         let pattern = #"^(.*)\/([^\/]+)\.(m3u8|ts|mpd)$"#
         if let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive]),
@@ -108,9 +111,9 @@ enum CatchupBuilder {
             var stem = (path as NSString).substring(with: match.range(at: 2))
             let ext = (path as NSString).substring(with: match.range(at: 3)).lowercased()
             if stem == "mpegts" || stem == "mono" { stem = "index" }
-            return "\(dir)/\(stem)-\(start)-\(duration).\(ext)\(query)"
+            return "\(origin)\(dir)/\(stem)-\(start)-\(duration).\(ext)\(query)"
         }
-        return "\(path)/archive-\(start)-\(duration).ts\(query)"
+        return "\(origin)\(path)/archive-\(start)-\(duration).ts\(query)"
     }
 
     /// Xtream: {host}/timeshift/{user}/{pass}/{ceil(dur/60)}/{Y-m-d:H-M UTC of start}/{id}.ts

@@ -216,9 +216,10 @@ enum SkipSegmentMerger {
         adCorpus: [SkipSegment] = [],
         durationSeconds: Double
     ) -> [SkipSegment] {
+        // Harbor priority: [ad, aniSkip, introDb, chapters], first-wins on overlap.
         let ordered = adCorpus + aniSkip + introDB + chapters
         var accepted: [SkipSegment] = []
-        for candidate in ordered.sorted(by: { $0.startSeconds < $1.startSeconds }) {
+        for candidate in ordered {
             let length = candidate.endSeconds - candidate.startSeconds
             guard length >= PlaybackPolicy.skipSegmentMinSeconds,
                   length <= PlaybackPolicy.skipSegmentMaxSeconds,

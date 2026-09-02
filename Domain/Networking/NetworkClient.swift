@@ -88,23 +88,34 @@ actor NetworkClient {
         var lastError: Error = NetworkClientError.invalidResponse
         while attempt < policy.maxAttempts {
             attempt += 1
+            var outcome: (Data, HTTPURLResponse)?
+            var failure: Error?
             do {
-                let (data, response) = try await transport.data(for: request)
-                let status = response.statusCode
-                if (200..<300).contains(status) {
-                    return (data, response)
-                }
-                lastError = NetworkClientError.httpStatus(status)
-                if !policy.retryableStatusCodes.contains(status) || attempt >= policy.maxAttempts {
-                    throw lastError
-                }
+                outcome = try await transport.data(for: request)
             } catch is CancellationError {
                 throw CancellationError()
             } catch {
-                lastError = error
-                if !policy.retryOnNetworkError || attempt >= policy.maxAttempts {
-                    throw error
+                failure = error
+            }
+
+            if let outcome {
+                let status = outcome.1.statusCode
+                if (200..<300).contains(status) {
+                    return outcome
                 }
+                // Non-retryable status throws OUTSIDE the do-catch so it is never
+                // swallowed by the retry handler (404 must not be retried).
+                guard policy.retryableStatusCodes.contains(status) else {
+                    throw NetworkClientError.httpStatus(status)
+                }
+                lastError = NetworkClientError.httpStatus(status)
+            } else if let failure {
+                lastError = failure
+                guard policy.retryOnNetworkError else { throw failure }
+            }
+
+            if attempt >= policy.maxAttempts {
+                throw lastError
             }
             try await Task.sleep(nanoseconds: UInt64(delaySeconds(attempt: attempt, policy: policy) * 1_000_000_000))
         }

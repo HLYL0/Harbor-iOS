@@ -362,8 +362,9 @@ final class ScoringTests: XCTestCase {
         XCTAssertEqual(picker.primary?.tier, .uhd)
         XCTAssertEqual(picker.primary?.score, 90.0)
 
-        // byTier holds the first stream per tier; Rust BTreeMap serializes keys lexicographically.
-        XCTAssertEqual(Array(picker.byTier.keys), ["1080p", "4K", "720p"])
+        // byTier holds the first stream per tier; Swift dictionaries are unordered,
+        // so compare sorted keys (Rust's BTreeMap ordering is a serialization detail).
+        XCTAssertEqual(picker.byTier.keys.sorted(), ["1080p", "4K", "720p"])
         XCTAssertEqual(picker.byTier["4K"]?.score, 90.0)
         XCTAssertEqual(picker.byTier["1080p"]?.score, 30.0)
         XCTAssertEqual(picker.byTier["720p"]?.score, 50.0)

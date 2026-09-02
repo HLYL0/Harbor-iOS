@@ -91,6 +91,10 @@ actor ResumeStore: ResumeStoring {
         if p.durationSeconds > 0, p.durationSeconds < PlaybackPolicy.stubMaxSeconds, !p.watched {
             return
         }
+        // Minimum position 5s (Harbor parity): below-threshold positions are never saved.
+        if !p.watched, p.positionSeconds < PlaybackPolicy.minimumResumePosition {
+            return
+        }
         // Dedupe: 1.5s delta on non-terminal saves.
         if !p.watched, p.positionSeconds >= PlaybackPolicy.minimumResumePosition {
             let now = Date()

@@ -118,20 +118,25 @@ final class CatchupBuilderTests: XCTestCase {
     func testFlussonicTransform() {
         let ch = channel(url: "http://host/channel.m3u8?token=abc", attrs: ["catchup": "fs"])
         XCTAssertEqual(CatchupBuilder.detectCatchupType(channel: ch), .flussonic)
-        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1756800000000, endMs: 1756803600000, nowMs: 1756800000000)
-        XCTAssertEqual(url, "http://host/channel-1756800000-3600.m3u8?token=abc")
+        let startMs = calendar.date(from: components)!.timeIntervalSince1970 * 1000
+        let endMs = startMs + 3600 * 1000
+        let startSec = Int(startMs / 1000)
+        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: Int64(startMs), endMs: Int64(endMs), nowMs: Int64(startMs))
+        XCTAssertEqual(url, "http://host/channel-\(startSec)-3600.m3u8?token=abc")
     }
 
     func testFlussonicIndexStem() {
         let ch = channel(url: "http://host/mpegts.m3u8", attrs: ["catchup-type": "flussonic"])
-        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1000000000, endMs: 1000003600000, nowMs: 1000000000)
+        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1000000000, endMs: 1003600000, nowMs: 1000000000)
         XCTAssertEqual(url, "http://host/index-1000000-3600.m3u8")
     }
 
     func testUtcLutcFallback() {
         let ch = channel(url: "http://host/stream.ts", attrs: ["catchup": "default"])
-        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1756800000000, endMs: 1756803600000, nowMs: 1756800300000)
-        XCTAssertEqual(url, "http://host/stream.ts?utc=1756800000&lutc=1756800300")
+        let startMs = calendar.date(from: components)!.timeIntervalSince1970 * 1000
+        let startSec = Int(startMs / 1000)
+        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: Int64(startMs), endMs: Int64(startMs + 3600 * 1000), nowMs: Int64(startMs + 300 * 1000))
+        XCTAssertEqual(url, "http://host/stream.ts?utc=\(startSec)&lutc=\(startSec + 300)")
     }
 
     func testTemplateSourceFilled() {
@@ -139,16 +144,25 @@ final class CatchupBuilderTests: XCTestCase {
             url: "http://host/live/stream.ts",
             attrs: ["catchup": "append", "catchup-source": "http://archive.host/{utc}/{duration}.ts"]
         )
-        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: 1756800000000, endMs: 1756803600000, nowMs: 1756800000000)
-        XCTAssertEqual(url, "http://archive.host/1756800000/3600.ts")
+        let startMs = calendar.date(from: components)!.timeIntervalSince1970 * 1000
+        let startSec = Int(startMs / 1000)
+        let url = CatchupBuilder.buildCatchupUrl(channel: ch, startMs: Int64(startMs), endMs: Int64(startMs + 3600 * 1000), nowMs: Int64(startMs))
+        XCTAssertEqual(url, "http://archive.host/\(startSec)/3600.ts")
     }
 
     func testStrftimeTokens() {
+        let start = calendar.date(from: components)!.timeIntervalSince1970
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        let day = formatter.string(from: Date(timeIntervalSince1970: start))
+        formatter.dateFormat = "HHmm"
+        let time = formatter.string(from: Date(timeIntervalSince1970: start))
         let out = CatchupBuilder.fillTemplate(
             "http://host/${utc:Y}-${utc:m}-${utc:d}/${utc:H}${utc:M}.ts",
-            start: 1756800000, end: 1756803600, now: 1756800000, duration: 3600
+            start: start, end: start + 3600, now: start, duration: 3600
         )
-        XCTAssertEqual(out, "http://host/2026-09-02/1430.ts")
+        XCTAssertEqual(out, "http://host/\(day)/\(time).ts")
     }
 
     func testCatchupDaysNotEnforced() {

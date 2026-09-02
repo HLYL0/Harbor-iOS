@@ -55,7 +55,7 @@ targets:
     sources:
       - HarborIOSTests
     resources:
-      - Tests/Fixtures
+      - path: Tests/Fixtures/stream-engine-vectors.json
     dependencies:
       - target: HarborIOS
     settings:

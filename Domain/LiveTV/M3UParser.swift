@@ -54,10 +54,25 @@ enum M3UParser {
         var duration: Double?
         var title = ""
 
+        // Harbor's attrTitleSplit: the title starts at the first comma AFTER the
+        // last closing quote. Attribute parsing must not see the title portion.
+        var attributeString = raw
+        var titleString = ""
+        if let lastQuote = raw.lastIndex(of: "\"") {
+            let afterQuote = raw[raw.index(after: lastQuote)...]
+            if let comma = afterQuote.firstIndex(of: ",") {
+                attributeString = String(raw[..<comma])
+                titleString = String(raw[raw.index(after: comma)...]).trimmingCharacters(in: .whitespaces)
+            }
+        } else if let comma = raw.firstIndex(of: ",") {
+            attributeString = String(raw[..<comma])
+            titleString = String(raw[raw.index(after: comma)...]).trimmingCharacters(in: .whitespaces)
+        }
+
         var tokens = [String]()
         var current = ""
         var inQuotes = false
-        for char in raw {
+        for char in attributeString {
             if char == "\"" {
                 inQuotes.toggle()
                 current.append(char)
@@ -105,10 +120,7 @@ enum M3UParser {
             }
             index += 1
         }
-        // Title = after the first comma following the last closing quote.
-        if let comma = raw.firstIndex(of: ",") {
-            title = String(raw[raw.index(after: comma)...]).trimmingCharacters(in: .whitespaces)
-        }
+        title = titleString
         return (duration, attributes, title)
     }
 
@@ -241,7 +253,9 @@ enum M3UParser {
               let queryItems = components.queryItems,
               let username = queryItems.first(where: { $0.name == "username" })?.value,
               let password = queryItems.first(where: { $0.name == "password" })?.value,
-              let origin = components.host.flatMap({ "\(components.scheme ?? "http")://\($0)" }) else {
+              let host = components.host ?? ""
+              let portPart = components.port.map { ":\($0)" } ?? ""
+              let origin = "\(components.scheme ?? "http")://\(host)\(portPart)" else {
             return []
         }
         let lastPath = url.lastPathComponent
