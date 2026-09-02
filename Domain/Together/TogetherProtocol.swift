@@ -206,10 +206,20 @@ enum TogetherProtocol {
 
     // MARK: - Message models (protocol.ts, sanitized client-side before send)
 
+    struct EpisodeRef: Codable, Equatable, Sendable {
+        var season: Int
+        var episode: Int
+
+        init(season: Int, episode: Int) {
+            self.season = season
+            self.episode = episode
+        }
+    }
+
     struct SyncState: Codable, Equatable, Sendable {
         var mediaId: String?
         var mediaTitle: String?
-        var episode: (season: Int, episode: Int)?
+        var episode: EpisodeRef?
         var posterUrl: String?
         var positionSeconds: Double
         var playing: Bool

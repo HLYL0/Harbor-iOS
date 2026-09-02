@@ -7,41 +7,41 @@ import CryptoKit
 // PBKDF2-SHA256 (Harbor uses SHA-256 with a static salt — brute-forceable).
 // Backup import still accepts Harbor's SHA-256 hash format for compatibility.
 
-public struct UserProfile: Codable, Equatable, Identifiable, Sendable {
-    public var id: String
-    public var name: String
-    public var avatar: String?
-    public var isPrimary: Bool
+struct UserProfile: Codable, Equatable, Identifiable, Sendable {
+    var id: String
+    var name: String
+    var avatar: String?
+    var isPrimary: Bool
     /// Which profile's Stremio account this profile uses (Harbor shareStremioWith).
-    public var shareStremioWith: String?
-    public var passwordHash: String?
-    public var hideContent: HideContent
-    public var lockedTabs: [String]
-    public var kid: KidSettings?
+    var shareStremioWith: String?
+    var passwordHash: String?
+    var hideContent: HideContent
+    var lockedTabs: [String]
+    var kid: KidSettings?
 
-    public struct HideContent: Codable, Equatable, Sendable {
-        public var adult: Bool
-        public var titles: Bool
+    struct HideContent: Codable, Equatable, Sendable {
+        var adult: Bool
+        var titles: Bool
 
-        public init(adult: Bool = true, titles: Bool = false) {
+        init(adult: Bool = true, titles: Bool = false) {
             self.adult = adult
             self.titles = titles
         }
     }
 
-    public struct KidSettings: Codable, Equatable, Sendable {
-        public var age: Int?
-        public var curfewMinutes: Int
-        public var parentPinHash: String?
+    struct KidSettings: Codable, Equatable, Sendable {
+        var age: Int?
+        var curfewMinutes: Int
+        var parentPinHash: String?
 
-        public init(age: Int? = nil, curfewMinutes: Int = 0, parentPinHash: String? = nil) {
+        init(age: Int? = nil, curfewMinutes: Int = 0, parentPinHash: String? = nil) {
             self.age = age
             self.curfewMinutes = curfewMinutes
             self.parentPinHash = parentPinHash
         }
     }
 
-    public init(
+    init(
         id: String = UUID().uuidString,
         name: String,
         avatar: String? = nil,
@@ -63,30 +63,30 @@ public struct UserProfile: Codable, Equatable, Identifiable, Sendable {
         self.kid = kid
     }
 
-    public var isLocked: Bool {
+    var isLocked: Bool {
         passwordHash != nil && !lockedTabs.isEmpty
     }
 }
 
 // MARK: - PIN hashing
 
-public enum ProfilePIN {
+enum ProfilePIN {
 
     /// Harbor's exact scheme (kept ONLY for importing Harbor backups):
     /// SHA-256("harbor-profile-v1|" + pin), hex-encoded.
-    public static func harborLegacyHash(pin: String) -> String {
+    static func harborLegacyHash(pin: String) -> String {
         let salted = "harbor-profile-v1|\(pin)"
         let digest = SHA256.hash(data: Data(salted.utf8))
         return digest.map { String(format: "%02x", $0) }.joined()
     }
 
-    public static func isHarborLegacyHash(_ hash: String) -> Bool {
+    static func isHarborLegacyHash(_ hash: String) -> Bool {
         hash.count == 64 && hash.allSatisfy { $0.isHexDigit }
     }
 
     /// Native scheme: PBKDF2-SHA256, 100k iterations, per-hash random salt.
     /// Format: "pbkdf2sha256:<iterations>:<salt-b64>:<hash-b64>".
-    public static func hash(pin: String) -> String {
+    static func hash(pin: String) -> String {
         var saltBytes = [UInt8](repeating: 0, count: 16)
         let result = SecRandomCopyBytes(kSecRandomDefault, saltBytes.count, &saltBytes)
         assert(result == errSecSuccess)
@@ -97,7 +97,7 @@ public enum ProfilePIN {
     }
 
     /// Verifies either scheme; legacy hashes verify against Harbor's static-salt format.
-    public static func verify(pin: String, hash: String) -> Bool {
+    static func verify(pin: String, hash: String) -> Bool {
         let parts = hash.split(separator: ":").map(String.init)
         if parts.count == 4, parts[0] == "pbkdf2sha256",
            let iterations = Int(parts[1]),
@@ -131,22 +131,22 @@ public enum ProfilePIN {
 
 // MARK: - Profile store
 
-public protocol ProfileStoring: Sendable {
+protocol ProfileStoring: Sendable {
     func profiles() async -> [UserProfile]
     func activeProfileId() async -> String
     func setActive(_ id: String) async
     func save(_ profiles: [UserProfile]) async throws
 }
 
-public actor ProfileStore: ProfileStoring {
+actor ProfileStore: ProfileStoring {
 
-    public static let shared = ProfileStore()
+    static let shared = ProfileStore()
 
     private let cache: AppCache
     private var memory: (profiles: [UserProfile], activeId: String)?
     private var unlockedProfiles: Set<String> = []
 
-    public init(cache: AppCache = .shared) {
+    init(cache: AppCache = .shared) {
         self.cache = cache
     }
 
@@ -163,15 +163,15 @@ public actor ProfileStore: ProfileStoring {
         return memory!
     }
 
-    public func profiles() async -> [UserProfile] {
+    func profiles() async -> [UserProfile] {
         state().profiles
     }
 
-    public func activeProfileId() async -> String {
+    func activeProfileId() async -> String {
         state().activeId
     }
 
-    public func setActive(_ id: String) async {
+    func setActive(_ id: String) async {
         let current = state()
         memory = (current.profiles, id)
         persist(memory!)
@@ -179,7 +179,7 @@ public actor ProfileStore: ProfileStoring {
         unlockedProfiles.removeAll()
     }
 
-    public func save(_ profiles: [UserProfile]) async throws {
+    func save(_ profiles: [UserProfile]) async throws {
         let current = state()
         memory = (profiles, current.activeId)
         persist(memory!)
@@ -191,16 +191,16 @@ public actor ProfileStore: ProfileStoring {
 
     // MARK: - Lock state (Harbor: session-scoped unlock)
 
-    public func unlock(_ profileId: String) {
+    func unlock(_ profileId: String) {
         unlockedProfiles.insert(profileId)
     }
 
-    public func isUnlocked(_ profileId: String) -> Bool {
+    func isUnlocked(_ profileId: String) -> Bool {
         unlockedProfiles.contains(profileId)
     }
 
     /// Tab access gate: locked tabs require the profile to be unlocked this session.
-    public func canAccess(tab: String, profile: UserProfile) -> Bool {
+    func canAccess(tab: String, profile: UserProfile) -> Bool {
         if !profile.lockedTabs.contains(tab) { return true }
         return isUnlocked(profile.id)
     }
@@ -208,25 +208,25 @@ public actor ProfileStore: ProfileStoring {
 
 // MARK: - Kid curfew (Harbor curfew.ts: daily play-time budget)
 
-public struct CurfewState: Codable, Equatable, Sendable {
-    public var date: String        // "yyyy-MM-dd"
-    public var seconds: Int
-    public var unlocked: Bool
+struct CurfewState: Codable, Equatable, Sendable {
+    var date: String        // "yyyy-MM-dd"
+    var seconds: Int
+    var unlocked: Bool
 
-    public init(date: String, seconds: Int = 0, unlocked: Bool = false) {
+    init(date: String, seconds: Int = 0, unlocked: Bool = false) {
         self.date = date
         self.seconds = seconds
         self.unlocked = unlocked
     }
 }
 
-public actor CurfewTracker {
+actor CurfewTracker {
 
-    public static let shared = CurfewTracker()
+    static let shared = CurfewTracker()
 
     private let cache: AppCache
 
-    public init(cache: AppCache = .shared) {
+    init(cache: AppCache = .shared) {
         self.cache = cache
     }
 
@@ -237,7 +237,7 @@ public actor CurfewTracker {
         return formatter.string(from: Date())
     }
 
-    public func state(profileId: String) -> CurfewState {
+    func state(profileId: String) -> CurfewState {
         let key = todayKey()
         if let stored: CurfewState = cache.get(CurfewState.self, key: "curfew-\(key)", namespace: "curfew/\(profileId)") {
             return stored
@@ -246,7 +246,7 @@ public actor CurfewTracker {
     }
 
     /// Adds played seconds; returns false when the budget is exhausted.
-    public func add(seconds: Int, budgetMinutes: Int, profileId: String) -> Bool {
+    func add(seconds: Int, budgetMinutes: Int, profileId: String) -> Bool {
         var current = state(profileId: profileId)
         if current.unlocked { return true }
         let budgetSeconds = budgetMinutes * 60
@@ -256,7 +256,7 @@ public actor CurfewTracker {
         return current.seconds <= budgetSeconds
     }
 
-    public func unlockToday(profileId: String) {
+    func unlockToday(profileId: String) {
         var current = state(profileId: profileId)
         current.unlocked = true
         cache.set(current, key: "curfew-\(todayKey())", namespace: "curfew/\(profileId)", ttl: nil)
