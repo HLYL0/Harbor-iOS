@@ -253,11 +253,12 @@ enum M3UParser {
               let queryItems = components.queryItems,
               let username = queryItems.first(where: { $0.name == "username" })?.value,
               let password = queryItems.first(where: { $0.name == "password" })?.value,
-              let host = components.host ?? ""
-              let portPart = components.port.map { ":\($0)" } ?? ""
-              let origin = "\(components.scheme ?? "http")://\(host)\(portPart)" else {
+              let scheme = components.scheme,
+              let host = components.host else {
             return []
         }
+        let portPart = components.port.map { ":\($0)" } ?? ""
+        let origin = "\(scheme)://\(host)\(portPart)"
         let lastPath = url.lastPathComponent
         guard lastPath == "get.php" || lastPath == "player_api.php" else { return [] }
         var out: [String] = []
