@@ -369,6 +369,9 @@ struct TrustOptions: Codable, Equatable, Sendable {
     var expectedSeason: Int?
     var expectedEpisode: Int?
     var releaseDate: String?
+    /// Generator-provided relative day offset; the parity harness re-derives an
+    /// absolute releaseDate at replay time so cinema-window fixtures never age out.
+    var releaseDateDaysAgo: Int?
     var allowSeasonPacks: Bool
     var allowCam: Bool
     var allowSizeOutliers: Bool
@@ -382,6 +385,7 @@ struct TrustOptions: Codable, Equatable, Sendable {
     init(
         kind: String? = nil, expectedTitle: String? = nil, expectedYear: Int? = nil,
         expectedSeason: Int? = nil, expectedEpisode: Int? = nil, releaseDate: String? = nil,
+        releaseDateDaysAgo: Int? = nil,
         allowSeasonPacks: Bool = false, allowCam: Bool = false, allowSizeOutliers: Bool = false,
         strict: Bool = true, disabled: Bool = false, preferredLanguages: [String] = [],
         preferredAudioLangs: [String] = [], requirePreferredLanguage: Bool = false,
@@ -389,7 +393,8 @@ struct TrustOptions: Codable, Equatable, Sendable {
     ) {
         self.kind = kind; self.expectedTitle = expectedTitle; self.expectedYear = expectedYear
         self.expectedSeason = expectedSeason; self.expectedEpisode = expectedEpisode
-        self.releaseDate = releaseDate; self.allowSeasonPacks = allowSeasonPacks
+        self.releaseDate = releaseDate; self.releaseDateDaysAgo = releaseDateDaysAgo
+        self.allowSeasonPacks = allowSeasonPacks
         self.allowCam = allowCam; self.allowSizeOutliers = allowSizeOutliers
         self.strict = strict; self.disabled = disabled
         self.preferredLanguages = preferredLanguages

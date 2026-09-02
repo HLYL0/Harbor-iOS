@@ -470,6 +470,9 @@ enum StreamParser {
             title = String(title[..<range.lowerBound])
         } else if let range = title.range(of: "\\d{1,2}x\\d{1,3}", options: .regularExpression) {
             title = String(title[..<range.lowerBound])
+        } else if let range = title.range(of: "(?<=[.\\s])S\\d{1,2}(?=[.\\s])", options: .regularExpression) {
+            // ptt parity: bare season token ends the title (e.g. "Breaking.Bad.S01.Complete.…").
+            title = String(title[..<range.lowerBound])
         }
         // Cut at quality stop tokens.
         if let range = title.range(of: "(1080p|720p|480p|2160p|4k|UHD|HDR|DV|WEB-DL|WEBRip|BluRay|BDRip|HDRip|DVDRip|HDTV|REMUX|REMUX|HDTS|HDCAM|CAM|TS|TC|SCR|PROPER|REPACK)", options: [.regularExpression, .caseInsensitive]) {

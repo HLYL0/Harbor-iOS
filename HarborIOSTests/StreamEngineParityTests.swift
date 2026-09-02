@@ -157,7 +157,8 @@ final class StreamEngineParityTests: XCTestCase {
                 parsed = applyPatches(fixture.patches?.dropFirst(index).first ?? [], to: parsed)
                 return parsed
             }
-            let (kept, rejected) = TrustGate.applyTrust(streams: inputs, opts: fixture.options)
+            let options = resolvedTrustOptions(fixture.options)
+            let (kept, rejected) = TrustGate.applyTrust(streams: inputs, opts: options)
             XCTAssertEqual(
                 rejected.map(\.reason),
                 fixture.rejected.map(\.reason),
@@ -167,6 +168,19 @@ final class StreamEngineParityTests: XCTestCase {
             checked += 1
         }
         print("TRUST PARITY: \(checked) fixtures verified against harbor-core")
+    }
+
+    /// Re-derives the absolute releaseDate from the generator's relative day
+    /// offset, keeping cinema-window fixtures time-immune.
+    private func resolvedTrustOptions(_ options: TrustOptions) -> TrustOptions {
+        var resolved = options
+        guard let daysAgo = options.releaseDateDaysAgo else { return resolved }
+        let date = Calendar(identifier: .gregorian).date(byAdding: .day, value: -daysAgo, to: Date())!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        resolved.releaseDate = formatter.string(from: date)
+        return resolved
     }
 
     /// JSON-space patch application: encodes the parsed stream to JSON, walks the
