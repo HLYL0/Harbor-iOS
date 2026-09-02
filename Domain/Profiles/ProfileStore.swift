@@ -1,5 +1,6 @@
 import Foundation
 import CryptoKit
+import CommonCrypto
 
 // MARK: - Profiles + PIN (Phase 16, audit sync-storage.md §8).
 // Harbor parity: per-profile settings, session-scoped unlock, kid curfew.
@@ -114,17 +115,21 @@ enum ProfilePIN {
 
     static func pbkdf2SHA256(password: String, salt: Data, iterations: Int) -> Data {
         var derived = Data(repeating: 0, count: 32)
-        derived.withUnsafeMutableBytes { buffer in
-            CCKeyDerivationPBKDF(
-                CCPBKDFAlgorithm(kCCPBKDF2),
-                password, password.utf8.count,
-                (salt as NSData).bytes.bindMemory(to: UInt8.self, capacity: salt.count), salt.count,
-                CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256),
-                UInt32(iterations),
-                buffer.baseAddress?.assumingMemoryBound(to: UInt8.self),
-                32
-            )
+        let status: Int32 = derived.withUnsafeMutableBytes { output in
+            salt.withUnsafeBytes { saltBytes in
+                password.withCString { passwordPtr in
+                    CCKeyDerivationPBKDF(
+                        CCPBKDFAlgorithm(kCCPBKDF2),
+                        passwordPtr, password.utf8.count,
+                        saltBytes.baseAddress?.assumingMemoryBound(to: UInt8.self), salt.count,
+                        CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256),
+                        UInt32(iterations),
+                        output.baseAddress?.assumingMemoryBound(to: UInt8.self), 32
+                    )
+                }
+            }
         }
+        guard status == kCCSuccess else { return Data() }
         return derived
     }
 }

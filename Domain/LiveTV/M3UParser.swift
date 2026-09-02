@@ -183,7 +183,7 @@ enum M3UParser {
             if line.hasPrefix("#") { continue }   // unknown directive ignored (Harbor parity)
 
             // URL line (with pipe options: url|user-agent=...&referer=...).
-            guard let pending else { continue }
+            guard var pending else { continue }
             var url = line
             var pipeOptions: [String: String] = [:]
             if let pipe = line.firstIndex(of: "|") {
