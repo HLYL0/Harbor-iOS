@@ -6,23 +6,23 @@ import Foundation
 // segments, outros only after 50% of duration, active window uses 0.75s tail margin.
 // MANUAL pill only — Harbor has no auto-skip (FACT).
 
-public enum SkipKind: String, Codable, Sendable, Equatable {
+enum SkipKind: String, Codable, Sendable, Equatable {
     case intro, outro, recap, ad
 }
 
-public enum SkipSource: String, Codable, Sendable, Equatable {
+enum SkipSource: String, Codable, Sendable, Equatable {
     case aniskip, introdb, chapters, adcorpus
 }
 
-public struct SkipSegment: Codable, Equatable, Sendable, Identifiable {
-    public var startSeconds: Double
-    public var endSeconds: Double
-    public var kind: SkipKind
-    public var source: SkipSource
+struct SkipSegment: Codable, Equatable, Sendable, Identifiable {
+    var startSeconds: Double
+    var endSeconds: Double
+    var kind: SkipKind
+    var source: SkipSource
 
-    public var id: String { "\(source.rawValue)-\(kind.rawValue)-\(Int(startSeconds))" }
+    var id: String { "\(source.rawValue)-\(kind.rawValue)-\(Int(startSeconds))" }
 
-    public init(startSeconds: Double, endSeconds: Double, kind: SkipKind, source: SkipSource) {
+    init(startSeconds: Double, endSeconds: Double, kind: SkipKind, source: SkipSource) {
         self.startSeconds = startSeconds
         self.endSeconds = endSeconds
         self.kind = kind
@@ -30,12 +30,12 @@ public struct SkipSegment: Codable, Equatable, Sendable, Identifiable {
     }
 }
 
-public struct ChapterInfo: Codable, Equatable, Sendable {
-    public var title: String
-    public var startSeconds: Double
-    public var endSeconds: Double?
+struct ChapterInfo: Codable, Equatable, Sendable {
+    var title: String
+    var startSeconds: Double
+    var endSeconds: Double?
 
-    public init(title: String, startSeconds: Double, endSeconds: Double? = nil) {
+    init(title: String, startSeconds: Double, endSeconds: Double? = nil) {
         self.title = title
         self.startSeconds = startSeconds
         self.endSeconds = endSeconds
@@ -44,20 +44,20 @@ public struct ChapterInfo: Codable, Equatable, Sendable {
 
 // MARK: - Providers
 
-public protocol SkipIntroProviding: Sendable {
+protocol SkipIntroProviding: Sendable {
     func segments(media: SkipIntroMedia) async -> [SkipSegment]
 }
 
-public struct SkipIntroMedia: Sendable {
-    public var imdbId: String?
-    public var tmdbId: Int?
-    public var malId: Int?
-    public var kitsuId: String?
-    public var season: Int?
-    public var episode: Int?
-    public var durationSeconds: Double
+struct SkipIntroMedia: Sendable {
+    var imdbId: String?
+    var tmdbId: Int?
+    var malId: Int?
+    var kitsuId: String?
+    var season: Int?
+    var episode: Int?
+    var durationSeconds: Double
 
-    public init(
+    init(
         imdbId: String? = nil, tmdbId: Int? = nil, malId: Int? = nil, kitsuId: String? = nil,
         season: Int? = nil, episode: Int? = nil, durationSeconds: Double
     ) {
@@ -72,12 +72,12 @@ public struct SkipIntroMedia: Sendable {
 }
 
 /// AniSkip v2 (audit §6.1): GET https://api.aniskip.com/v2/skip-times/{malId}/{episode}?types=op&types=ed&types=mixed-op&types=mixed-ed&types=recap&episodeLength={sec}
-public actor AniSkipProvider: SkipIntroProviding {
+actor AniSkipProvider: SkipIntroProviding {
 
-    public static let shared = AniSkipProvider()
+    static let shared = AniSkipProvider()
     private let network: NetworkClient
 
-    public init(network: NetworkClient = .shared) {
+    init(network: NetworkClient = .shared) {
         self.network = network
     }
 
@@ -91,7 +91,7 @@ public actor AniSkipProvider: SkipIntroProviding {
         var results: [Result]?
     }
 
-    public func segments(media: SkipIntroMedia) async -> [SkipSegment] {
+    func segments(media: SkipIntroMedia) async -> [SkipSegment] {
         guard let malId = media.malId, let episode = media.episode else { return [] }
         var components = URLComponents(string: "https://api.aniskip.com/v2/skip-times/\(malId)/\(episode)")!
         components.queryItems = [
@@ -128,12 +128,12 @@ public actor AniSkipProvider: SkipIntroProviding {
 
 /// TheIntroDB v2 (audit §6.2): GET https://api.theintrodb.org/v2/media?tmdb_id=... or ?imdb_id=tt...
 /// spans in ms: intro, recap, credits, preview (credits+preview → outro; missing end → duration).
-public actor TheIntroDBProvider: SkipIntroProviding {
+actor TheIntroDBProvider: SkipIntroProviding {
 
-    public static let shared = TheIntroDBProvider()
+    static let shared = TheIntroDBProvider()
     private let network: NetworkClient
 
-    public init(network: NetworkClient = .shared) {
+    init(network: NetworkClient = .shared) {
         self.network = network
     }
 
@@ -146,7 +146,7 @@ public actor TheIntroDBProvider: SkipIntroProviding {
         var spans: [Span]?
     }
 
-    public func segments(media: SkipIntroMedia) async -> [SkipSegment] {
+    func segments(media: SkipIntroMedia) async -> [SkipSegment] {
         var components = URLComponents(string: "https://api.theintrodb.org/v2/media")!
         var items: [URLQueryItem] = []
         if let tmdbId = media.tmdbId {
@@ -178,7 +178,7 @@ public actor TheIntroDBProvider: SkipIntroProviding {
 
 // MARK: - Chapter classification (audit §6.3, port of chapters.ts)
 
-public enum ChapterSkipClassifier {
+enum ChapterSkipClassifier {
 
     static let recapRegex = try! NSRegularExpression(pattern: "recap|previously", options: [.caseInsensitive])
     static let introRegex = try! NSRegularExpression(
@@ -186,7 +186,7 @@ public enum ChapterSkipClassifier {
     static let outroRegex = try! NSRegularExpression(
         pattern: "ending|ed\\b|outro|end credits|closing credits|credits", options: [.caseInsensitive])
 
-    public static func segments(from chapters: [ChapterInfo], durationSeconds: Double) -> [SkipSegment] {
+    static func segments(from chapters: [ChapterInfo], durationSeconds: Double) -> [SkipSegment] {
         var out: [SkipSegment] = []
         for (index, chapter) in chapters.enumerated() {
             let end = chapter.endSeconds ?? (index + 1 < chapters.count ? chapters[index + 1].startSeconds : durationSeconds)
@@ -207,9 +207,9 @@ public enum ChapterSkipClassifier {
 
 // MARK: - Merge (audit §6.5: priority ad > aniSkip > introDb > chapters, first-wins on overlap)
 
-public enum SkipSegmentMerger {
+enum SkipSegmentMerger {
 
-    public static func merge(
+    static func merge(
         aniSkip: [SkipSegment],
         introDB: [SkipSegment],
         chapters: [SkipSegment],
@@ -237,7 +237,7 @@ public enum SkipSegmentMerger {
     }
 
     /// Harbor's activeSegment: position ≥ start && position < end − 0.75s.
-    public static func activeSegment(at position: Double, in segments: [SkipSegment]) -> SkipSegment? {
+    static func activeSegment(at position: Double, in segments: [SkipSegment]) -> SkipSegment? {
         segments.first {
             position >= $0.startSeconds && position < $0.endSeconds - PlaybackPolicy.skipSegmentActiveTailMargin
         }

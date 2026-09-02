@@ -4,19 +4,19 @@ import Foundation
 // Tick 4s while playing, force-save on pause/end, min 5s position, 150s stub cap,
 // dedupe 1.5s delta, watched threshold 0.85 (ended always counts as watched).
 
-public struct PlaybackProgress: Codable, Equatable, Sendable {
-    public var metaId: String
-    public var streamKey: String
-    public var url: String?
-    public var title: String?
-    public var poster: String?
-    public var metaType: String
-    public var positionSeconds: Double
-    public var durationSeconds: Double
-    public var watched: Bool
-    public var updatedAt: Date
+struct PlaybackProgress: Codable, Equatable, Sendable {
+    var metaId: String
+    var streamKey: String
+    var url: String?
+    var title: String?
+    var poster: String?
+    var metaType: String
+    var positionSeconds: Double
+    var durationSeconds: Double
+    var watched: Bool
+    var updatedAt: Date
 
-    public init(
+    init(
         metaId: String, streamKey: String, url: String? = nil, title: String? = nil,
         poster: String? = nil, metaType: String = "movie",
         positionSeconds: Double = 0, durationSeconds: Double = 0,
@@ -34,27 +34,27 @@ public struct PlaybackProgress: Codable, Equatable, Sendable {
         self.updatedAt = updatedAt
     }
 
-    public var resumePosition: Double? {
+    var resumePosition: Double? {
         guard !watched, durationSeconds > PlaybackPolicy.stubMaxSeconds,
               positionSeconds >= PlaybackPolicy.minimumResumePosition else { return nil }
         return positionSeconds
     }
 }
 
-public protocol ResumeStoring: Sendable {
+protocol ResumeStoring: Sendable {
     func progress(metaId: String) async -> PlaybackProgress?
     func save(_ progress: PlaybackProgress) async
     func clear(metaId: String) async
 }
 
-public actor ResumeStore: ResumeStoring {
+actor ResumeStore: ResumeStoring {
 
-    public static let shared = ResumeStore()
+    static let shared = ResumeStore()
 
     private let cache: AppCache
     private var lastSaved: [String: (position: Double, at: Date)] = [:]
 
-    public init(cache: AppCache = .shared) {
+    init(cache: AppCache = .shared) {
         self.cache = cache
     }
 
@@ -63,7 +63,7 @@ public actor ResumeStore: ResumeStoring {
     private var indexKey: String { "resume-index" }
 
     /// Ordered list of unfinished progress entries (most recent first).
-    public func allProgress() async -> [PlaybackProgress] {
+    func allProgress() async -> [PlaybackProgress] {
         let index: [String] = cache.get([String].self, key: indexKey, namespace: "resume-index") ?? []
         var out: [PlaybackProgress] = []
         for metaId in index {
@@ -75,12 +75,12 @@ public actor ResumeStore: ResumeStoring {
         return out.sorted { $0.updatedAt > $1.updatedAt }
     }
 
-    public func progress(metaId: String) async -> PlaybackProgress? {
+    func progress(metaId: String) async -> PlaybackProgress? {
         cache.get(PlaybackProgress.self, key: key(metaId: metaId), namespace: namespace(metaId: metaId))
     }
 
     /// Harbor's autosave semantics: dedupe 1.5s delta, skip stubs below 150s, min 5s.
-    public func save(_ progress: PlaybackProgress) async {
+    func save(_ progress: PlaybackProgress) async {
         var p = progress
         // Ended → watched. Past 85% → watched (Harbor's threshold).
         let isEnded = p.durationSeconds > 0 && p.positionSeconds >= p.durationSeconds - 1
@@ -111,7 +111,7 @@ public actor ResumeStore: ResumeStoring {
         cache.set(index, key: indexKey, namespace: "resume-index", ttl: nil)
     }
 
-    public func clear(metaId: String) async {
+    func clear(metaId: String) async {
         cache.remove(key: key(metaId: metaId), namespace: namespace(metaId: metaId))
         var index: [String] = cache.get([String].self, key: indexKey, namespace: "resume-index") ?? []
         index.removeAll { $0 == metaId }

@@ -5,20 +5,20 @@ import Foundation
 // primary = stremio-addons.net API v0, fallback/merge = Stremio's own community/official
 // catalogs, 1h TTL cache, adult gating applied at the catalog layer.
 
-public struct DiscoveredAddon: Codable, Identifiable, Equatable, Sendable {
-    public var manifestId: String
-    public var name: String
-    public var description: String?
-    public var logo: String?
-    public var background: String?
-    public var stars: Int
-    public var categories: [String]
-    public var slug: String?
-    public var behaviorHintsAdult: Bool?
+struct DiscoveredAddon: Codable, Identifiable, Equatable, Sendable {
+    var manifestId: String
+    var name: String
+    var description: String?
+    var logo: String?
+    var background: String?
+    var stars: Int
+    var categories: [String]
+    var slug: String?
+    var behaviorHintsAdult: Bool?
 
-    public var id: String { manifestId }
+    var id: String { manifestId }
 
-    public init(
+    init(
         manifestId: String, name: String, description: String? = nil,
         logo: String? = nil, background: String? = nil, stars: Int = 0,
         categories: [String] = [], slug: String? = nil,
@@ -36,27 +36,27 @@ public struct DiscoveredAddon: Codable, Identifiable, Equatable, Sendable {
     }
 }
 
-public enum AddonDiscoveryError: Error, LocalizedError {
+enum AddonDiscoveryError: Error, LocalizedError {
     case allSourcesFailed
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         "The addon directory is unreachable right now."
     }
 }
 
-public protocol AddonDiscoveryServicing: Sendable {
+protocol AddonDiscoveryServicing: Sendable {
     func browse(mode: BrowseMode, category: String?, query: String?, allowAdult: Bool) async throws -> [DiscoveredAddon]
 }
 
-public enum BrowseMode: String, Sendable {
+enum BrowseMode: String, Sendable {
     case top
     case rising
     case new
 }
 
-public actor AddonDiscoveryClient: AddonDiscoveryServicing {
+actor AddonDiscoveryClient: AddonDiscoveryServicing {
 
-    public static let shared = AddonDiscoveryClient()
+    static let shared = AddonDiscoveryClient()
 
     private let network: NetworkClient
     private var cache: [String: (addons: [DiscoveredAddon], storedAt: Date)] = [:]
@@ -81,13 +81,13 @@ public actor AddonDiscoveryClient: AddonDiscoveryServicing {
         var adult: Bool?
     }
 
-    public init(network: NetworkClient = .shared) {
+    init(network: NetworkClient = .shared) {
         self.network = network
     }
 
     // MARK: - Harbor parity endpoints
 
-    public func list(category: String? = nil, query: String? = nil, allowAdult: Bool) async throws -> [DiscoveredAddon] {
+    func list(category: String? = nil, query: String? = nil, allowAdult: Bool) async throws -> [DiscoveredAddon] {
         var url = URL(string: "https://stremio-addons.net/api/v0/addons")!
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         var queryItems: [URLQueryItem] = [
@@ -109,7 +109,7 @@ public actor AddonDiscoveryClient: AddonDiscoveryServicing {
         return addons
     }
 
-    public func rising(allowAdult: Bool) async throws -> [DiscoveredAddon] {
+    func rising(allowAdult: Bool) async throws -> [DiscoveredAddon] {
         let result: SARisingEnvelope = try await network.get(
             SARisingEnvelope.self,
             url: URL(string: "https://stremio-addons.net/api/v0/rising")!,
@@ -122,7 +122,7 @@ public actor AddonDiscoveryClient: AddonDiscoveryServicing {
         return addons
     }
 
-    public func categories() async throws -> [String] {
+    func categories() async throws -> [String] {
         struct CatEnvelope: Decodable { var categories: [String]? }
         let fallback = ["anime", "asian drama", "bollywood", "debrid support", "http streams",
                         "live tv", "metadata", "misc", "movies", "music", "nsfw", "radios",
@@ -141,7 +141,7 @@ public actor AddonDiscoveryClient: AddonDiscoveryServicing {
 
     // MARK: - Community / official catalog merge (Harbor parity)
 
-    public func communityCatalog(allowAdult: Bool) async throws -> [DiscoveredAddon] {
+    func communityCatalog(allowAdult: Bool) async throws -> [DiscoveredAddon] {
         let communityURL = URL(string: "https://v3-cinemeta.strem.io/addon_catalog/all/community.json")!
         let officialURL = URL(string: "https://v3-cinemeta.strem.io/addon_catalog/all/official.json")!
 
@@ -192,7 +192,7 @@ public actor AddonDiscoveryClient: AddonDiscoveryServicing {
 
     // MARK: - Unified browse with cache (Harbor's directory pipeline)
 
-    public func browse(mode: BrowseMode, category: String? = nil, query: String? = nil, allowAdult: Bool) async throws -> [DiscoveredAddon] {
+    func browse(mode: BrowseMode, category: String? = nil, query: String? = nil, allowAdult: Bool) async throws -> [DiscoveredAddon] {
         let key = "\(mode.rawValue)|\(category ?? "")|\(query ?? "")|\(allowAdult)"
         if let hit = cache[key], Date().timeIntervalSince(hit.storedAt) < ttl {
             return hit.addons

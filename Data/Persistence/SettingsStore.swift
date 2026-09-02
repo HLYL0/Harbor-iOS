@@ -5,21 +5,21 @@ import Foundation
 // DEFAULT ∪ parsed ∪ sanitizers, flag-based migrations, atomic writes.
 // iOS improvement (documented in IOS_SECURITY.md): secrets never live here — Keychain only.
 
-public protocol SettingsStoring: Sendable {
+protocol SettingsStoring: Sendable {
     func load(profileID: String) async -> AppSettings
     func save(_ settings: AppSettings, profileID: String) async throws
 }
 
-public actor SettingsStore: SettingsStoring {
+actor SettingsStore: SettingsStoring {
 
-    public static let shared = SettingsStore()
+    static let shared = SettingsStore()
 
     private let fileManager: FileManager
     private let storeDirectory: URL
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
-    public init(fileManager: FileManager = .default) {
+    init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
         let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         self.storeDirectory = base.appendingPathComponent("Harbor", isDirectory: true)
@@ -31,7 +31,7 @@ public actor SettingsStore: SettingsStoring {
         storeDirectory.appendingPathComponent("settings-\(profileID).json")
     }
 
-    public func load(profileID: String) async -> AppSettings {
+    func load(profileID: String) async -> AppSettings {
         let url = fileURL(profileID: profileID)
         guard fileManager.fileExists(atPath: url.path),
               let data = try? Data(contentsOf: url),
@@ -51,7 +51,7 @@ public actor SettingsStore: SettingsStoring {
         }
     }
 
-    public func save(_ settings: AppSettings, profileID: String) async throws {
+    func save(_ settings: AppSettings, profileID: String) async throws {
         var toSave = settings
         SettingsMigrator.sanitize(&toSave)
         let data = try encoder.encode(toSave)

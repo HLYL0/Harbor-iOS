@@ -4,7 +4,7 @@ import Foundation
 // (verified 2026-09-02 @0117755). Same term lists, same leet/diacritic normalization,
 // same two-pass matching (substring first, then word-boundary tokens).
 
-public enum AdultContentFilter {
+enum AdultContentFilter {
 
     static let substringTerms: [String] = [
         "porn", "pornhub", "pornography", "porno", "porntv", "xhamster", "xnxx",
@@ -71,7 +71,7 @@ public enum AdultContentFilter {
         return " " + joined + " "
     }
 
-    public static func isAdultText(_ fields: String?...) -> Bool {
+    static func isAdultText(_ fields: String?...) -> Bool {
         let normalized = fields.map { normalize($0) }.joined(separator: " ")
         for term in substringTerms where normalized.contains(term) { return true }
         let tokens = fields.map { lowerTokens($0) }.joined()
@@ -82,14 +82,14 @@ public enum AdultContentFilter {
 
     static let adultAnimeGenres: Set<String> = ["hentai", "erotica"]
 
-    public static func isAdultAnime(name: String?, genres: [String]?) -> Bool {
+    static func isAdultAnime(name: String?, genres: [String]?) -> Bool {
         if let genres, genres.contains(where: { adultAnimeGenres.contains($0.lowercased()) }) {
             return true
         }
         return isAdultText(name)
     }
 
-    public static func isAdultAddon(id: String, name: String, behaviorHintsAdult: Bool?) -> Bool {
+    static func isAdultAddon(id: String, name: String, behaviorHintsAdult: Bool?) -> Bool {
         if behaviorHintsAdult == true { return true }
         return isAdultText(id, name)
     }

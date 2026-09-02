@@ -1,0 +1,13 @@
+[package]
+name = "vector-extractor"
+version = "0.1.0"
+edition = "2021"
+description = "Golden-vector extractor: replays the 56 harbor-core Rust test scenarios and emits Swift-decodable JSON fixtures."
+
+[dependencies]
+harbor-core = { path = "../harbor-core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = 2

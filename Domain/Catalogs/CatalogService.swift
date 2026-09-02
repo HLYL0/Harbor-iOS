@@ -5,23 +5,23 @@ import Foundation
 // parallel addon requests, 8s timeout, required-extra first-option resolution,
 // `skip=` pagination, per-addon failures dropped, partial results always delivered.
 
-public struct CatalogPage: Sendable {
-    public var metas: [StremioMeta]
-    public var hasMore: Bool
+struct CatalogPage: Sendable {
+    var metas: [StremioMeta]
+    var hasMore: Bool
 
-    public init(metas: [StremioMeta], hasMore: Bool) {
+    init(metas: [StremioMeta], hasMore: Bool) {
         self.metas = metas
         self.hasMore = hasMore
     }
 }
 
-public enum CatalogError: Error, LocalizedError {
+enum CatalogError: Error, LocalizedError {
     case noResults
 
-    public var errorDescription: String? { "No catalog rows were returned." }
+    var errorDescription: String? { "No catalog rows were returned." }
 }
 
-public protocol CatalogServicing: Sendable {
+protocol CatalogServicing: Sendable {
     func catalogs(addons: [StremioAddon], type: String) -> [(addon: StremioAddon, catalog: CatalogDefinition)]
     func fetchCatalog(
         addon: StremioAddon, catalog: CatalogDefinition,
@@ -29,19 +29,19 @@ public protocol CatalogServicing: Sendable {
     ) async throws -> [StremioMeta]
 }
 
-public actor CatalogService: CatalogServicing {
+actor CatalogService: CatalogServicing {
 
-    public static let shared = CatalogService()
+    static let shared = CatalogService()
 
     private let network: NetworkClient
     private let requestTimeout: TimeInterval = 8   // Harbor: 8s catalog timeout
 
-    public init(network: NetworkClient = .shared) {
+    init(network: NetworkClient = .shared) {
         self.network = network
     }
 
-    /// All catalogs an addon declares for a media type, plus Cinemeta (always first).
-    public func catalogs(addons: [StremioAddon], type: String) -> [(addon: StremioAddon, catalog: CatalogDefinition)] {
+    /// All catalogs an addon declares for a media type (pure computation — nonisolated).
+    nonisolated func catalogs(addons: [StremioAddon], type: String) -> [(addon: StremioAddon, catalog: CatalogDefinition)] {
         var out: [(addon: StremioAddon, catalog: CatalogDefinition)] = []
         for addon in addons {
             guard let catalogs = addon.manifest.catalogs else { continue }
@@ -52,7 +52,7 @@ public actor CatalogService: CatalogServicing {
         return out
     }
 
-    public func fetchCatalog(
+    func fetchCatalog(
         addon: StremioAddon, catalog: CatalogDefinition,
         type: String, skip: Int, extra: [String: String]
     ) async throws -> [StremioMeta] {
@@ -65,7 +65,7 @@ public actor CatalogService: CatalogServicing {
 
     // MARK: - URL construction (Stremio protocol, Harbor parity)
 
-    public func buildCatalogURL(
+    func buildCatalogURL(
         addon: StremioAddon, catalog: CatalogDefinition,
         type: String, skip: Int, extra: [String: String]
     ) -> URL? {
@@ -91,7 +91,7 @@ public actor CatalogService: CatalogServicing {
     }
 
     /// Parallel fan-out with per-addon failure isolation + progressive delivery.
-    public func fetchAllCatalogs(
+    func fetchAllCatalogs(
         addons: [StremioAddon],
         type: String,
         skip: Int,
@@ -129,7 +129,7 @@ public actor CatalogService: CatalogServicing {
     }
 
     /// Cinemeta-first catalog fetch (Harbor's default catalog base).
-    public func cinemetaCatalog(type: String, skip: Int = 0, genre: String? = nil, search: String? = nil) async throws -> [StremioMeta] {
+    func cinemetaCatalog(type: String, skip: Int = 0, genre: String? = nil, search: String? = nil) async throws -> [StremioMeta] {
         var components = URLComponents(string: "https://v3-cinemeta.strem.io/catalog/\(type)/top.json")!
         var items: [URLQueryItem] = []
         if skip > 0 { items.append(URLQueryItem(name: "skip", value: String(skip))) }

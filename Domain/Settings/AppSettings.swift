@@ -4,48 +4,48 @@ import Foundation
 // Mirrors the Harbor settings surface we implement so far; flag-based migrations
 // follow Harbor's presence-flag model (docs/audit/sync-storage.md §6.3).
 
-public struct AppSettings: Codable, Equatable, Sendable {
-    public var schemaVersion: Int
-    public var migrationFlags: [String: Bool]
+struct AppSettings: Codable, Equatable, Sendable {
+    var schemaVersion: Int
+    var migrationFlags: [String: Bool]
 
     // Identity / profile
-    public var activeProfileId: String
+    var activeProfileId: String
 
     // Language & region
-    public var uiLanguage: String
-    public var region: String
+    var uiLanguage: String
+    var region: String
 
     // Home customization (Harbor: settings.homeRows — parity surface, Phase 6 fills it)
-    public var homeRowsOrder: [String]
-    public var homeRowsHidden: Set<String>
+    var homeRowsOrder: [String]
+    var homeRowsHidden: Set<String>
 
     // Player preferences (Harbor defaults, per audit)
-    public var playerEngine: String            // "auto" | "mpv" | "avplayer"
-    public var autoPlayNextEpisode: Bool
-    public var pauseListStatusOnPause: Bool
-    public var resumePrompt: Bool
-    public var sleepTimerMinutes: Int?
+    var playerEngine: String            // "auto" | "mpv" | "avplayer"
+    var autoPlayNextEpisode: Bool
+    var pauseListStatusOnPause: Bool
+    var resumePrompt: Bool
+    var sleepTimerMinutes: Int?
 
     // Subtitles
-    public var subProvidersEnabled: Set<String>  // wyzie, opensubtitles, jimaku, addons
-    public var subtitleAutoSync: Bool            // default false (Harbor)
-    public var subDelayMs: Int
-    public var subStylePresetId: String?
+    var subProvidersEnabled: Set<String>  // wyzie, opensubtitles, jimaku, addons
+    var subtitleAutoSync: Bool            // default false (Harbor)
+    var subDelayMs: Int
+    var subStylePresetId: String?
 
     // Adult content
-    public var showAdultAddons: Bool             // default false (Harbor)
+    var showAdultAddons: Bool             // default false (Harbor)
 
     // Deep links
-    public var stremioDeeplinkInstall: Bool      // default true (Harbor)
+    var stremioDeeplinkInstall: Bool      // default true (Harbor)
 
     // Watch together
-    public var togetherRelayUrl: String
-    public var togetherShareCursors: Bool
+    var togetherRelayUrl: String
+    var togetherShareCursors: Bool
 
     // Tracker blocking (privacy blocker)
-    public var trackerBlockingEnabled: Bool      // default true
+    var trackerBlockingEnabled: Bool      // default true
 
-    public init(
+    init(
         schemaVersion: Int = 1,
         migrationFlags: [String: Bool] = [:],
         activeProfileId: String = "guest",
@@ -94,12 +94,12 @@ public struct AppSettings: Codable, Equatable, Sendable {
 
 // MARK: - One-shot presence-flag migrations (Harbor model).
 
-public enum SettingsMigrator {
+enum SettingsMigrator {
 
     /// Applied to the raw JSON before decoding. Each migration runs exactly once,
     /// gated by a `_<flag>` key, exactly like Harbor's `_stremioDeeplinkOnByDefault`
     /// style flags (audit sync-storage §6.3).
-    public static func migrate(raw: [String: Any]) -> [String: Any] {
+    static func migrate(raw: [String: Any]) -> [String: Any] {
         var dict = raw
         var flags = dict["migrationFlags"] as? [String: Bool] ?? [:]
 
@@ -124,7 +124,7 @@ public enum SettingsMigrator {
     }
 
     /// Sanitizers (Harbor load.ts sanitization model): clamp invalid values back to defaults.
-    public static func sanitize(_ settings: inout AppSettings) {
+    static func sanitize(_ settings: inout AppSettings) {
         if !["auto", "mpv", "avplayer"].contains(settings.playerEngine) {
             settings.playerEngine = "auto"
         }

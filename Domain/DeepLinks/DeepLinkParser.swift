@@ -4,12 +4,12 @@ import Foundation
 // Validates every incoming stremio:// / harbor:// URL against the allowlist.
 // No arbitrary navigation, no scheme-triggered auth.
 
-public enum DeepLinkDestination: Equatable, Sendable {
+enum DeepLinkDestination: Equatable, Sendable {
     case detail(type: String, id: String, videoId: String?)
     case addonInstall(manifestURL: URL)
     case watchTogether(relay: String, room: String)
 
-    public static func == (lhs: DeepLinkDestination, rhs: DeepLinkDestination) -> Bool {
+    static func == (lhs: DeepLinkDestination, rhs: DeepLinkDestination) -> Bool {
         switch (lhs, rhs) {
         case (.detail(let t1, let i1, let v1), .detail(let t2, let i2, let v2)):
             return t1 == t2 && i1 == i2 && v1 == v2
@@ -23,11 +23,11 @@ public enum DeepLinkDestination: Equatable, Sendable {
     }
 }
 
-public enum DeepLinkParser {
+enum DeepLinkParser {
 
-    public static let allowedDetailTypes: Set<String> = ["movie", "series", "channel", "tv", "anime"]
+    static let allowedDetailTypes: Set<String> = ["movie", "series", "channel", "tv", "anime"]
 
-    public static func parse(_ rawURL: String) -> DeepLinkDestination? {
+    static func parse(_ rawURL: String) -> DeepLinkDestination? {
         guard let url = URL(string: rawURL.trimmingCharacters(in: .whitespacesAndNewlines)),
               let scheme = url.scheme?.lowercased(),
               ["stremio", "harbor", "https"].contains(scheme) else {

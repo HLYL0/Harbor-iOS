@@ -5,14 +5,14 @@ import Foundation
 // exponential backoff + jitter, cancellation propagation. Mirrors Harbor's safeFetch
 // contract (TrackerBlockedError + blocked counter) and its retry norms (audit §1).
 
-public struct RetryPolicy: Sendable {
-    public var maxAttempts: Int          // total attempts including the first
-    public var baseDelay: TimeInterval   // seconds
-    public var maxDelay: TimeInterval
-    public var retryableStatusCodes: Set<Int>
-    public var retryOnNetworkError: Bool
+struct RetryPolicy: Sendable {
+    var maxAttempts: Int          // total attempts including the first
+    var baseDelay: TimeInterval   // seconds
+    var maxDelay: TimeInterval
+    var retryableStatusCodes: Set<Int>
+    var retryOnNetworkError: Bool
 
-    public init(
+    init(
         maxAttempts: Int = 2,
         baseDelay: TimeInterval = 0.5,
         maxDelay: TimeInterval = 5,
@@ -26,16 +26,16 @@ public struct RetryPolicy: Sendable {
         self.retryOnNetworkError = retryOnNetworkError
     }
 
-    public static let none = RetryPolicy(maxAttempts: 1, retryOnNetworkError: false)
-    public static let `default` = RetryPolicy()
+    static let none = RetryPolicy(maxAttempts: 1, retryOnNetworkError: false)
+    static let `default` = RetryPolicy()
 }
 
-public enum NetworkClientError: Error, LocalizedError {
+enum NetworkClientError: Error, LocalizedError {
     case blocked(String)
     case httpStatus(Int)
     case invalidResponse
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .blocked(let host): return "Blocked by privacy filter: \(host)"
         case .httpStatus(let code): return "Server returned HTTP \(code)"
@@ -45,16 +45,16 @@ public enum NetworkClientError: Error, LocalizedError {
 }
 
 /// Transport abstraction so retry/backoff logic is unit-testable on CI.
-public protocol HTTPTransport: Sendable {
+protocol HTTPTransport: Sendable {
     func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse)
 }
 
-public struct URLSessionTransport: HTTPTransport {
+struct URLSessionTransport: HTTPTransport {
     private let session: URLSession
 
-    public init(session: URLSession = .shared) { self.session = session }
+    init(session: URLSession = .shared) { self.session = session }
 
-    public func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+    func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw NetworkClientError.invalidResponse
@@ -63,19 +63,19 @@ public struct URLSessionTransport: HTTPTransport {
     }
 }
 
-public actor NetworkClient {
+actor NetworkClient {
 
-    public static let shared = NetworkClient()
+    static let shared = NetworkClient()
 
     private let transport: any HTTPTransport
-    public private(set) var blockedRequestCount: Int = 0
+    private(set) var blockedRequestCount: Int = 0
 
-    public init(transport: any HTTPTransport = URLSessionTransport()) {
+    init(transport: any HTTPTransport = URLSessionTransport()) {
         self.transport = transport
     }
 
     /// Full request: blocklist → transport → status/retry handling.
-    public func data(
+    func data(
         for request: URLRequest,
         policy: RetryPolicy = .default
     ) async throws -> (Data, HTTPURLResponse) {
@@ -112,7 +112,7 @@ public actor NetworkClient {
     }
 
     /// Convenience JSON getter with decoding + blocklist.
-    public func get<T: Decodable>(
+    func get<T: Decodable>(
         _ type: T.Type,
         url: URL,
         headers: [String: String] = [:],
@@ -125,7 +125,7 @@ public actor NetworkClient {
     }
 
     /// Exponential backoff with full jitter, clamped to maxDelay.
-    nonisolated public func delaySeconds(attempt: Int, policy: RetryPolicy) -> Double {
+    nonisolated func delaySeconds(attempt: Int, policy: RetryPolicy) -> Double {
         let exp = min(policy.maxDelay, policy.baseDelay * pow(2, Double(attempt - 1)))
         return Double.random(in: 0...exp)
     }

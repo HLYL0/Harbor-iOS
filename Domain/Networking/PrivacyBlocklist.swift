@@ -5,18 +5,18 @@ import Foundation
 // point, so coverage is uniform (Harbor's safeFetch-only gap is documented as an
 // intentional improvement in IOS_KNOWN_LIMITATIONS.md).
 
-public enum TrackerBlockedError: Error, LocalizedError {
+enum TrackerBlockedError: Error, LocalizedError {
     case blocked(String)
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         if case .blocked(let host) = self { return "Request blocked by privacy filter: \(host)" }
         return "Request blocked by privacy filter."
     }
 }
 
-public enum PrivacyBlocklist {
+enum PrivacyBlocklist {
 
-    public static let exactHosts: Set<String> = [
+    static let exactHosts: Set<String> = [
         "google-analytics.com", "googletagmanager.com", "googlesyndication.com",
         "doubleclick.net", "googleadservices.com", "adservice.google.com",
         "mc.yandex.ru", "yandex.ru", "connect.facebook.net", "facebook.com",
@@ -35,7 +35,7 @@ public enum PrivacyBlocklist {
         "s3.amazonaws.com", "loggly.com", "papertrailapp.com",
     ]
 
-    public static let blockedSuffixes: [String] = [
+    static let blockedSuffixes: [String] = [
         ".google-analytics.com", ".googletagmanager.com", ".doubleclick.net",
         ".googlesyndication.com", ".mc.yandex.", ".yandex.ru", ".yandex.com",
         ".facebook.net", ".facebook.com", ".tiktokcdn.com", ".tiktok.com",
@@ -47,7 +47,7 @@ public enum PrivacyBlocklist {
         ".scorecardresearch.com", ".quantserve.com", ".chartbeat.com",
     ]
 
-    public static func isBlocked(_ url: URL) -> Bool {
+    static func isBlocked(_ url: URL) -> Bool {
         guard let host = url.host?.lowercased() else { return false }
         if exactHosts.contains(host) { return true }
         return blockedSuffixes.contains { host == String($0.dropFirst()) || host.hasSuffix($0) }

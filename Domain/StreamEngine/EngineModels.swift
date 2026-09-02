@@ -5,17 +5,17 @@ import Foundation
 // JSON golden vectors produced by the Rust reference are decodable 1:1.
 // Do NOT rename cases or change raw values without updating the vector fixtures.
 
-public enum Resolution: String, Codable, CaseIterable, Sendable, Equatable {
+enum Resolution: String, Codable, CaseIterable, Sendable, Equatable {
     case uhd = "4K"
     case p1080 = "1080p"
     case p720 = "720p"
     case p480 = "480p"
     case sd = "SD"
 
-    public static let `default`: Resolution = .sd
+    static let `default`: Resolution = .sd
 }
 
-public enum HdrFormat: String, Codable, Sendable, Equatable {
+enum HdrFormat: String, Codable, Sendable, Equatable {
     case hdr10 = "HDR10"
     case hdr10Plus = "HDR10+"
     case dv = "DV"
@@ -23,7 +23,7 @@ public enum HdrFormat: String, Codable, Sendable, Equatable {
     case hlg = "HLG"
 }
 
-public enum Codec: String, Codable, Sendable, Equatable {
+enum Codec: String, Codable, Sendable, Equatable {
     case hevc = "HEVC"
     case avc = "AVC"
     case av1 = "AV1"
@@ -31,10 +31,10 @@ public enum Codec: String, Codable, Sendable, Equatable {
     case mpeg2 = "MPEG2"
     case other = "Other"
 
-    public static let `default`: Codec = .other
+    static let `default`: Codec = .other
 }
 
-public enum AudioCodec: String, Codable, Sendable, Equatable {
+enum AudioCodec: String, Codable, Sendable, Equatable {
     case atmos = "Atmos"
     case trueHD = "TrueHD"
     case dtsHdMa = "DTS-HD MA"
@@ -46,10 +46,10 @@ public enum AudioCodec: String, Codable, Sendable, Equatable {
     case flac = "FLAC"
     case other = "Other"
 
-    public static let `default`: AudioCodec = .other
+    static let `default`: AudioCodec = .other
 }
 
-public enum Source: String, Codable, CaseIterable, Sendable, Equatable {
+enum Source: String, Codable, CaseIterable, Sendable, Equatable {
     case bluRay = "BluRay"
     case remux = "REMUX"
     case webDl = "WEB-DL"
@@ -65,10 +65,10 @@ public enum Source: String, Codable, CaseIterable, Sendable, Equatable {
     case scr = "SCR"
     case other = "Other"
 
-    public static let `default`: Source = .other
+    static let `default`: Source = .other
 }
 
-public enum Tier: String, Codable, Comparable, Sendable, Equatable {
+enum Tier: String, Codable, Comparable, Sendable, Equatable {
     case uhdDv = "4K_DV"
     case uhdHdr = "4K_HDR"
     case uhd = "4K"
@@ -79,7 +79,7 @@ public enum Tier: String, Codable, Comparable, Sendable, Equatable {
     case rough = "ROUGH"
 
     /// Harbor's tier ordering: 4K_DV > 4K_HDR > 4K > 1080p_HDR > 1080p > 720p > SD > ROUGH.
-    public var rank: Int {
+    var rank: Int {
         switch self {
         case .uhdDv: return 7
         case .uhdHdr: return 6
@@ -92,56 +92,56 @@ public enum Tier: String, Codable, Comparable, Sendable, Equatable {
         }
     }
 
-    public static func < (lhs: Tier, rhs: Tier) -> Bool { lhs.rank < rhs.rank }
+    static func < (lhs: Tier, rhs: Tier) -> Bool { lhs.rank < rhs.rank }
 }
 
-public enum Container: String, Codable, Sendable, Equatable {
+enum Container: String, Codable, Sendable, Equatable {
     case mkv, mp4, m4v, avi, webm, mov, ts, wmv
 }
 
-public struct AudioInfo: Codable, Equatable, Sendable {
-    public var codec: AudioCodec
-    public var channels: Int
-    public var bitDepth: Int?
+struct AudioInfo: Codable, Equatable, Sendable {
+    var codec: AudioCodec
+    var channels: Int
+    var bitDepth: Int?
 
-    public init(codec: AudioCodec = .other, channels: Int = 2, bitDepth: Int? = nil) {
+    init(codec: AudioCodec = .other, channels: Int = 2, bitDepth: Int? = nil) {
         self.codec = codec
         self.channels = channels
         self.bitDepth = bitDepth
     }
 }
 
-public struct Contributor: Codable, Equatable, Sendable {
-    public var id: String
-    public var name: String
+struct Contributor: Codable, Equatable, Sendable {
+    var id: String
+    var name: String
 
-    public init(id: String, name: String) {
+    init(id: String, name: String) {
         self.id = id
         self.name = name
     }
 }
 
 /// Mirrors the Rust `Stream` shape (camelCase).
-public struct EngineStream: Codable, Equatable, Sendable {
-    public var name: String?
-    public var title: String?
-    public var description: String?
-    public var infoHash: String?
-    public var fileIdx: Int64?
-    public var url: String?
-    public var ytId: String?
-    public var externalUrl: String?
-    public var subtitles: [StreamSubtitle]?
-    public var behaviorHints: EngineBehaviorHints?
-    public var sources: [String]?
-    public var availability: Double?
-    public var addonId: String
-    public var addonName: String
-    public var addonPriority: Int?
-    public var addonReturnIdx: Int?
-    public var contributors: [Contributor]?
+struct EngineStream: Codable, Equatable, Sendable {
+    var name: String?
+    var title: String?
+    var description: String?
+    var infoHash: String?
+    var fileIdx: Int64?
+    var url: String?
+    var ytId: String?
+    var externalUrl: String?
+    var subtitles: [StreamSubtitle]?
+    var behaviorHints: EngineBehaviorHints?
+    var sources: [String]?
+    var availability: Double?
+    var addonId: String
+    var addonName: String
+    var addonPriority: Int?
+    var addonReturnIdx: Int?
+    var contributors: [Contributor]?
 
-    public init(
+    init(
         name: String? = nil, title: String? = nil, description: String? = nil,
         infoHash: String? = nil, fileIdx: Int64? = nil, url: String? = nil,
         ytId: String? = nil, externalUrl: String? = nil, subtitles: [StreamSubtitle]? = nil,
@@ -160,52 +160,52 @@ public struct EngineStream: Codable, Equatable, Sendable {
 }
 
 /// Subset of behaviorHints the engine consumes (Rust keeps the whole blob; we decode what we use).
-public struct EngineBehaviorHints: Codable, Equatable, Sendable {
-    public var filename: String?
-    public var fileName: String?
-    public var videoSize: Int64?
+struct EngineBehaviorHints: Codable, Equatable, Sendable {
+    var filename: String?
+    var fileName: String?
+    var videoSize: Int64?
 
-    public init(filename: String? = nil, fileName: String? = nil, videoSize: Int64? = nil) {
+    init(filename: String? = nil, fileName: String? = nil, videoSize: Int64? = nil) {
         self.filename = filename
         self.fileName = fileName
         self.videoSize = videoSize
     }
 
-    public var effectiveFilename: String? { filename ?? fileName }
+    var effectiveFilename: String? { filename ?? fileName }
 }
 
-public struct ParsedStream: Codable, Equatable, Sendable {
-    public var stream: EngineStream
-    public var parsedTitle: String
-    public var episodeTitle: String?
-    public var resolution: Resolution
-    public var hdrFormat: HdrFormat?
-    public var codec: Codec
-    public var source: Source
-    public var audio: AudioInfo
-    public var audioLanguages: [String]
-    public var size: UInt64?
-    public var seeders: UInt32?
-    public var cached: [String: Bool]
-    public var inLibrary: [String: Bool]
-    public var container: Container?
-    public var releaseGroup: String?
-    public var releaseGroupNormalized: String?
-    public var remux: Bool
-    public var edition: String?
-    public var year: Int?
-    public var yearRange: (Int, Int)?
-    public var season: Int?
-    public var episode: Int?
-    public var seasonPack: Bool
-    public var discIndex: Int?
-    public var repackIteration: Int
-    public var proper: Bool
-    public var hardcoded: Bool
-    public var animeHash: String?
-    public var scamScore: Int
+struct ParsedStream: Codable, Equatable, Sendable {
+    var stream: EngineStream
+    var parsedTitle: String
+    var episodeTitle: String?
+    var resolution: Resolution
+    var hdrFormat: HdrFormat?
+    var codec: Codec
+    var source: Source
+    var audio: AudioInfo
+    var audioLanguages: [String]
+    var size: UInt64?
+    var seeders: UInt32?
+    var cached: [String: Bool]
+    var inLibrary: [String: Bool]
+    var container: Container?
+    var releaseGroup: String?
+    var releaseGroupNormalized: String?
+    var remux: Bool
+    var edition: String?
+    var year: Int?
+    var yearRange: (Int, Int)?
+    var season: Int?
+    var episode: Int?
+    var seasonPack: Bool
+    var discIndex: Int?
+    var repackIteration: Int
+    var proper: Bool
+    var hardcoded: Bool
+    var animeHash: String?
+    var scamScore: Int
 
-    public init(
+    init(
         stream: EngineStream = EngineStream(),
         parsedTitle: String = "", episodeTitle: String? = nil,
         resolution: Resolution = .sd, hdrFormat: HdrFormat? = nil,
@@ -244,7 +244,7 @@ extension ParsedStream {
         case hardcoded, animeHash, scamScore
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         stream = try c.decode(EngineStream.self, forKey: .stream)
         parsedTitle = try c.decodeIfPresent(String.self, forKey: .parsedTitle) ?? ""
@@ -279,7 +279,7 @@ extension ParsedStream {
         scamScore = try c.decodeIfPresent(Int.self, forKey: .scamScore) ?? 0
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(stream, forKey: .stream)
         try c.encode(parsedTitle, forKey: .parsedTitle)
@@ -313,23 +313,23 @@ extension ParsedStream {
     }
 }
 
-public struct ScoreReason: Codable, Equatable, Sendable {
-    public var signal: String
-    public var delta: Double
+struct ScoreReason: Codable, Equatable, Sendable {
+    var signal: String
+    var delta: Double
 
-    public init(signal: String, delta: Double) {
+    init(signal: String, delta: Double) {
         self.signal = signal
         self.delta = delta
     }
 }
 
-public struct ScoredStream: Codable, Equatable, Sendable {
-    public var parsed: ParsedStream
-    public var score: Double
-    public var reasons: [ScoreReason]
-    public var tier: Tier
+struct ScoredStream: Codable, Equatable, Sendable {
+    var parsed: ParsedStream
+    var score: Double
+    var reasons: [ScoreReason]
+    var tier: Tier
 
-    public init(parsed: ParsedStream, score: Double, reasons: [ScoreReason], tier: Tier) {
+    init(parsed: ParsedStream, score: Double, reasons: [ScoreReason], tier: Tier) {
         self.parsed = parsed
         self.score = score
         self.reasons = reasons
@@ -337,36 +337,36 @@ public struct ScoredStream: Codable, Equatable, Sendable {
     }
 }
 
-public struct RankedPicker: Codable, Equatable, Sendable {
-    public var primary: ScoredStream?
-    public var byTier: [String: ScoredStream]
-    public var all: [ScoredStream]
+struct RankedPicker: Codable, Equatable, Sendable {
+    var primary: ScoredStream?
+    var byTier: [String: ScoredStream]
+    var all: [ScoredStream]
 
-    public init(primary: ScoredStream? = nil, byTier: [String: ScoredStream] = [:], all: [ScoredStream] = []) {
+    init(primary: ScoredStream? = nil, byTier: [String: ScoredStream] = [:], all: [ScoredStream] = []) {
         self.primary = primary
         self.byTier = byTier
         self.all = all
     }
 }
 
-public struct TrustOptions: Codable, Equatable, Sendable {
-    public var kind: String?
-    public var expectedTitle: String?
-    public var expectedYear: Int?
-    public var expectedSeason: Int?
-    public var expectedEpisode: Int?
-    public var releaseDate: String?
-    public var allowSeasonPacks: Bool
-    public var allowCam: Bool
-    public var allowSizeOutliers: Bool
-    public var strict: Bool
-    public var disabled: Bool
-    public var preferredLanguages: [String]
-    public var preferredAudioLangs: [String]
-    public var requirePreferredLanguage: Bool
-    public var isAnime: Bool
+struct TrustOptions: Codable, Equatable, Sendable {
+    var kind: String?
+    var expectedTitle: String?
+    var expectedYear: Int?
+    var expectedSeason: Int?
+    var expectedEpisode: Int?
+    var releaseDate: String?
+    var allowSeasonPacks: Bool
+    var allowCam: Bool
+    var allowSizeOutliers: Bool
+    var strict: Bool
+    var disabled: Bool
+    var preferredLanguages: [String]
+    var preferredAudioLangs: [String]
+    var requirePreferredLanguage: Bool
+    var isAnime: Bool
 
-    public init(
+    init(
         kind: String? = nil, expectedTitle: String? = nil, expectedYear: Int? = nil,
         expectedSeason: Int? = nil, expectedEpisode: Int? = nil, releaseDate: String? = nil,
         allowSeasonPacks: Bool = false, allowCam: Bool = false, allowSizeOutliers: Bool = false,
@@ -386,30 +386,30 @@ public struct TrustOptions: Codable, Equatable, Sendable {
     }
 }
 
-public struct Rejection: Codable, Equatable, Sendable {
-    public var stream: ParsedStream
-    public var reason: String
+struct Rejection: Codable, Equatable, Sendable {
+    var stream: ParsedStream
+    var reason: String
 
-    public init(stream: ParsedStream, reason: String) {
+    init(stream: ParsedStream, reason: String) {
         self.stream = stream
         self.reason = reason
     }
 }
 
-public struct ScoreOptions: Codable, Equatable, Sendable {
-    public var activeDebrids: [String]
-    public var preferredLanguages: [String]
-    public var releaseDate: String?
-    public var mediaKind: String?
-    public var runtimeMinutes: Int?
-    public var inTheaters: Bool
-    public var respectAddonOrder: Bool
-    public var preferredReleaseGroup: String?
-    public var bandwidthMbps: Double?
-    public var preferSingleAudioTrack: Bool
-    public var preferAddonId: String?
+struct ScoreOptions: Codable, Equatable, Sendable {
+    var activeDebrids: [String]
+    var preferredLanguages: [String]
+    var releaseDate: String?
+    var mediaKind: String?
+    var runtimeMinutes: Int?
+    var inTheaters: Bool
+    var respectAddonOrder: Bool
+    var preferredReleaseGroup: String?
+    var bandwidthMbps: Double?
+    var preferSingleAudioTrack: Bool
+    var preferAddonId: String?
 
-    public init(
+    init(
         activeDebrids: [String] = [], preferredLanguages: [String] = [],
         releaseDate: String? = nil, mediaKind: String? = nil, runtimeMinutes: Int? = nil,
         inTheaters: Bool = false, respectAddonOrder: Bool = false,
@@ -430,14 +430,14 @@ public struct ScoreOptions: Codable, Equatable, Sendable {
     }
 }
 
-public struct CorpusStats: Codable, Equatable, Sendable {
-    public var daysSinceRelease: Double?
-    public var trustedTrackedFraction: Double
-    public var theaterCaptureFraction: Double
-    public var webishFraction: Double
-    public var trustedTrackedCount: Int
+struct CorpusStats: Codable, Equatable, Sendable {
+    var daysSinceRelease: Double?
+    var trustedTrackedFraction: Double
+    var theaterCaptureFraction: Double
+    var webishFraction: Double
+    var trustedTrackedCount: Int
 
-    public init(
+    init(
         daysSinceRelease: Double? = nil, trustedTrackedFraction: Double = 0,
         theaterCaptureFraction: Double = 0, webishFraction: Double = 0,
         trustedTrackedCount: Int = 0

@@ -4,15 +4,15 @@ import Foundation
 // Disk-backed (Caches/<namespace>/<key>.json) with an in-memory LRU hot layer.
 // All caches must be bounded, invalidatable, versioned, concurrency-safe.
 
-public struct CacheEntry: Codable {
-    public var storedAt: Date
-    public var expiresAt: Date?
-    public var payload: Data
+struct CacheEntry: Codable {
+    var storedAt: Date
+    var expiresAt: Date?
+    var payload: Data
 }
 
-public final class AppCache: @unchecked Sendable {
+final class AppCache: @unchecked Sendable {
 
-    public static let shared = AppCache()
+    static let shared = AppCache()
 
     private let fileManager: FileManager
     private let cacheDirectory: URL
@@ -24,7 +24,7 @@ public final class AppCache: @unchecked Sendable {
 
     private var memoryObserver: NSObjectProtocol?
 
-    public init(fileManager: FileManager = .default) {
+    init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
         let base = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         self.cacheDirectory = base.appendingPathComponent("HarborCache", isDirectory: true)
@@ -58,7 +58,7 @@ public final class AppCache: @unchecked Sendable {
     }
 
     /// Reads from memory, then disk, then nil. Expired entries are dropped.
-    public func get<T: Decodable>(_ type: T.Type, key: String, namespace: String) -> T? {
+    func get<T: Decodable>(_ type: T.Type, key: String, namespace: String) -> T? {
         let fullKey = "\(namespace)/\(key)"
         let now = Date()
 
@@ -84,7 +84,7 @@ public final class AppCache: @unchecked Sendable {
         return try? JSONDecoder().decode(T.self, from: entry.payload)
     }
 
-    public func set<T: Encodable>(_ value: T, key: String, namespace: String, ttl: TimeInterval? = nil) {
+    func set<T: Encodable>(_ value: T, key: String, namespace: String, ttl: TimeInterval? = nil) {
         guard let payload = try? JSONEncoder().encode(value) else { return }
         let now = Date()
         let entry = CacheEntry(
@@ -105,7 +105,7 @@ public final class AppCache: @unchecked Sendable {
         lock.unlock()
     }
 
-    public func remove(key: String, namespace: String) {
+    func remove(key: String, namespace: String) {
         let url = diskURL(key: key, namespace: namespace)
         try? fileManager.removeItem(at: url)
         lock.lock()
@@ -113,7 +113,7 @@ public final class AppCache: @unchecked Sendable {
         lock.unlock()
     }
 
-    public func removeAll(namespace: String) {
+    func removeAll(namespace: String) {
         let dir = cacheDirectory.appendingPathComponent(namespace, isDirectory: true)
         try? fileManager.removeItem(at: dir)
         lock.lock()
@@ -121,7 +121,7 @@ public final class AppCache: @unchecked Sendable {
         lock.unlock()
     }
 
-    public func pruneExpired() {
+    func pruneExpired() {
         lock.lock()
         let now = Date()
         for (key, item) in memoryEntries where isExpired(item.entry, now: now) {
