@@ -881,8 +881,8 @@ enum StreamParser {
         var uncached: [String: Bool] = [:]
     }
 
-    private static let invisiblesRX = try! NSRegularExpression(pattern: "[\x{200B}-\x{200D}\x{2060}\x{FEFF}]")
-    private static let variationSelectorRX = try! NSRegularExpression(pattern: "\x{FE0F}")
+    private static let invisiblesRX = try! NSRegularExpression(pattern: "[\u{200B}-\u{200D}\u{2060}\u{FEFF}]")
+    private static let variationSelectorRX = try! NSRegularExpression(pattern: "\u{FE0F}")
 
     private static let uncachedBracketRX = try! NSRegularExpression(
         pattern: "\\[(RD|TB|AD|PM|DL)(?:[\\s\\-]?download|⬇️?|⏳)\\]", options: [.caseInsensitive])
