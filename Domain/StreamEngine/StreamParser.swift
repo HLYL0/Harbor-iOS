@@ -184,7 +184,12 @@ enum StreamParser {
         let resolutionRaw = detectResolutionRaw(fullText, titleInfo: titleInfo)
         let resolution = mapResolution(resolutionRaw)
         let hdr = detectHDR(fullText)
-        let codec = mapCodec(titleInfo.codecRaw ?? detectCodecRaw(fullText))
+        let codec: Codec
+        if let raw = titleInfo.codecRaw {
+            codec = raw == "legacy" ? codecFromText(fullText) : mapCodec(raw)
+        } else {
+            codec = codecFromText(fullText)
+        }
         let source = detectSource(fullText)
         let audioCodec = detectAudio(fullText)
         var channels = detectChannels(fullText) ?? titleInfo.channels ?? 2
@@ -366,7 +371,8 @@ enum StreamParser {
         } else if codecAvcRX.matches(working) {
             info.codecRaw = "h264"
         } else if codecLegacyRX.matches(working) {
-            info.codecRaw = "xvid"
+            // x264/x265 etc. — keep the matched token; mapCodec reads the 264/265 digits.
+            info.codecRaw = "legacy"
         }
 
         // Channels.
@@ -381,8 +387,9 @@ enum StreamParser {
             info.bitDepth = Int((working as NSString).substring(with: match.range(at: 1)))
         }
 
-        // Season (first match wins).
-        if let match = firstMatch(seasonPatterns, working) {
+        // Season (first match wins) — the two-group regex array captures
+        // season/episode pairs per branch (xall / SxxEyy / XxNN / Season N / bare Sxx).
+        if let match = firstMatch(seasonRXs, working) {
             info.season = match.season
             info.episode = match.episode
             if match.episode == nil { info.seasonPack = true }
@@ -400,11 +407,16 @@ enum StreamParser {
     }
 
     private static func parseChannelsValue(_ raw: String) -> Int? {
-        if raw.contains(".") || raw.contains(" ") {
-            let cleaned = raw.replacingOccurrences(of: " ", with: ".")
-            return Int(cleaned.prefix(1)) == nil ? nil : Int(cleaned.split(separator: ".").first ?? "0")
+        // Harbor's map_channels: 7.1→8, 6.1→7, 5.1→6, 2.1→3, else 2.
+        let cleaned = raw.replacingOccurrences(of: " ", with: ".")
+        switch cleaned {
+        case "7.1": return 8
+        case "6.1": return 7
+        case "5.1": return 6
+        case "2.1": return 3
+        case "2.0": return 2
+        default: return nil
         }
-        return nil
     }
 
     private static let seasonPackPatterns = try! NSRegularExpression(
@@ -536,7 +548,10 @@ enum StreamParser {
     private static func detectCodecRaw(_ text: String) -> String? {
         if codecHevcRX.matches(text) { return "h265" }
         if codecAvcRX.matches(text) { return "h264" }
-        if codecLegacyRX.matches(text) { return "xvid" }
+        if codecLegacyRX.matches(text) {
+            // x264/x265 → mapCodec reads the digits from the matched token itself.
+            return nil
+        }
         return nil
     }
 
@@ -548,6 +563,16 @@ enum StreamParser {
         if value.contains("av1") { return .av1 }
         if value.contains("vp9") { return .vp9 }
         if value.contains("mpeg") { return .mpeg2 }
+        return .other
+    }
+
+    /// Codec for legacy tokens like x264/x265 (Rust's cleanup + map_codec).
+    static func codecFromText(_ text: String) -> Codec {
+        let cleaned = text.lowercased().replacingOccurrences(of: " ", with: "").replacingOccurrences(of: ".", with: "").replacingOccurrences(of: "-", with: "")
+        if cleaned.contains("265") { return .hevc }
+        if cleaned.contains("264") { return .avc }
+        if cleaned.contains("xvid") || cleaned.contains("divx") || cleaned.contains("dvix") { return .other }
+        if cleaned.contains("mpeg") { return .mpeg2 }
         return .other
     }
 
@@ -689,9 +714,9 @@ enum StreamParser {
         let unit = (text as NSString).substring(with: match.range(at: 2)).lowercased()
         guard let value = Double(valueString) else { return nil }
         switch unit {
-        case "tb", "tib": return UInt64(value * 1024 * 1024 * 1024 * 1024)
-        case "gb", "gib": return UInt64(value * 1024 * 1024 * 1024)
-        case "mb", "mib": return UInt64(value * 1024 * 1024)
+        case "tb", "tib": return UInt64((value * 1024 * 1024 * 1024 * 1024).rounded())
+        case "gb", "gib": return UInt64((value * 1024 * 1024 * 1024).rounded())
+        case "mb", "mib": return UInt64((value * 1024 * 1024).rounded())
         default: return nil
         }
     }
@@ -869,10 +894,11 @@ enum StreamParser {
         pattern: "^⬇️?download\\n([^\\n]+)")
     private static let streamfusionInstantRX = try! NSRegularExpression(
         pattern: "^⚡instant\\n([^\\n]+)")
+    private static let serviceNamesPattern = "(Real[-. ]?Debrid|TorBox|Tor Box|AllDebrid|All Debrid|Premiumize|Debrid[-. ]?Link|Easynews|EasyNews|Put\.io|Offcloud|EasyDebrid)"
     private static let genericUncachedRX = try! NSRegularExpression(
-        pattern: "(?:⏳|⬇️?|🔻|❌)\\s*(need cache|download via|not ready|uncached on)?\\s*<service>", options: [.caseInsensitive])
+        pattern: "(?:⏳|⬇️?|🔻|❌)\\s*(need cache|download via|not ready|uncached on)?\\s*" + serviceNamesPattern, options: [.caseInsensitive])
     private static let genericCachedRX = try! NSRegularExpression(
-        pattern: "(?:⚡️?|✅)\\s*(cached on|instant on|ready on)?\\s*<service>", options: [.caseInsensitive])
+        pattern: "(?:⚡️?|✅)\\s*(cached on|instant on|ready on)?\\s*" + serviceNamesPattern, options: [.caseInsensitive])
     private static let aiostreamsPrismRX = try! NSRegularExpression(
         pattern: "❌\\s*Not Ready", options: [.caseInsensitive])
     private static let aiostreamsGdriveRX = try! NSRegularExpression(pattern: "🎟️")
@@ -921,6 +947,10 @@ enum StreamParser {
             let serviceLine = (cleaned as NSString).substring(with: match.range(at: 1))
             applyServiceLine(serviceLine, to: &result, cached: false)
         }
+        if let match = genericUncachedRX.firstMatch(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned)) {
+            let service = (cleaned as NSString).substring(with: match.range(at: 2)).lowercased()
+            if let slug = slugForService(service) { result.uncached[slug] = true }
+        }
         if aiostreamsPrismRX.matches(cleaned) || aiostreamsGdriveRX.matches(cleaned) {
             applyTemplateUncached(stream: stream, addonName: addonName, to: &result)
         }
@@ -943,6 +973,10 @@ enum StreamParser {
            match.numberOfRanges > 1 {
             let serviceLine = (cleaned as NSString).substring(with: match.range(at: 1))
             applyServiceLine(serviceLine, to: &result, cached: true)
+        }
+        if let match = genericCachedRX.firstMatch(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned)) {
+            let service = (cleaned as NSString).substring(with: match.range(at: 2)).lowercased()
+            if let slug = slugForService(service), result.uncached[slug] != true { result.cached[slug] = true }
         }
         if aiostreamsInstantRX.matches(cleaned) {
             applyTemplateCached(stream: stream, addonName: addonName, to: &result)
@@ -995,6 +1029,15 @@ enum StreamParser {
         ("pm", ["premiumize"]),
         ("dl", ["debrid-link", "debrid link"]),
     ]
+
+    private static func slugForService(_ service: String) -> String? {
+        if service.contains("real") && service.contains("debrid") { return "rd" }
+        if service.contains("tor") && (service.contains("box") || service.contains(" ")) && service.contains("box") { return "tb" }
+        if service.contains("all") && service.contains("debrid") { return "ad" }
+        if service.contains("premiumize") { return "pm" }
+        if service.contains("debrid") && service.contains("link") { return "dl" }
+        return nil
+    }
 
     private static func slugForAddon(addonName: String) -> String {
         if addonName.contains("torbox") { return "tb" }

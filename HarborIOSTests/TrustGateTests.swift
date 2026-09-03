@@ -683,13 +683,15 @@ final class TrustGateTests: XCTestCase {
         XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: nil))
         XCTAssertFalse(TrustGate.isInCinemaWindow(releaseDate: "not-a-date"))
 
-        // Future dates: inside the +60-day future bound.
+        // Future dates: inside the +60-day future bound. Harbor's window is
+        // asymmetric: -90 < days_since_release < 60 → future releases are IN up
+        // to ~90 days ahead (negative days_since_release); 91+ days ahead is OUT.
         let future30 = TrustGate.civilFromDays(TrustGate.nowUnixMs() / 86_400_000 + 30)
         XCTAssertTrue(TrustGate.isInCinemaWindow(
             releaseDate: String(format: "%04d-%02d-%02d", Int(future30.year), future30.month, future30.day)))
-        let future61 = TrustGate.civilFromDays(TrustGate.nowUnixMs() / 86_400_000 + 61)
+        let future91 = TrustGate.civilFromDays(TrustGate.nowUnixMs() / 86_400_000 + 91)
         XCTAssertFalse(TrustGate.isInCinemaWindow(
-            releaseDate: String(format: "%04d-%02d-%02d", Int(future61.year), future61.month, future61.day)))
+            releaseDate: String(format: "%04d-%02d-%02d", Int(future91.year), future91.month, future91.day)))
     }
 
     func testCinemaWindowDrivesFloorAndFreshRules() {
