@@ -477,10 +477,10 @@ enum TrustGate {
     static func sequelMarker(_ title: String) -> Int? {
         var cleaned = yearParenRX.stringByReplacingMatches(
             in: title, options: [], range: NSRange(location: 0, length: (title as NSString).length),
-            withTemplate: "", options: [.caseInsensitive])
+            withTemplate: "")
         cleaned = partWordRX.stringByReplacingMatches(
             in: cleaned, options: [], range: NSRange(location: 0, length: (cleaned as NSString).length),
-            withTemplate: "", options: [.caseInsensitive])
+            withTemplate: "")
         let trimmed = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
         let fullRange = NSRange(location: 0, length: (trimmed as NSString).length)
         guard let m = sequelTailRX.firstMatch(in: trimmed, options: [], range: fullRange),

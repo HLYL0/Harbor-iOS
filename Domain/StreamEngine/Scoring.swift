@@ -620,7 +620,7 @@ enum Scoring {
             if let fn = hints.fileName { parts.append(fn) }
         }
         if let d = s.stream.description { parts.append(d) }
-        let haystack = parts.joined(separator: " \n ", options: [.caseInsensitive])
+        let haystack = parts.joined(separator: " \n ")
 
         guard regexMatches(camMarkerRegex, haystack) else { return 0.0 }
         return s.resolution == .uhd ? -200.0 : -100.0
