@@ -56,11 +56,11 @@ enum TrustGate {
 
     /// trust.rs:71 — UNCACHED_EMOJI_RX.
     static let uncachedEmojiRX = try! NSRegularExpression(
-        pattern: "[\u{2B07}\u{23F3}\u{231B}\u{23EC}\u{1F53D}\u{1F4E5}\u{2601}]", options: [.caseInsensitive])
+        pattern: "[\x{2B07}\x{23F3}\x{231B}\x{23EC}\x{1F53D}\x{1F4E5}\x{2601}]", options: [.caseInsensitive])
 
     /// trust.rs:73-78 — PLACEHOLDER_BANNER_RX.
     static let placeholderBannerRX = try! NSRegularExpression(
-        pattern: #"(?:\u{1F6AB}|\u{26A0}\u{FE0F}?|\u{2757}|\u{2139}\u{FE0F}?)\s*(?:no\s+streams?\s+(?:found|available)|streams?\s+filtered|streams?\s+blocked|filtered)"#, options: [.caseInsensitive])
+        pattern: #"(?:\x{1F6AB}|\x{26A0}\x{FE0F}?|\x{2757}|\x{2139}\x{FE0F}?)\s*(?:no\s+streams?\s+(?:found|available)|streams?\s+filtered|streams?\s+blocked|filtered)"#, options: [.caseInsensitive])
 
     /// trust.rs:80-85 — STATUS_LINE_RX.
     static let statusLineRX = try! NSRegularExpression(
