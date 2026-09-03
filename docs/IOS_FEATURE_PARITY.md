@@ -34,9 +34,9 @@
 
 | Feature | Harbor Source | iOS Strategy | Status | Tests | Evidence |
 |---|---|---|---|---|---|
-| Parse (resolution/HDR/codec/audio/source/container/…) | `harbor-core/src/parser.rs` + TS parser | Swift port of Rust core, golden-vector verified | PLANNED | Rust tests on Windows + vector parity on CI | — |
-| Trust (fake/CAM/mismatch/year/season/episode/size…) | `harbor-core/src/trust.rs` | same port | PLANNED | vectors | — |
-| Score + rank (corpus, weights, debrid priority, prefer AAC) | `harbor-core/src/scoring.rs` | same port incl. corpus stats | PLANNED | vectors | — |
+| Parse (resolution/HDR/codec/audio/source/container/…) | `harbor-core/src/parser.rs` + TS parser | Swift port, golden-vector verified | **PASS** | 8 parser fixtures vs harbor-core | CI run 33744503664 (2026-09-03): PARSER PARITY 8/8 |
+| Trust (fake/CAM/mismatch/year/season/episode/size…) | `harbor-core/src/trust.rs` | Swift port of all 23 rules | **PASS** | 26 trust fixtures + 56 TrustGateTests | CI run 33744503664: TRUST PARITY 26/26 |
+| Score + rank (corpus, weights, debrid priority) | `harbor-core/src/scoring.rs` | Swift port, Rust rank semantics | **PASS** | 34 scoring + 5 ranking fixtures | CI run 33744503664: SCORING 34/34, RANKING 5/5 |
 | Debrid cache check / library | `pipeline.ts` + `lib/debrid/*` | RD flow exists; extend to AllDebrid/Premiumize/Debrid-Link/TorBox | PARTIAL | RD resolver tests exist | MVP RD only |
 | Resolve/validate (size gates, HEAD probe, preflight) | `resolve.ts`, `preflight.ts` | port gates + URLSession probe | PLANNED | — | — |
 | Episode file matching / season packs | `episode-file.ts`, PR #1119 | port matching rules | PLANNED | vectors | — |
@@ -115,5 +115,6 @@
 
 ## Status summary
 
-- TESTING: 4 · PARTIAL: 9 · PLANNED: ~40 · BLOCKED: 5 · DISCOVERED: 3 (delta-watch)
-- PASS: **0** — nothing is PASS until parity evidence exists.
+- TESTING: 3 · PARTIAL: 9 · PLANNED: ~40 · BLOCKED: 5 · DISCOVERED: 3 (delta-watch)
+- PASS: **4** — Stream Engine: parse/trust/score/rank verified 1:1 against
+  harbor-core golden vectors (73 fixtures, CI run 33744503664, 578 tests / 0 failures).
