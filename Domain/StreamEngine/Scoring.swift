@@ -55,13 +55,13 @@ enum Scoring {
 
     // MARK: - Regexes (scoring.rs:47-56)
 
-    /// scoring.rs:47-49 — `(?i)\b(?:cam|hdcam|hd[\s._-]?cam|tsrip|telesync|hdts|hd[\s._-]?ts|telecine|hd[\s._-]?tc|hc[\s._-]?hdrip|hc[\s._-]?cam|new[\s._-]?cam|cleancam|hqcam)\b`
+    /// scoring.rs:47-49 — `\b(?:cam|hdcam|hd[\s._-]?cam|tsrip|telesync|hdts|hd[\s._-]?ts|telecine|hd[\s._-]?tc|hc[\s._-]?hdrip|hc[\s._-]?cam|new[\s._-]?cam|cleancam|hqcam)\b`
     static let camMarkerRegex = try! NSRegularExpression(
         pattern: "\\b(?:cam|hdcam|hd[\\s._-]?cam|tsrip|telesync|hdts|hd[\\s._-]?ts|telecine|hd[\\s._-]?tc|hc[\\s._-]?hdrip|hc[\\s._-]?cam|new[\\s._-]?cam|cleancam|hqcam)\\b",
         options: [.caseInsensitive]
     )
 
-    /// scoring.rs:51 — `(?i)easynews`
+    /// scoring.rs:51 — `easynews`
     static let easynewsRegex = try! NSRegularExpression(pattern: "easynews", options: [.caseInsensitive])
 
     /// scoring.rs:53-54 — trusted addon name.
@@ -499,7 +499,7 @@ enum Scoring {
 
     private static let dateOnlyFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX", options: [.caseInsensitive])
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
@@ -507,7 +507,7 @@ enum Scoring {
 
     private static let dateTimeTFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX", options: [.caseInsensitive])
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         return formatter
@@ -515,7 +515,7 @@ enum Scoring {
 
     private static let dateTimeSpaceFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX", options: [.caseInsensitive])
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter
@@ -620,7 +620,7 @@ enum Scoring {
             if let fn = hints.fileName { parts.append(fn) }
         }
         if let d = s.stream.description { parts.append(d) }
-        let haystack = parts.joined(separator: " \n ")
+        let haystack = parts.joined(separator: " \n ", options: [.caseInsensitive])
 
         guard regexMatches(camMarkerRegex, haystack) else { return 0.0 }
         return s.resolution == .uhd ? -200.0 : -100.0

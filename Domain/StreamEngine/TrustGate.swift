@@ -52,42 +52,42 @@ enum TrustGate {
 
     /// trust.rs:64-68 — SHORT_FORMAT_RX. Exempts rules 10 and 19.
     static let shortFormatRX = try! NSRegularExpression(
-        pattern: #"(?i)\b(short|shorts|mini|mini[\s.\-_]?episode|ova|special|specials|skit|sketch|chibi|micro|webisode|vignette|interlude)\b"#)
+        pattern: #"\b(short|shorts|mini|mini[\s.\-_]?episode|ova|special|specials|skit|sketch|chibi|micro|webisode|vignette|interlude)\b"#, options: [.caseInsensitive])
 
     /// trust.rs:71 — UNCACHED_EMOJI_RX.
     static let uncachedEmojiRX = try! NSRegularExpression(
-        pattern: "[\u{2B07}\u{23F3}\u{231B}\u{23EC}\u{1F53D}\u{1F4E5}\u{2601}]")
+        pattern: "[\u{2B07}\u{23F3}\u{231B}\u{23EC}\u{1F53D}\u{1F4E5}\u{2601}]", options: [.caseInsensitive])
 
     /// trust.rs:73-78 — PLACEHOLDER_BANNER_RX.
     static let placeholderBannerRX = try! NSRegularExpression(
-        pattern: #"(?i)(?:\u{1F6AB}|\u{26A0}\u{FE0F}?|\u{2757}|\u{2139}\u{FE0F}?)\s*(?:no\s+streams?\s+(?:found|available)|streams?\s+filtered|streams?\s+blocked|filtered)"#)
+        pattern: #"(?:\u{1F6AB}|\u{26A0}\u{FE0F}?|\u{2757}|\u{2139}\u{FE0F}?)\s*(?:no\s+streams?\s+(?:found|available)|streams?\s+filtered|streams?\s+blocked|filtered)"#, options: [.caseInsensitive])
 
     /// trust.rs:80-85 — STATUS_LINE_RX.
     static let statusLineRX = try! NSRegularExpression(
-        pattern: #"(?i)\b(?:expires?\s+in|days?\s+left|premium\s+(?:active|expir(?:ed|ing))|api\s+limit|quota\s+used)\b"#)
+        pattern: #"\b(?:expires?\s+in|days?\s+left|premium\s+(?:active|expir(?:ed|ing))|api\s+limit|quota\s+used)\b"#, options: [.caseInsensitive])
 
     /// trust.rs:87-88 — VIDEO_EXT_RX (url counts as "video" only for these
     /// extensions at query-string or end of string).
     static let videoExtRX = try! NSRegularExpression(
-        pattern: #"(?i)\.(mkv|mp4|m4v|avi|webm|mov|ts)(\?|$)"#)
+        pattern: #"\.(mkv|mp4|m4v|avi|webm|mov|ts)(\?|$)"#, options: [.caseInsensitive])
 
     /// trust.rs:90-95 — TRAILER_RX, matched against the lowercased
     /// "filename title name" haystack.
     static let trailerRX = try! NSRegularExpression(
-        pattern: #"(?i)(?:^|[^a-z0-9])(?:trailer|teaser|tlr|trl|tra(?:iler)?|sneak[\s.\-_]?peek|preview|behind[\s.\-_]?the[\s.\-_]?scenes|featurette|making[\s.\-_]?of|deleted[\s.\-_]?scene|bloopers?|gag[\s.\-_]?reel|extras?|promo)(?:$|[^a-z0-9])"#)
+        pattern: #"(?:^|[^a-z0-9])(?:trailer|teaser|tlr|trl|tra(?:iler)?|sneak[\s.\-_]?peek|preview|behind[\s.\-_]?the[\s.\-_]?scenes|featurette|making[\s.\-_]?of|deleted[\s.\-_]?scene|bloopers?|gag[\s.\-_]?reel|extras?|promo)(?:$|[^a-z0-9])"#, options: [.caseInsensitive])
 
     /// trust.rs:97-98 — SEQUEL_TAIL_RX (capture 1 = the trailing digit/roman token).
     static let sequelTailRX = try! NSRegularExpression(
-        pattern: #"(?i)(?:\s|^)(\d{1,2}|[ivx]+)\s*$"#)
+        pattern: #"(?:\s|^)(\d{1,2}|[ivx]+)\s*$"#, options: [.caseInsensitive])
 
     /// trust.rs:100 — YEAR_PAREN_RX.
-    static let yearParenRX = try! NSRegularExpression(pattern: #"\(\d{4}\)"#)
+    static let yearParenRX = try! NSRegularExpression(pattern: #"\(\d{4}\)"#, options: [.caseInsensitive])
 
     /// trust.rs:102-103 — PART_WORD_RX.
-    static let partWordRX = try! NSRegularExpression(pattern: #"(?i)\b(part|chapter|vol|volume)\b"#)
+    static let partWordRX = try! NSRegularExpression(pattern: #"\b(part|chapter|vol|volume)\b"#, options: [.caseInsensitive])
 
     /// trust.rs:105 — WORD_RX (runs on already-lowercased text).
-    static let wordRX = try! NSRegularExpression(pattern: #"[a-z0-9]+"#)
+    static let wordRX = try! NSRegularExpression(pattern: #"[a-z0-9]+"#, options: [.caseInsensitive])
 
     // trust.rs:107 — ANIME_JA_RX is defined in the Rust source but never used
     // (dead code, audit §8.1). Deliberately not ported.
@@ -477,10 +477,10 @@ enum TrustGate {
     static func sequelMarker(_ title: String) -> Int? {
         var cleaned = yearParenRX.stringByReplacingMatches(
             in: title, options: [], range: NSRange(location: 0, length: (title as NSString).length),
-            withTemplate: "")
+            withTemplate: "", options: [.caseInsensitive])
         cleaned = partWordRX.stringByReplacingMatches(
             in: cleaned, options: [], range: NSRange(location: 0, length: (cleaned as NSString).length),
-            withTemplate: "")
+            withTemplate: "", options: [.caseInsensitive])
         let trimmed = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
         let fullRange = NSRange(location: 0, length: (trimmed as NSString).length)
         guard let m = sequelTailRX.firstMatch(in: trimmed, options: [], range: fullRange),
