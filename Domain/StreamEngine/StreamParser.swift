@@ -894,7 +894,7 @@ enum StreamParser {
         pattern: "^⬇️?download\\n([^\\n]+)")
     private static let streamfusionInstantRX = try! NSRegularExpression(
         pattern: "^⚡instant\\n([^\\n]+)")
-    private static let serviceNamesPattern = "(Real[-. ]?Debrid|TorBox|Tor Box|AllDebrid|All Debrid|Premiumize|Debrid[-. ]?Link|Easynews|EasyNews|Put\.io|Offcloud|EasyDebrid)"
+    private static let serviceNamesPattern = "(Real[-. ]?Debrid|TorBox|Tor Box|AllDebrid|All Debrid|Premiumize|Debrid[-. ]?Link|Easynews|EasyNews|Put\\.io|Offcloud|EasyDebrid)"
     private static let genericUncachedRX = try! NSRegularExpression(
         pattern: "(?:⏳|⬇️?|🔻|❌)\\s*(need cache|download via|not ready|uncached on)?\\s*" + serviceNamesPattern, options: [.caseInsensitive])
     private static let genericCachedRX = try! NSRegularExpression(
