@@ -42,10 +42,10 @@ enum SubtitleParser {
         if data.count >= 2 {
             let bom = (data[data.startIndex], data[data.startIndex + 1])
             if bom == (0xFF, 0xFE), let s = String(data: data, encoding: .utf16LittleEndian) {
-                return s
+                return stripBom(s)
             }
             if bom == (0xFE, 0xFF), let s = String(data: data, encoding: .utf16BigEndian) {
-                return s
+                return stripBom(s)
             }
         }
         // UTF-8 (with or without BOM).
@@ -58,6 +58,10 @@ enum SubtitleParser {
         if let s = decodeWindows1256(data) { return s }
         if let s = decodeWindows1252(data) { return s }
         return nil
+    }
+
+    static func stripBom(_ string: String) -> String {
+        string.hasPrefix("\u{FEFF}") ? String(string.dropFirst()) : string
     }
 
     static func decodeWindows1256(_ data: Data) -> String? {

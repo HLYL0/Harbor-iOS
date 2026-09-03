@@ -99,13 +99,8 @@ final class StreamEngineParityTests: XCTestCase {
 
     private func vectors() throws -> EngineVectors {
         if let cached = Self.cachedVectors { return cached }
-        let bundle = Bundle(for: StreamEngineParityTests.self)
-        guard let url = bundle.url(forResource: "stream-engine-vectors", withExtension: "json"),
-              let data = try? Data(contentsOf: url) else {
-            XCTFail("Golden vectors fixture missing from the test bundle")
-            throw NSError(domain: "parity", code: 1)
-        }
-        let decoded = try JSONDecoder().decode(EngineVectors.self, from: data)
+        // Vectors are embedded as a compiled Swift string (no bundle-resource plumbing).
+        let decoded = try JSONDecoder().decode(EngineVectors.self, from: Data(streamEngineVectorsJSON.utf8))
         Self.cachedVectors = decoded
         return decoded
     }

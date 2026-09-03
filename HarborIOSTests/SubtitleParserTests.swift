@@ -89,7 +89,7 @@ final class SubtitleParserTests: XCTestCase {
 
     func testWindows1256ArabicFallback() {
         // "مرحبا" in windows-1256: E3 D1 CD C7
-        let data = Data([0xE3, 0xD1, 0xCD, 0xC7])
+        let data = Data([0xE3, 0xD1, 0xCD, 0xC8, 0xC7])   // م ر ح ب ا (5 bytes)
         let decoded = SubtitleParser.decodeNormalized(data)
         XCTAssertEqual(decoded, "مرحبا")
     }
